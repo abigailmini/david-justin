@@ -650,17 +650,7 @@ function Vlog() {
     });
   },[]);
 
-  return <section style={{position:'relative',padding:'140px 0',overflow:'hidden',minHeight:'100vh'}}>
-    {/* Ambient background */}
-    <div aria-hidden style={{position:'absolute',inset:0,zIndex:0,overflow:'hidden'}}>
-      <iframe
-        src={`https://www.youtube.com/embed/${youtubeBackgroundId}?autoplay=1&mute=1&loop=1&playlist=${youtubeBackgroundId}&controls=0&showinfo=0&modestbranding=1&playsinline=1&rel=0&iv_load_policy=3&disablekb=1`}
-        title="background"
-        style={{position:'absolute',top:'50%',left:'50%',width:'177.78vh',height:'100vh',minWidth:'100%',minHeight:'56.25vw',transform:'translate(-50%,-50%) scale(1.15)',border:'none',pointerEvents:'none'}}
-        allow="autoplay; encrypted-media"
-      />
-      <div style={{position:'absolute',inset:0,background:'linear-gradient(180deg,rgba(10,9,6,0.88) 0%,rgba(10,9,6,0.55) 45%,rgba(10,9,6,0.92) 100%)'}}/>
-    </div>
+  return <section style={{position:'relative',padding:'140px 0',overflow:'hidden',minHeight:'100vh',background:'var(--bg)'}}>
     <div style={{maxWidth:1440,margin:'0 auto',padding:'0 40px',position:'relative',zIndex:2}}>
       <Reveal>
         <div style={{display:'flex',alignItems:'end',justifyContent:'space-between',gap:40,marginBottom:56,flexWrap:'wrap'}}>
