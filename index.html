@@ -320,7 +320,7 @@ function Hero() {
     return ()=>el.removeEventListener('pointermove',on);
   },[]);
   return <section ref={heroRef} style={{position:'relative',minHeight:'100vh',overflow:'hidden',paddingTop:140,paddingBottom:80,background:'var(--bg)'}}>
-    <div id="hero-bg" aria-hidden style={{position:'absolute',inset:0,zIndex:0,backgroundImage:"url('https://www.david-justin.com/wp-content/uploads/2026/01/david-bg-scaled.png')",backgroundSize:'cover',backgroundPosition:'top center',transform:isMobile?'none':`translate(${mx.x*-20}px,${mx.y*-12}px) scale(1.08)`,transition:'transform .3s ease-out',opacity:0.55,filter:'saturate(0.85) contrast(1.05)'}}/>
+    <div id="hero-bg" aria-hidden style={{position:'absolute',inset:0,zIndex:0,backgroundImage:"url('https://www.david-justin.com/wp-content/uploads/2026/01/david-bg-scaled.png')",backgroundSize:'cover',backgroundPosition:isMobile?'center 30%':'center',transform:isMobile?'none':`translate(${mx.x*-20}px,${mx.y*-12}px) scale(1.08)`,transition:'transform .3s ease-out',opacity:isMobile?0.3:0.55,filter:'saturate(0.85) contrast(1.05)'}}/>
     <div aria-hidden style={{position:'absolute',inset:0,zIndex:1,pointerEvents:'none',background:'radial-gradient(ellipse 90% 60% at 50% 100%,rgba(229,180,106,0.18),transparent 60%),radial-gradient(ellipse 50% 40% at 18% 22%,rgba(229,180,106,0.12),transparent 55%),linear-gradient(180deg,rgba(10,9,6,0.55) 0%,rgba(10,9,6,0.3) 40%,rgba(10,9,6,0.85) 100%)'}}/>
     <CornerMarks/>
     <div id="hero-grid" style={{maxWidth:1440,margin:'0 auto',padding:'0 40px',display:'grid',gridTemplateColumns:'1.1fr 1fr',gap:60,alignItems:'center'}}>
