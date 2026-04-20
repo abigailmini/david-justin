@@ -64,7 +64,9 @@
     #hero-grid { grid-template-columns:1fr !important; }
     #hero-right { display:none !important; }
     #hero-h1 { font-size:clamp(52px,12vw,80px) !important; }
-    #hero-stats { grid-template-columns:1fr 1fr !important; }
+    #hero-stats { grid-template-columns:1fr 1fr 1fr !important; }
+    #hero-stats > div > div:first-child { font-size:clamp(20px,6vw,32px) !important; }
+    #hero-stats > div { padding:16px 8px 0 0 !important; padding-left:12px !important; }
     /* Two-col grids → single */
     .grid-2col, .grid-3col, .grid-4col {
       grid-template-columns: 1fr !important;
@@ -360,6 +362,7 @@ function Hero() {
         <Reveal delay={520}>
           <div id="hero-stats" style={{marginTop:80,display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:0,borderTop:'1px solid var(--line)'}}>
             {[{k:'11,000+',l:'Students educated',sub:'Across SEA'},{k:'99.9%',l:'Satisfaction rate',sub:'Verified reviews'},{k:'1×',l:'World record',sub:'Guinness, 2022'}].map((s,i)=>(
+
               <div key={i} style={{padding:'24px 20px 0 0',borderLeft:i>0?'1px solid var(--line)':'none',paddingLeft:i>0?28:0}}>
                 <div style={{fontFamily:'var(--serif)',fontSize:42,color:'var(--ink)',lineHeight:1,letterSpacing:'-0.02em'}}>{s.k}</div>
                 <div style={{marginTop:10,fontFamily:'var(--sans)',fontSize:13,color:'var(--ink-80)'}}>{s.l}</div>
