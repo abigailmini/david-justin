@@ -73,6 +73,9 @@
     #record-grid { grid-template-columns:1fr !important; }
     /* Press */
     #press-grid { grid-template-columns:1fr !important; }
+    #press-layout { grid-template-columns:1fr !important; }
+    #press-layout > *:first-child { display:block !important; }
+    #press-list-item { grid-template-columns:36px 64px 1fr auto !important; gap:10px !important; }
     /* Vlog */
     #vlog-grid { grid-template-columns:1fr !important; }
     /* FAQ */
@@ -511,7 +514,7 @@ function Press() {
           </p>
         </Reveal>
       </div>
-      <div style={{display:'grid',gridTemplateColumns:'1.3fr 1fr',gap:32}}>
+      <div id="press-layout" style={{display:'grid',gridTemplateColumns:'1.3fr 1fr',gap:32}}>
         <Reveal y={32}>
           <div style={{position:'relative',aspectRatio:'4/5',overflow:'hidden',background:'var(--surface-1)',border:'1px solid var(--line)'}}>
             <SmartImg src={media[active].src} alt={media[active].title} label={media[active].outlet} style={{width:'100%',height:'100%',objectFit:'cover',transition:'opacity .4s'}}/>
@@ -542,21 +545,10 @@ function Press() {
   </section>;
 }
 
-// ——— TESTIMONIALS (with YouTube video background) ———
+// ——— TESTIMONIALS ———
 function Testimonials() {
   const {testimonials}=window.DJ_DATA;
-  return <section id="testimonials" style={{padding:'140px 0',position:'relative',borderTop:'1px solid var(--line)',borderBottom:'1px solid var(--line)',overflow:'hidden'}}>
-    {/* FIX 1: YouTube video background */}
-    <div aria-hidden style={{position:'absolute',inset:0,zIndex:0,overflow:'hidden'}}>
-      <iframe
-        src="https://www.youtube.com/embed/TWiU8AIAoDE?autoplay=1&mute=1&loop=1&playlist=TWiU8AIAoDE&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
-        title="background"
-        style={{position:'absolute',top:'50%',left:'50%',width:'177.78vh',height:'100vh',minWidth:'100%',minHeight:'56.25vw',transform:'translate(-50%,-50%) scale(1.15)',border:'none',pointerEvents:'none'}}
-        allow="autoplay; encrypted-media"
-      />
-      {/* Dark overlay rgba(8,7,5,0.78) */}
-      <div style={{position:'absolute',inset:0,background:'rgba(8,7,5,0.78)'}}/>
-    </div>
+  return <section id="testimonials" style={{padding:'140px 0',position:'relative',borderTop:'1px solid var(--line)',borderBottom:'1px solid var(--line)',background:'var(--surface-1)'}}>
     <div style={{maxWidth:1440,margin:'0 auto',padding:'0 40px',position:'relative',zIndex:2}}>
       <Reveal>
         <div style={{display:'flex',alignItems:'end',justifyContent:'space-between',gap:40,flexWrap:'wrap'}}>
@@ -598,8 +590,12 @@ function Testimonials() {
 // ——— EXCHANGES ———
 function Exchanges() {
   const {exchanges}=window.DJ_DATA;
-  return <section style={{padding:'120px 0'}}>
-    <div style={{maxWidth:1440,margin:'0 auto',padding:'0 40px'}}>
+  return <section style={{padding:'120px 0',position:'relative',overflow:'hidden'}}>
+    <div aria-hidden style={{position:'absolute',inset:0,zIndex:0,overflow:'hidden'}}>
+      <iframe src="https://www.youtube.com/embed/TWiU8AIAoDE?autoplay=1&mute=1&loop=1&playlist=TWiU8AIAoDE&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1" title="bg" allow="autoplay; encrypted-media" style={{position:'absolute',top:'50%',left:'50%',width:'177.78vh',height:'100vh',minWidth:'100%',minHeight:'56.25vw',transform:'translate(-50%,-50%) scale(1.15)',border:'none',pointerEvents:'none'}}/>
+      <div style={{position:'absolute',inset:0,background:'rgba(8,7,5,0.82)'}}/>
+    </div>
+    <div style={{maxWidth:1440,margin:'0 auto',padding:'0 40px',position:'relative',zIndex:2}}>
       <Reveal>
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:60,alignItems:'end',marginBottom:48}}>
           <div>
