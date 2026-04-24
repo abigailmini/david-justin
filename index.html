@@ -131,8 +131,14 @@
     #press-thumbs { display:flex !important; flex-direction:row !important; overflow-x:auto !important;
       scrollbar-width:none; gap:8px !important; padding-bottom:4px; }
     #press-thumbs::-webkit-scrollbar { display:none; }
-    #press-thumbs > button { flex:0 0 200px !important; width:200px; height:130px !important;
-      grid-template-columns:80px 1fr !important; }
+    #press-thumbs > button { flex:0 0 40vw !important; width:40vw !important; height:130px !important;
+      grid-template-columns:72px 1fr !important; }
+    /* Press thumb label — compact single-line on mobile */
+    #press-thumbs > button > div:last-child { padding:8px 10px !important; gap:3px !important; }
+    #press-thumbs > button > div:last-child > div:first-child { display:none !important; }
+    #press-thumbs > button > div:last-child > div:last-child {
+      font-size:10px !important; font-style:normal !important;
+      -webkit-line-clamp:3 !important; line-height:1.3 !important; letter-spacing:0 !important; }
     /* Luma header grid */
     #luma-header-grid {
       grid-template-columns:1fr !important;
@@ -147,24 +153,23 @@
       gap:8px !important;
     }
   }
-  /* ——— Hamburger & mobile nav overlay ——— */
+  /* ——— Hamburger & mobile nav ——— */
   #nav-hamburger { display:none; }
   @media (max-width:768px) {
     #nav-hamburger {
-      display:inline-flex;
+      display:flex;
       align-items:center;
       justify-content:center;
-      width:40px; height:40px;
-      border:1px solid var(--line-strong);
-      border-radius:50%;
-      background:transparent;
+      background:none;
+      border:none;
       color:var(--ink);
-      font-size:20px;
+      font-size:22px;
       cursor:pointer;
       flex-shrink:0;
-      transition:background .2s,border-color .2s;
+      padding:6px 8px;
+      line-height:1;
     }
-    #nav-hamburger:hover { background:var(--surface-1); border-color:var(--accent); color:var(--accent); }
+    #nav-desktop-links { display:none !important; }
   }
   /* ——— On the Floor — coverflow ——— */
   .floor-scrim { background:linear-gradient(180deg,rgba(10,9,6,0.92) 0%,rgba(10,9,6,0.88) 45%,rgba(10,9,6,0.94) 100%); }
@@ -415,25 +420,27 @@ function Nav() {
     {t:'Enquiry',h:'enquiry.html'},
   ];
   return <>
-  {/* Mobile nav overlay */}
-  {mobileOpen && <div style={{position:'fixed',top:0,left:0,right:0,bottom:0,background:isLight?'rgba(246,241,231,0.97)':'rgba(10,9,6,0.97)',backdropFilter:'blur(24px)',zIndex:48,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'80px 40px 40px',gap:0}}>
+  {/* Mobile nav dropdown panel — slide-down below nav bar */}
+  {mobileOpen && <div style={{position:'fixed',top:scrolled?65:80,left:0,right:0,background:isLight?'rgba(246,241,231,0.97)':'rgba(10,9,6,0.97)',backdropFilter:'blur(24px)',zIndex:49,borderBottom:'1px solid var(--line)',paddingBottom:20}}>
     {navLinks.map((link,i)=>(
-      <a key={i} href={link.h} onClick={()=>setMobileOpen(false)} style={{fontFamily:'var(--serif)',fontSize:'clamp(36px,10vw,56px)',fontStyle:'italic',color:'var(--ink)',textDecoration:'none',padding:'18px 0',borderBottom:'1px solid var(--line)',width:'100%',textAlign:'center',display:'block',transition:'color .3s'}}
+      <a key={i} href={link.h} onClick={()=>setMobileOpen(false)} style={{display:'block',padding:'14px 28px',fontFamily:'var(--sans)',fontSize:15,letterSpacing:'0.02em',color:'var(--ink)',textDecoration:'none',borderBottom:'1px solid var(--line)',transition:'color .2s'}}
         onMouseEnter={e=>{e.currentTarget.style.color='var(--accent)';}}
         onMouseLeave={e=>{e.currentTarget.style.color='var(--ink)';}}>{link.t}</a>
     ))}
-    <a href="enquiry.html" onClick={()=>setMobileOpen(false)} style={{marginTop:36,padding:'18px 52px',border:'1px solid var(--accent)',color:'var(--accent)',textDecoration:'none',fontFamily:'var(--mono)',fontSize:13,letterSpacing:'0.14em',textTransform:'uppercase',display:'inline-block'}}>Enquire →</a>
-    <button onClick={()=>setMode(isLight?'dark':'light')} aria-label="Toggle theme" style={{all:'unset',cursor:'pointer',marginTop:28,width:44,height:44,borderRadius:'50%',border:'1px solid var(--line-strong)',display:'inline-flex',alignItems:'center',justifyContent:'center',color:'var(--ink-80)'}}>
-      {isLight
-        ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
-        : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>}
-    </button>
+    <div style={{padding:'16px 28px 0',display:'flex',alignItems:'center',gap:16}}>
+      <a href="enquiry.html" onClick={()=>setMobileOpen(false)} style={{padding:'10px 20px',border:'1px solid var(--accent)',color:'var(--accent)',textDecoration:'none',fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.12em',textTransform:'uppercase'}}>Enquire →</a>
+      <button onClick={()=>setMode(isLight?'dark':'light')} aria-label="Toggle theme" style={{all:'unset',cursor:'pointer',width:36,height:36,borderRadius:'50%',border:'1px solid var(--line-strong)',display:'inline-flex',alignItems:'center',justifyContent:'center',color:'var(--ink-80)'}}>
+        {isLight
+          ? <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+          : <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>}
+      </button>
+    </div>
   </div>}
   <nav style={{position:'fixed',top:0,left:0,right:0,zIndex:50,padding:scrolled?'14px 40px':'28px 40px',transition:'padding .4s,background .4s,border-color .4s',background:scrolled?(isLight?'rgba(246,241,231,0.82)':'rgba(10,9,6,0.78)'):'transparent',backdropFilter:scrolled?'blur(18px) saturate(1.4)':'none',borderBottom:scrolled?'1px solid var(--line)':'1px solid transparent',display:'flex',alignItems:'center',justifyContent:'space-between',fontFamily:'var(--sans)'}}>
     <div id="nav-logo" style={{display:'flex',alignItems:'center',gap:12}}>
       <img src="images/dj-logo-horizontal.png?v=3" alt="David Justin" style={{height:23,width:'auto',display:'block'}}/>
     </div>
-    <div style={{display:'flex',alignItems:'center',gap:28,fontSize:13,letterSpacing:'0.04em'}}>
+    <div id="nav-desktop-links" style={{display:'flex',alignItems:'center',gap:28,fontSize:13,letterSpacing:'0.04em'}}>
       <a href="guinness-world-record.html" style={{color:'var(--ink-80)',textDecoration:'none',fontFamily:'var(--sans)',fontSize:13,letterSpacing:'0.02em'}}>Record</a>
       <a href="press.html" style={{color:'var(--ink-80)',textDecoration:'none',fontFamily:'var(--sans)',fontSize:13,letterSpacing:'0.02em'}}>Press</a>
       <a href="blog.html" style={{color:'var(--ink-80)',textDecoration:'none',fontFamily:'var(--sans)',fontSize:13,letterSpacing:'0.02em'}}>Blog</a>
