@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guinness World Record · David Justin — Largest Blockchain Lesson</title>
+<meta name="description" content="On 13 November 2022, David Justin led 897 participants through a 3-day lesson at MITEC Malaysia to set the Guinness World Record for the Largest Blockchain Lesson — officially verified by Guinness World Records.">
+<meta name="keywords" content="Guinness World Record, largest blockchain lesson, David Justin, MITEC Malaysia, 897 participants, 3 day blockchain class, blockchain education record">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://david-justin.com/guinness-world-record.html">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Guinness World Record · Largest Blockchain Lesson">
+<meta property="og:description" content="897 participants. Three days. One hall in Kuala Lumpur. David Justin's Guinness World Record for the Largest Blockchain Lesson.">
+<meta property="og:image" content="https://david-justin.com/images/dj-logo.png">
+<meta property="og:url" content="https://david-justin.com/guinness-world-record.html">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "headline": "Largest Blockchain Lesson — Guinness World Record",
+  "datePublished": "2022-11-13",
+  "author": { "@type": "Person", "name": "David Justin" },
+  "publisher": { "@type": "Organization", "name": "David Justin Blockchain Academy" },
+  "image": "https://david-justin.com/images/dj-logo.png",
+  "mainEntityOfPage": "https://david-justin.com/guinness-world-record.html",
+  "about": {
+    "@type": "Event",
+    "name": "Largest Blockchain Lesson",
+    "startDate": "2022-11-13",
+    "endDate": "2022-11-15",
+    "location": {
+      "@type": "Place",
+      "name": "MITEC · Malaysia International Trade & Exhibition Centre",
+      "address": { "@type": "PostalAddress", "addressLocality": "Kuala Lumpur", "addressCountry": "Malaysia" }
+    },
+    "organizer": { "@type": "Person", "name": "David Justin" }
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/shell.css?v=5">
+<script src="assets/theme.js?v=5"></script>
+<style>
+  /* Record title override */
+  .record-hero { padding:140px 40px 60px; }
+  .record-title { font-size:clamp(48px,7vw,120px); }
+
+  /* Stats strip */
+  .stats { display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .stat { padding:40px; border-right:1px solid var(--line); }
+  .stat:last-child { border-right:none; }
+  .stat-num { font-family:var(--serif); font-size:72px; line-height:0.9; color:var(--accent); letter-spacing:-0.03em; }
+  .stat-label { font-family:var(--mono); font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:var(--ink-60); margin-top:12px; }
+  @media (max-width:900px) { .stats { grid-template-columns:1fr 1fr; } .stat:nth-child(2){border-right:none;} .stat-num{font-size:56px;} }
+
+  /* Slider */
+  .slider-wrap { margin:40px 0 0; position:relative; }
+  .slider { position:relative; aspect-ratio:16/9; background:var(--surface-1); border:1px solid var(--line); overflow:hidden; }
+  .slide { position:absolute; inset:0; opacity:0; transition:opacity .6s; display:flex; align-items:center; justify-content:center; }
+  .slide.active { opacity:1; }
+  .slide img { width:100%; height:100%; object-fit:cover; display:block; }
+
+  .slide-caption {
+    position:absolute; left:0; right:0; bottom:0;
+    padding:24px 32px; background:linear-gradient(transparent, rgba(10,9,6,0.9));
+    display:flex; justify-content:space-between; align-items:end; gap:24px;
+  }
+  .slide-caption .sc-title { font-family:var(--serif); font-size:22px; font-style:italic; color:var(--ink); letter-spacing:-0.01em; }
+  .slide-caption .sc-meta { font-family:var(--mono); font-size:11px; letter-spacing:0.16em; color:var(--accent); text-transform:uppercase; text-align:right; white-space:nowrap; }
+
+  .slider-controls { display:flex; justify-content:space-between; align-items:center; margin-top:24px; gap:20px; }
+  .slider-dots { display:flex; gap:10px; }
+  .dot { width:36px; height:2px; background:var(--line-strong); border:none; cursor:pointer; transition:background .2s; padding:0; }
+  .dot.active { background:var(--accent); }
+  .slider-arrows { display:flex; gap:10px; }
+  .arrow {
+    width:48px; height:48px; border:1px solid var(--line-strong);
+    background:transparent; color:var(--ink); cursor:pointer;
+    display:flex; align-items:center; justify-content:center; font-size:18px;
+    transition:border-color .2s, color .2s;
+  }
+  .arrow:hover { border-color:var(--accent); color:var(--accent); }
+  .slider-count { font-family:var(--mono); font-size:11px; letter-spacing:0.18em; color:var(--ink-60); text-transform:uppercase; }
+
+  /* Story + criteria grid */
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+  @media (max-width:900px) { .two-col { grid-template-columns:1fr; gap:40px; } }
+  @media (max-width:600px) {
+    .slide-caption { flex-direction:column; align-items:flex-start; gap:6px; padding:16px 18px; }
+    .slide-caption .sc-title { font-size:16px; }
+    .slide-caption .sc-meta { text-align:left; }
+    .slider-controls { flex-wrap:wrap; gap:12px; }
+    .arrow { width:40px; height:40px; }
+  }
+  .criteria-list { list-style:none; padding:0; margin:0; border-top:1px solid var(--line); }
+  .criteria-list li { padding:24px 0; border-bottom:1px solid var(--line); display:grid; grid-template-columns:44px 1fr; gap:20px; align-items:start; }
+  .criteria-list .num { font-family:var(--mono); font-size:11px; color:var(--accent); letter-spacing:0.18em; padding-top:4px; }
+  .criteria-list .c-title { font-family:var(--serif); font-size:20px; color:var(--ink); font-style:italic; letter-spacing:-0.01em; margin-bottom:6px; }
+  .criteria-list .c-body { font-family:var(--sans); font-size:14px; line-height:1.65; color:var(--ink-80); }
+
+  /* Certificate card */
+  .cert-card {
+    padding:48px; background:linear-gradient(135deg, var(--surface-1), var(--surface-2));
+    border:1px solid var(--line-strong); position:relative; overflow:hidden;
+  }
+  .cert-card::before {
+    content:""; position:absolute; top:-40%; right:-20%; width:80%; height:180%;
+    background: radial-gradient(ellipse, rgba(229,180,106,0.12), transparent 70%);
+  }
+  .cert-crest { font-family:var(--serif); font-style:italic; font-size:140px; line-height:1; color:var(--accent); opacity:0.3; margin-bottom:24px; }
+  .cert-kicker { font-family:var(--mono); font-size:10px; letter-spacing:0.24em; text-transform:uppercase; color:var(--accent); margin-bottom:16px; }
+  .cert-title { font-family:var(--serif); font-size:40px; color:var(--ink); letter-spacing:-0.02em; line-height:1.05; margin-bottom:20px; }
+  .cert-meta { font-family:var(--mono); font-size:11px; letter-spacing:0.14em; color:var(--ink-60); text-transform:uppercase; padding-top:20px; border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+
+  /* CTA strip */
+  .cta-strip { padding:100px 40px; background:var(--surface-1); border-top:1px solid var(--line); border-bottom:1px solid var(--line); text-align:center; }
+  .cta-strip h3 { font-family:var(--serif); font-size:clamp(32px,4vw,56px); font-weight:400; margin:0 0 24px; letter-spacing:-0.02em; }
+  .cta-strip em { color:var(--accent); font-style:italic; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo"><img src="images/dj-logo-horizontal.png?v=3" alt="David Justin"></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="guinness-world-record.html" class="active">Record</a>
+    <a href="press.html">Press</a>
+    <a href="blog.html">Blog</a>
+    <a href="enquiry.html">Enquiry</a>
+  </div>
+  <a href="enquiry.html" class="nav-cta">Enquire</a>
+</nav>
+
+<!-- HERO -->
+<header class="page-hero record-hero">
+  <div class="page-hero-inner">
+    <div class="eyebrow reveal">Officially Verified · 13 November 2022</div>
+    <h1 class="page-title record-title reveal">Largest <em>blockchain</em> lesson.</h1>
+    <p class="page-lede reveal">
+      On 13 November 2022, David Justin stood before <strong style="color:var(--ink);">897 participants</strong> at MITEC Kuala Lumpur
+      to deliver a <strong style="color:var(--ink);">three-day</strong> structured lesson on blockchain technology
+      — officially verified by Guinness World Records as the largest of its kind anywhere on Earth.
+    </p>
+    <div style="margin-top:40px;display:flex;gap:16px;flex-wrap:wrap;" class="reveal">
+      <a href="#story" class="btn-primary">Read the Story <span aria-hidden="true">→</span></a>
+      <a href="#criteria" class="btn-outline">Verification Criteria</a>
+    </div>
+  </div>
+</header>
+
+<!-- STATS -->
+<section class="stats reveal">
+  <div class="stat"><div class="stat-num">897</div><div class="stat-label">Participants · One Class</div></div>
+  <div class="stat"><div class="stat-num">3<span style="font-size:32px;">days</span></div><div class="stat-label">Structured Lesson</div></div>
+  <div class="stat"><div class="stat-num">1</div><div class="stat-label">World Record</div></div>
+  <div class="stat"><div class="stat-num">13·11·22</div><div class="stat-label">Record Date</div></div>
+</section>
+
+<!-- SLIDER -->
+<section class="section" id="gallery">
+  <div class="section-inner">
+    <div class="section-label reveal"><span>01</span> Gallery</div>
+    <h2 class="section-heading reveal">The <em>auditorium</em>, the moment.</h2>
+    <p class="body-copy reveal" style="max-width:640px;margin-top:20px;">
+      A photo essay from the record attempt at MITEC Kuala Lumpur —
+      from the main hall filling up on day one to the closing keynote three days later.
+    </p>
+
+    <div class="slider-wrap reveal">
+      <div class="slider" id="slider">
+        <div class="slide active" data-title="Main hall fills up" data-meta="MITEC · Day One">
+          <img src="images/floor/tbm-day3-406.jpg" alt="Main hall fills up at MITEC Kuala Lumpur">
+        </div>
+        <div class="slide" data-title="Opening keynote" data-meta="MITEC · Day One Stage">
+          <img src="images/floor/tbm-aft-28.jpg" alt="David Justin on stage delivering the opening keynote">
+        </div>
+        <div class="slide" data-title="Centre stage — live teach" data-meta="Main Hall · Day Two">
+          <img src="images/floor/tbm-aft-58.jpg" alt="David Justin teaching live on centre stage">
+        </div>
+        <div class="slide" data-title="The 15th cohort, in session" data-meta="Afternoon · Day Two">
+          <img src="images/floor/tbm-aft-49.jpg" alt="The 15th cohort in a full afternoon session">
+        </div>
+        <div class="slide" data-title="Stage in full swing" data-meta="Main Hall · Day Three">
+          <img src="images/floor/tbm-day3-450.jpg" alt="The record-attempt stage in full swing on day three">
+        </div>
+        <div class="slide" data-title="One class. One record." data-meta="Closing · Day Three">
+          <img src="images/floor/tbm-aft3-34.jpg" alt="One class, one record — closing moment">
+        </div>
+        <div class="slide" data-title="Crowd lights — final hour" data-meta="Evening · Day Three">
+          <img src="images/floor/tbm-eve-71.jpg" alt="Crowd lights during the final hour">
+        </div>
+        <div class="slide" data-title="Curtain call · 一生一起走" data-meta="Closing · Day Three">
+          <img src="images/floor/tbm-eve-74.jpg" alt="Curtain call at the close of the record attempt">
+        </div>
+
+        <div class="slide-caption">
+          <div class="sc-title" id="sc-title">Main hall fills up</div>
+          <div class="sc-meta" id="sc-meta">MITEC · Day One</div>
+        </div>
+      </div>
+
+      <div class="slider-controls">
+        <div class="slider-dots" id="dots"></div>
+        <div class="slider-count"><span id="sc-curr">01</span> / <span id="sc-total">05</span></div>
+        <div class="slider-arrows">
+          <button class="arrow" id="prev" aria-label="Previous slide">←</button>
+          <button class="arrow" id="next" aria-label="Next slide">→</button>
+        </div>
+      </div>
+      <p style="font-family:var(--mono);font-size:10px;letter-spacing:0.18em;color:var(--ink-40);text-transform:uppercase;margin-top:16px;">Photography — The Bigger Meet, MITEC Kuala Lumpur.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STORY + CERTIFICATE -->
+<section class="section" id="story" style="padding-top:40px;">
+  <div class="section-inner">
+    <div class="two-col">
+      <div class="reveal">
+        <div class="section-label"><span>02</span> The story</div>
+        <h2 class="section-heading" style="margin-bottom:32px;">Why <em>897</em>, and why three days.</h2>
+        <div class="body-copy">
+          <p>
+            Blockchain education in Southeast Asia was — and largely still is — fragmented.
+            Retail learners chase price charts. University curricula lag two cycles behind the technology.
+            Enterprises treat the entire category as a compliance checkbox.
+          </p>
+          <p>
+            The Largest Blockchain Lesson was designed as a single, public answer to that gap:
+            a rigorously prepared, three-day lesson delivered to <strong style="color:var(--ink);">897 participants in a single class</strong> —
+            not a conference, not a panel, not a series of overlapping workshops. One instructor, one syllabus,
+            one hall, one record.
+          </p>
+          <p>
+            Why 897? Because that was every verified seat filled across all three days. Guinness
+            required the same registered learners to be present at the start and end of each day
+            for the count to hold. Nobody was a walk-in. Nobody was a replacement.
+          </p>
+          <p>
+            Hosted at <strong style="color:var(--ink);">MITEC — Malaysia International Trade &amp; Exhibition Centre</strong>
+            in Kuala Lumpur over 13–15 November 2022, the attempt was independently witnessed throughout
+            by a Guinness World Records adjudicator. The record stands today as the world's largest verified
+            single-instructor blockchain lesson.
+          </p>
+          <p>
+            For David Justin personally, it was the beginning of a much larger mission — to make this technology
+            accessible to one million learners across the region.
+          </p>
+        </div>
+      </div>
+
+      <aside class="cert-card reveal">
+        <div class="cert-crest">dj</div>
+        <div style="position:relative;">
+          <div class="cert-kicker">Official Certificate</div>
+          <div class="cert-title">Largest<br>Blockchain Lesson</div>
+          <div class="body-copy" style="color:var(--ink-80);font-size:15px;margin-bottom:28px;">
+            Achieved by <strong style="color:var(--ink);">David Justin</strong> with <strong style="color:var(--ink);">897 participants</strong>
+            over three days from 13 November 2022 at MITEC, Kuala Lumpur, Malaysia — as independently
+            verified by Guinness World Records.
+          </div>
+          <div class="cert-meta">
+            <span>Record ID · Verified ✓</span>
+            <span>guinnessworldrecords.com</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- CRITERIA -->
+<section class="section" id="criteria" style="background:var(--surface-1);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="section-inner">
+    <div class="two-col">
+      <div class="reveal">
+        <div class="section-label"><span>03</span> Verification</div>
+        <h2 class="section-heading">How Guinness <em>verified</em> it.</h2>
+        <p class="body-copy" style="margin-top:24px;">
+          A Guinness World Records title is not self-awarded. Every attempt must meet a
+          pre-approved set of criteria, witnessed independently and evidenced contemporaneously.
+          Here is how we met each requirement.
+        </p>
+      </div>
+
+      <ol class="criteria-list reveal">
+        <li>
+          <div class="num">01</div>
+          <div>
+            <div class="c-title">Pre-approved category</div>
+            <div class="c-body">Application submitted in advance; Guinness reviewed the proposed lesson topic, duration, and participant definition before accepting the attempt.</div>
+          </div>
+        </li>
+        <li>
+          <div class="num">02</div>
+          <div>
+            <div class="c-title">Single instructor, single topic</div>
+            <div class="c-body">One lead educator (David Justin) delivered the entire three-day lesson on a single subject — blockchain fundamentals — with no rotating speakers or co-presenters.</div>
+          </div>
+        </li>
+        <li>
+          <div class="num">03</div>
+          <div>
+            <div class="c-title">Minimum qualifying duration</div>
+            <div class="c-body">Each day's session ran for the required uninterrupted duration, monitored on an official timekeeper's clock across all three days.</div>
+          </div>
+        </li>
+        <li>
+          <div class="num">04</div>
+          <div>
+            <div class="c-title">Participant identification &amp; attendance</div>
+            <div class="c-body">All 897 participants registered individually, were physically present at the start and end of each day of the lesson, and were verified by two independent witnesses.</div>
+          </div>
+        </li>
+        <li>
+          <div class="num">05</div>
+          <div>
+            <div class="c-title">Independent adjudication</div>
+            <div class="c-body">A Guinness World Records adjudicator was present in the venue for the full duration, confirming compliance with every published guideline before announcing the result.</div>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section class="cta-strip">
+  <h3>Want the full <em>lesson deck</em> or footage?</h3>
+  <p class="body-copy" style="max-width:560px;margin:0 auto 32px;">
+    The academy releases excerpts of the record-attempt lesson to partners and press on request.
+    Send us a note via the enquiry form.
+  </p>
+  <a href="enquiry.html" class="btn-primary">Request Materials <span aria-hidden="true">→</span></a>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="images/dj-logo.png?v=3" alt="David Justin">
+        <p>Learn, connect, and grow with leaders and investors shaping the future of finance.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="guinness-world-record.html">Guinness Record</a></li>
+          <li><a href="press.html">Press</a></li>
+          <li><a href="blog.html">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="enquiry.html">Enquiry</a></li>
+          <li><a href="https://luma.com/davidjustin" target="_blank" rel="noreferrer">Events · luma</a></li>
+          <li><a href="https://www.youtube.com/@DavidJustinOfficial" target="_blank" rel="noreferrer">YouTube</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:support@david-justin.com">support@david-justin.com</a></li>
+          <li>Kuala Lumpur, Malaysia</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© DAVID-JUSTIN SDN BHD · MMXXV · ALL RIGHTS RESERVED</div>
+      <div>KL ↔ SGP ↔ TYO</div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/shell.js?v=5"></script>
+<script>
+// Slider
+(function(){
+  const slides = document.querySelectorAll('#slider .slide');
+  const dotsEl = document.getElementById('dots');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  const scCurr = document.getElementById('sc-curr');
+  const scTotal = document.getElementById('sc-total');
+  const scTitle = document.getElementById('sc-title');
+  const scMeta = document.getElementById('sc-meta');
+  let i = 0;
+  scTotal.textContent = String(slides.length).padStart(2,'0');
+
+  slides.forEach((_, idx) => {
+    const b = document.createElement('button');
+    b.className = 'dot' + (idx===0?' active':'');
+    b.setAttribute('aria-label','Go to slide '+(idx+1));
+    b.addEventListener('click', () => go(idx));
+    dotsEl.appendChild(b);
+  });
+
+  function go(idx) {
+    i = (idx + slides.length) % slides.length;
+    slides.forEach((s,n)=>s.classList.toggle('active', n===i));
+    document.querySelectorAll('.dot').forEach((d,n)=>d.classList.toggle('active', n===i));
+    scCurr.textContent = String(i+1).padStart(2,'0');
+    const s = slides[i];
+    scTitle.textContent = s.dataset.title;
+    scMeta.textContent = s.dataset.meta;
+  }
+  prev.addEventListener('click', ()=>go(i-1));
+  next.addEventListener('click', ()=>go(i+1));
+  document.addEventListener('keydown', (e)=>{
+    if (e.key==='ArrowLeft') go(i-1);
+    if (e.key==='ArrowRight') go(i+1);
+  });
+  // autoplay
+  setInterval(()=>go(i+1), 6000);
+})();
+</script>
+</body>
+</html>

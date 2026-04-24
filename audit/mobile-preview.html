@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Mobile Audit — 375px</title>
+<style>
+  body{margin:0;background:#1a1a1a;font-family:-apple-system,sans-serif;color:#eee;}
+  h1{padding:16px;margin:0;font-size:14px;letter-spacing:0.1em;text-transform:uppercase;color:#E5B46A;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,390px);gap:20px;padding:20px;justify-content:center;}
+  .phone{width:390px;height:760px;background:#000;border:1px solid #333;border-radius:24px;overflow:hidden;position:relative;}
+  .phone iframe{width:375px;height:812px;border:0;transform:scale(1.04);transform-origin:top left;}
+  .phone h2{position:absolute;top:12px;left:50%;transform:translateX(-50%);font-size:11px;background:rgba(0,0,0,0.8);color:#E5B46A;padding:4px 12px;border-radius:10px;z-index:10;margin:0;font-family:monospace;letter-spacing:0.08em;pointer-events:none;}
+  .wrapper{position:relative;}
+  .nav{padding:14px 20px;background:#111;border-bottom:1px solid #333;display:flex;gap:14px;}
+  .nav a{color:#E5B46A;text-decoration:none;font-size:12px;padding:6px 12px;border:1px solid #444;border-radius:6px;}
+</style>
+</head>
+<body>
+<h1>Mobile Audit · iPhone 375 × 812</h1>
+<div class="nav">
+  <a href="#" onclick="load('../index.html');return false;">index</a>
+  <a href="#" onclick="load('../press.html');return false;">press</a>
+  <a href="#" onclick="load('../blog.html');return false;">blog</a>
+  <a href="#" onclick="load('../guinness-world-record.html');return false;">record</a>
+  <a href="#" onclick="load('../enquiry.html');return false;">enquiry</a>
+  <a href="#" onclick="load('../blog/897-chairs.html');return false;">897 chairs</a>
+  <a href="#" onclick="load('../blog/the-ten-thousand-hour-trade.html');return false;">10k hour</a>
+  <a href="#" onclick="load('../blog/why-blockchain-is-a-language.html');return false;">blockchain</a>
+</div>
+<div class="grid" id="g"></div>
+<script>
+function load(href){
+  const frame = document.querySelector('#g iframe');
+  if (frame) frame.src = href;
+}
+document.getElementById('g').innerHTML = `
+<div class="wrapper">
+  <div class="phone"><h2 id="url">index.html</h2><iframe src="../index.html" onload="document.getElementById('url').textContent=this.src.split('/').pop()"></iframe></div>
+</div>`;
+</script>
+</body>
+</html>

@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>David Justin — Invest in Yourself</title>
+<script>
+  // Apply persisted theme before render to avoid flash
+  try { var t=localStorage.getItem('dj-theme'); if(t==='light'||t==='dark') document.documentElement.setAttribute('data-mode',t); } catch(e){}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;500&display=swap" rel="stylesheet">
@@ -24,6 +28,10 @@
     --ink-40: #5A5249;
     --line: rgba(242,236,224,0.08);
     --line-strong: rgba(242,236,224,0.14);
+    --overlay: rgba(10,9,6,0.88);
+    --overlay-soft: rgba(10,9,6,0.55);
+    --chip-bg: rgba(10,9,6,0.82);
+    --bg-tint: rgba(10,9,6,0.35);
   }
   [data-mode="light"] {
     --bg: #F6F1E7;
@@ -35,13 +43,17 @@
     --ink-40: #9B8F7B;
     --line: rgba(26,20,10,0.1);
     --line-strong: rgba(26,20,10,0.2);
+    --overlay: rgba(246,241,231,0.88);
+    --overlay-soft: rgba(246,241,231,0.55);
+    --chip-bg: rgba(246,241,231,0.85);
+    --bg-tint: rgba(237,230,214,0.6);
   }
   [data-accent="amber"]   { --accent: #E5B46A; --accent-soft: rgba(229,180,106,0.22); }
   [data-accent="emerald"] { --accent: oklch(0.78 0.14 155); --accent-soft: oklch(0.78 0.14 155 / 0.22); }
   [data-accent="rose"]    { --accent: oklch(0.78 0.14 15);  --accent-soft: oklch(0.78 0.14 15 / 0.22); }
   [data-accent="ice"]     { --accent: oklch(0.82 0.1 220);  --accent-soft: oklch(0.82 0.1 220 / 0.22); }
   * { box-sizing: border-box; }
-  html, body { margin:0; padding:0; background:var(--bg); color:var(--ink); font-family:var(--sans); -webkit-font-smoothing:antialiased; overflow-x:hidden; cursor:none; }
+  html, body { margin:0; padding:0; background:var(--bg); color:var(--ink); font-family:var(--sans); -webkit-font-smoothing:antialiased; overflow-x:hidden; }
   a { color:inherit; }
   ::selection { background:var(--accent); color:var(--bg); }
   @keyframes mq-fwd { from { transform:translateX(0); } to { transform:translateX(-50%); } }
@@ -52,7 +64,6 @@
   }
   @keyframes spin-slow { from { transform:rotate(0); } to { transform:rotate(360deg); } }
   @media (pointer:coarse) { html,body,button,a,input { cursor:auto; } }
-  button,a,input { cursor:none; }
 
   /* ===== RESPONSIVE MOBILE ===== */
   @media (max-width:768px) {
@@ -97,18 +108,44 @@
     #nav-logo { font-size:18px !important; }
     h2 { font-size:clamp(36px,8vw,60px) !important; }
   }
-  /* ——— On the Floor carousel ——— */
-  .floor-carousel-wrapper { overflow:hidden; width:100%; }
-  .floor-track { display:flex; gap:16px; padding:0 calc(50% - 180px); transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); }
-  .floor-card { flex:0 0 340px; height:480px; position:relative; border-radius:4px; overflow:hidden; cursor:pointer; transition:all 0.4s; filter:brightness(0.5); transform:scale(0.92); }
-  .floor-card.active { filter:brightness(1); transform:scale(1); }
-  .floor-card img { width:100%; height:100%; object-fit:cover; display:block; }
-  .floor-card-label { position:absolute; bottom:24px; left:24px; }
-  .floor-cat { display:block; font-size:0.65rem; letter-spacing:0.15em; color:rgba(255,255,255,0.5); margin-bottom:4px; font-family:var(--mono); text-transform:uppercase; }
-  .floor-title { display:block; font-size:1.1rem; color:#fff; font-family:var(--serif); }
-  @media(max-width:768px) {
-    .floor-card { flex:0 0 260px; height:380px; }
-    .floor-track { padding:0 calc(50% - 130px); }
+  /* ——— On the Floor — coverflow ——— */
+  .floor-scrim { background:linear-gradient(180deg,rgba(10,9,6,0.92) 0%,rgba(10,9,6,0.88) 45%,rgba(10,9,6,0.94) 100%); }
+  [data-mode="light"] .floor-scrim { background:linear-gradient(180deg,rgba(246,241,231,0.96) 0%,rgba(246,241,231,0.94) 45%,rgba(246,241,231,0.97) 100%); }
+  /* Exchange logos — invert for theme so the black SVGs read on dark mode */
+  .exchange-logo { filter:brightness(0) invert(0.9) saturate(0); transition:filter .3s; }
+  [data-mode="light"] .exchange-logo { filter:brightness(0) invert(0.15) saturate(0); }
+  /* ——— Hero headline word stagger ——— */
+  .hero-word { opacity:0; transform:translateY(40px); animation:heroWord 900ms cubic-bezier(.22,.61,.36,1) forwards; }
+  @keyframes heroWord {
+    0% { opacity:0; transform:translateY(40px); }
+    100% { opacity:1; transform:translateY(0); }
+  }
+  @keyframes heroDotPulse {
+    0%, 100% { transform:scale(1); opacity:1; box-shadow:0 0 20px var(--accent); }
+    50%      { transform:scale(1.3); opacity:0.75; box-shadow:0 0 30px var(--accent); }
+  }
+  /* ——— Section label line draw-in ——— */
+  @keyframes slDraw { from { transform:scaleX(0); } to { transform:scaleX(1); } }
+  /* ——— Nav scroll state ——— */
+  .nav.scrolled { padding:14px 40px !important; box-shadow:0 1px 0 var(--line), 0 20px 60px -40px rgba(0,0,0,0.4); }
+  [data-mode="light"] .nav.scrolled { box-shadow:0 1px 0 var(--line), 0 20px 60px -40px rgba(0,0,0,0.08); }
+  @media (max-width:768px) { .nav.scrolled { padding:12px 20px !important; } }
+  .floor-cf { position:relative; width:100%; height:620px; perspective:1800px; display:flex; align-items:center; justify-content:center; }
+  .floor-cf-card { position:absolute; top:50%; left:50%; width:720px; height:480px; overflow:hidden; border:1px solid var(--line-strong); background:#000; transition:transform 900ms cubic-bezier(.22,.61,.36,1), opacity 900ms, filter 900ms; transform-origin:center; will-change:transform,opacity; }
+  .floor-cf-card img { width:100%; height:100%; object-fit:cover; display:block; }
+  .floor-cf-caption { position:absolute; inset:auto 0 0 0; padding:24px 32px; background:linear-gradient(180deg,transparent,rgba(10,9,6,0.9)); color:#fff; }
+  .floor-cf-caption .cat { font-family:var(--mono); font-size:10px; letter-spacing:0.24em; color:var(--accent); text-transform:uppercase; margin-bottom:8px; }
+  .floor-cf-caption .ttl { font-family:var(--serif); font-size:26px; font-style:italic; line-height:1.1; letter-spacing:-0.01em; }
+  @media(max-width:900px) {
+    .floor-cf { height:440px; }
+    .floor-cf-card { width:440px; height:330px; }
+    .floor-cf-caption { padding:16px 20px; }
+    .floor-cf-caption .ttl { font-size:18px; }
+  }
+  @media(max-width:560px) {
+    .floor-cf { height:360px; }
+    .floor-cf-card { width:300px; height:240px; }
+    .floor-cf-caption .ttl { font-size:15px; }
   }
 </style>
 </head>
@@ -145,9 +182,9 @@ window.DJ_DATA = {
     { src:"https://www.david-justin.com/wp-content/uploads/2025/10/image-shows-a-man.webp", cat:"Studio Portrait", label:"Editorial · 2025" },
   ],
   lumaEvents: [
-    { title:"A Trader's Poker Session: All-in or Fold", host:"David Justin", location:"Klang, Selangor", price:"USD 19.31", date:"May", day:"24", weekday:"Sat", time:"7:00 PM MYT", blurb:"An intimate poker night for traders — sharpen instincts on probability, bankroll and nerve in a room where every chip tells a story.", cover:"https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,anim=false,background=white,quality=75,width=600,height=600/event-covers/z7/80e4f424-9d99-4f98-8b18-e1d5479f48a2.png", tag:"Community · Poker Night", url:"https://lu.ma/davidjustin" },
-    { title:"Pizza Day: Trade, Chill & Connect", host:"David Justin", location:"Klang, Selangor", price:"Free", date:"May", day:"22", weekday:"Thu", time:"6:30 PM MYT", blurb:"Celebrating Bitcoin Pizza Day with the academy — share a slice, swap strategies, and mark the day a programmer paid 10,000 BTC for two pizzas.", cover:"https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,anim=false,background=white,quality=75,width=600,height=600/event-covers/3b/8b106d12-8979-4b16-89ce-fb163f349d5d.png", tag:"Community · Meetup", url:"https://lu.ma/davidjustin" },
-    { title:"Six-Star Masterclass · Cohort 14", host:"David Justin Academy", location:"Kuala Lumpur", price:"On application", date:"Jun", day:"07", weekday:"Sat", time:"10:00 AM MYT", blurb:"The signature three-day intensive — from first wallet to portfolio strategy. Small cohort, private Discord, lifetime alumni access.", cover:"https://www.david-justin.com/wp-content/uploads/2025/10/554694-largest-cryptocurrency-lesson-header-1.webp", tag:"Flagship Programme", url:"https://lu.ma/davidjustin" },
+    { title:"UC x FundedXYZ: Esports Trading Tournament 002", host:"David Justin", location:"David Justin Event Hall · Klang, Selangor", price:"Free", date:"May", day:"24", weekday:"Sun", time:"12:00 PM – 6:00 PM MYT", blurb:"Unity Crypto × FundedXYZ go head-to-head in a live trading tournament — Trade Fast. Think Sharp. Win Like a Pro.", cover:"images/luma/esports-tournament-002.png", tag:"Tournament · Live Trading", url:"https://luma.com/davidjustin" },
+    { title:"Pizza Day: Trade, Chill & Connect", host:"David Justin", location:"Klang, Selangor", price:"Free", date:"May", day:"22", weekday:"Fri", time:"6:30 PM MYT", blurb:"Celebrating Bitcoin Pizza Day with the academy — share a slice, swap strategies, and mark the day a programmer paid 10,000 BTC for two pizzas.", cover:"https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,anim=false,background=white,quality=75,width=600,height=600/event-covers/3b/8b106d12-8979-4b16-89ce-fb163f349d5d.png", tag:"Community · Meetup", url:"https://luma.com/davidjustin" },
+    { title:"A Trader's Poker Session: All-in or Fold", host:"David Justin", location:"Klang, Selangor", price:"USD 19.31", date:"May", day:"30", weekday:"Sat", time:"7:00 PM MYT", blurb:"An intimate poker night for traders — sharpen instincts on probability, bankroll and nerve in a room where every chip tells a story.", cover:"https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,anim=false,background=white,quality=75,width=600,height=600/event-covers/z7/80e4f424-9d99-4f98-8b18-e1d5479f48a2.png", tag:"Community · Poker Night", url:"https://luma.com/davidjustin" },
   ],
   youtubePlaylist:"PLpJ-94ComBggFBRMbqZ9J5lSoe7NGYvfZ",
   youtubePlaylistUrl:"https://youtube.com/playlist?list=PLpJ-94ComBggFBRMbqZ9J5lSoe7NGYvfZ",
@@ -164,17 +201,17 @@ window.DJ_DATA = {
     { name:"MEXC",    src:"https://www.david-justin.com/wp-content/uploads/2026/03/mx.png" },
     { name:"Luno",    src:"https://www.david-justin.com/wp-content/uploads/2026/03/luno-bnw.png" },
     { name:"Sinergy", src:"https://www.david-justin.com/wp-content/uploads/2026/03/sinergy-bnw.png" },
-    { name:"Hata",    src:"https://www.david-justin.com/wp-content/uploads/2026/03/hata-scaled.jpg" },
+    { name:"Hata",    src:"images/partners/hata.png" },
   ],
   trustedBy:[
-    "https://www.david-justin.com/wp-content/uploads/2025/10/tmpl42_k06x-1.webp",
-    "https://www.david-justin.com/wp-content/uploads/2025/10/download-1.webp",
-    "https://www.david-justin.com/wp-content/uploads/2025/10/tmpqqpl1a1h-1.webp",
-    "https://www.david-justin.com/wp-content/uploads/2025/10/tmp64pqmz31-1.webp",
-    "https://www.david-justin.com/wp-content/uploads/2025/10/tmpveb_c_j5-1.webp",
-    "https://www.david-justin.com/wp-content/uploads/2025/10/download.webp",
-    "https://www.david-justin.com/wp-content/uploads/2025/10/download-4.webp",
-    "https://www.david-justin.com/wp-content/uploads/2025/10/download-3.webp",
+    { src:"images/partners/gwr.png",             name:"Guinness World Records" },
+    { src:"images/partners/nst.png",             name:"New Straits Times" },
+    { src:"images/partners/nanyang.png",         name:"Nanyang Siang Pau" },
+    { src:"images/partners/success-resources.png", name:"Success Resources", maxH:70 },
+    { src:"images/partners/top-100.png",         name:"Top 100 Young Entrepreneurs" },
+    { src:"images/partners/legendary.png",       name:"Legendary Leader Award" },
+    { src:"images/partners/top-influencer.png",  name:"Top Influencer Award" },
+    { src:"images/partners/honesty.png",         name:"Asia 100 Honesty Award", colored:true },
   ],
   faq:[
     { q:"Who is David Justin?", a:"David Justin is a Guinness World Record-holding blockchain educator and founder of David Justin Blockchain Academy. He's dedicated to advancing financial literacy across Southeast Asia and empowering individuals to participate in the digital economy on their own terms." },
@@ -184,9 +221,9 @@ window.DJ_DATA = {
     { q:"How can I contact David Justin's team?", a:"Press, speaking, and partnership enquiries can be sent via the Contact page or directly to the media team. Response time is typically within two business days." },
   ],
   awards:[
-    { label:"Guinness World Record", sub:"Largest Cryptocurrency Lesson · 13 Nov 2022" },
-    { label:"Asia Top 100 Brand", sub:"Honesty Award" },
-    { label:"Featured on Bitget", sub:"Partner Spotlight" },
+    { label:"Guinness World Record", sub:"Largest Cryptocurrency Lesson · 13 Nov 2022", href:"https://www.guinnessworldrecords.com/world-records/554694-largest-cryptocurrency-lesson" },
+    { label:"Featured in New Straits Times", sub:"National Press Coverage", href:"press.html" },
+    { label:"Featured on Bitget", sub:"Partner Spotlight", href:"https://www.youtube.com/watch?v=AT5y_PPLSkM" },
   ],
 };
 </script>
@@ -262,9 +299,9 @@ function Counter({to,suffix='',duration=1800,decimals=0}) {
 
 // ——— Section label ———
 function SectionLabel({num,children}) {
-  return <div style={{display:'flex',alignItems:'center',gap:14,fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.22em',textTransform:'uppercase',color:'var(--accent)',opacity:0.85}}>
+  return <div className="sl" style={{display:'flex',alignItems:'center',gap:14,fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.22em',textTransform:'uppercase',color:'var(--accent)',opacity:0.85}}>
     <span style={{fontVariantNumeric:'tabular-nums'}}>§ {num}</span>
-    <span style={{width:36,height:1,background:'currentColor',opacity:0.5}}/>
+    <span className="sl-line" style={{width:36,height:1,background:'currentColor',opacity:0.5,transformOrigin:'left',animation:'slDraw 800ms cubic-bezier(.22,.61,.36,1) both'}}/>
     <span style={{color:'var(--ink-60)'}}>{children}</span>
   </div>;
 }
@@ -299,23 +336,36 @@ function CornerMarks() {
 // ——— NAV ———
 function Nav() {
   const [scrolled,setScrolled]=useState(false);
+  const [mode,setMode]=useState(()=>{
+    try { return localStorage.getItem('dj-theme') || 'dark'; } catch { return 'dark'; }
+  });
+  useEffect(()=>{
+    document.documentElement.setAttribute('data-mode',mode);
+    try { localStorage.setItem('dj-theme',mode); } catch {}
+  },[mode]);
   useEffect(()=>{
     const on=()=>setScrolled(window.scrollY>40);
     on(); window.addEventListener('scroll',on,{passive:true});
     return ()=>window.removeEventListener('scroll',on);
   },[]);
-  return <nav style={{position:'fixed',top:0,left:0,right:0,zIndex:50,padding:scrolled?'14px 40px':'28px 40px',transition:'padding .4s,background .4s,border-color .4s',background:scrolled?'rgba(10,9,6,0.78)':'transparent',backdropFilter:scrolled?'blur(18px) saturate(1.4)':'none',borderBottom:scrolled?'1px solid var(--line)':'1px solid transparent',display:'flex',alignItems:'center',justifyContent:'space-between',fontFamily:'var(--sans)'}}>
-    <div id="nav-logo" style={{display:'flex',alignItems:'baseline',gap:10}}>
-      <div style={{fontFamily:'var(--serif)',fontSize:22,fontStyle:'italic',color:'var(--ink)',letterSpacing:'-0.01em'}}>David</div>
-      <div style={{width:6,height:6,background:'var(--accent)',borderRadius:'50%',transform:'translateY(-2px)',boxShadow:'0 0 12px var(--accent)'}}/>
-      <div style={{fontFamily:'var(--serif)',fontSize:22,fontStyle:'italic',color:'var(--ink)',letterSpacing:'-0.01em'}}>Justin</div>
+  const isLight = mode==='light';
+  return <nav style={{position:'fixed',top:0,left:0,right:0,zIndex:50,padding:scrolled?'14px 40px':'28px 40px',transition:'padding .4s,background .4s,border-color .4s',background:scrolled?(isLight?'rgba(246,241,231,0.82)':'rgba(10,9,6,0.78)'):'transparent',backdropFilter:scrolled?'blur(18px) saturate(1.4)':'none',borderBottom:scrolled?'1px solid var(--line)':'1px solid transparent',display:'flex',alignItems:'center',justifyContent:'space-between',fontFamily:'var(--sans)'}}>
+    <div id="nav-logo" style={{display:'flex',alignItems:'center',gap:12}}>
+      <img src="images/dj-logo-horizontal.png?v=3" alt="David Justin" style={{height:23,width:'auto',display:'block'}}/>
     </div>
-    <div style={{display:'flex',alignItems:'center',gap:36,fontSize:13,letterSpacing:'0.04em'}}>
-      <a href="#record" style={{color:'var(--ink-80)',textDecoration:'none',fontFamily:'var(--sans)',fontSize:13,letterSpacing:'0.02em'}}>Record</a>
-      <a href="#press" style={{color:'var(--ink-80)',textDecoration:'none',fontFamily:'var(--sans)',fontSize:13,letterSpacing:'0.02em'}}>Press</a>
-      <a href="#testimonials" style={{color:'var(--ink-80)',textDecoration:'none',fontFamily:'var(--sans)',fontSize:13,letterSpacing:'0.02em'}}>Voices</a>
-      <a href="#faq" style={{color:'var(--ink-80)',textDecoration:'none',fontFamily:'var(--sans)',fontSize:13,letterSpacing:'0.02em'}}>Enquiry</a>
-      <a href="#contact" style={{padding:'10px 18px',border:'1px solid var(--accent)',color:'var(--accent)',textDecoration:'none',fontSize:12,letterSpacing:'0.12em',textTransform:'uppercase',fontFamily:'var(--mono)',background:'rgba(229,180,106,0.06)',transition:'all .3s'}}
+    <div style={{display:'flex',alignItems:'center',gap:28,fontSize:13,letterSpacing:'0.04em'}}>
+      <a href="guinness-world-record.html" style={{color:'var(--ink-80)',textDecoration:'none',fontFamily:'var(--sans)',fontSize:13,letterSpacing:'0.02em'}}>Record</a>
+      <a href="press.html" style={{color:'var(--ink-80)',textDecoration:'none',fontFamily:'var(--sans)',fontSize:13,letterSpacing:'0.02em'}}>Press</a>
+      <a href="blog.html" style={{color:'var(--ink-80)',textDecoration:'none',fontFamily:'var(--sans)',fontSize:13,letterSpacing:'0.02em'}}>Blog</a>
+      <a href="enquiry.html" style={{color:'var(--ink-80)',textDecoration:'none',fontFamily:'var(--sans)',fontSize:13,letterSpacing:'0.02em'}}>Enquiry</a>
+      <button onClick={()=>setMode(isLight?'dark':'light')} title={isLight?'Switch to dark mode':'Switch to light mode'} aria-label="Toggle theme" style={{all:'unset',cursor:'pointer',width:36,height:36,borderRadius:'50%',border:'1px solid var(--line-strong)',display:'inline-flex',alignItems:'center',justifyContent:'center',color:'var(--ink-80)',transition:'background .2s,color .2s,border-color .2s'}}
+        onMouseEnter={e=>{e.currentTarget.style.background='var(--surface-1)';e.currentTarget.style.color='var(--accent)';e.currentTarget.style.borderColor='var(--accent)';}}
+        onMouseLeave={e=>{e.currentTarget.style.background='';e.currentTarget.style.color='var(--ink-80)';e.currentTarget.style.borderColor='var(--line-strong)';}}>
+        {isLight
+          ? <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+          : <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>}
+      </button>
+      <a href="enquiry.html" style={{padding:'10px 18px',border:'1px solid var(--accent)',color:'var(--accent)',textDecoration:'none',fontSize:12,letterSpacing:'0.12em',textTransform:'uppercase',fontFamily:'var(--mono)',background:'rgba(229,180,106,0.06)',transition:'all .3s'}}
         onMouseEnter={e=>{e.target.style.background='var(--accent)';e.target.style.color='var(--bg)';}}
         onMouseLeave={e=>{e.target.style.background='rgba(229,180,106,0.06)';e.target.style.color='var(--accent)';}}>Enquire →</a>
     </div>
@@ -334,27 +384,20 @@ function Hero() {
     el.addEventListener('pointermove',on);
     return ()=>el.removeEventListener('pointermove',on);
   },[]);
-  return <section ref={heroRef} style={{position:'relative',minHeight:'100vh',overflow:'hidden',paddingTop:140,paddingBottom:80,background:'var(--bg)'}}>
+  return <section ref={heroRef} data-mode="dark" style={{position:'relative',minHeight:'100vh',overflow:'hidden',paddingTop:140,paddingBottom:80,background:'var(--bg)'}}>
     <div id="hero-bg" aria-hidden style={{position:'absolute',inset:0,zIndex:0,backgroundImage:"url('https://www.david-justin.com/wp-content/uploads/2026/01/david-bg-scaled.png')",backgroundSize:'cover',backgroundSize:isMobile?'200% auto':'cover',backgroundPosition:isMobile?'50% 20%':'center',backgroundRepeat:'no-repeat',transform:isMobile?'none':`translate(${mx.x*-20}px,${mx.y*-12}px) scale(1.08)`,transition:'transform .3s ease-out',opacity:isMobile?0.45:0.55,filter:'saturate(0.85) contrast(1.05)'}}/>
     <div aria-hidden style={{position:'absolute',inset:0,zIndex:1,pointerEvents:'none',background:'radial-gradient(ellipse 90% 60% at 50% 100%,rgba(229,180,106,0.18),transparent 60%),radial-gradient(ellipse 50% 40% at 18% 22%,rgba(229,180,106,0.12),transparent 55%),linear-gradient(180deg,rgba(10,9,6,0.55) 0%,rgba(10,9,6,0.3) 40%,rgba(10,9,6,0.85) 100%)'}}/>
     <CornerMarks/>
     <div id="hero-grid" style={{maxWidth:1440,margin:'0 auto',padding:'0 40px',display:'grid',gridTemplateColumns:'1.1fr 1fr',gap:60,alignItems:'center'}}>
       <div style={{position:'relative',zIndex:2}}>
-        <Reveal>
-          <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:36}}>
-            <span style={{fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.24em',color:'var(--accent)'}}>GUINNESS WORLD RECORD HOLDER</span>
-            <span style={{width:40,height:1,background:'var(--accent)',opacity:0.6}}/>
-            <span style={{fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.18em',color:'var(--ink-60)'}}>EST. 2022 · KL</span>
-          </div>
-        </Reveal>
         <Reveal delay={120}>
           <h1 id="hero-h1" style={{fontFamily:'var(--serif)',fontWeight:400,fontSize:'clamp(64px,9vw,148px)',lineHeight:0.92,letterSpacing:'-0.03em',color:'var(--ink)',margin:'0 0 6px'}}>
-            Invest<br/>
-            <span style={{fontStyle:'italic',color:'var(--accent)'}}>in</span>
+            <span className="hero-word" style={{display:'inline-block',animationDelay:'0ms'}}>Invest</span><br/>
+            <span className="hero-word" style={{display:'inline-block',fontStyle:'italic',color:'var(--accent)',animationDelay:'120ms'}}>in</span>
             <span style={{display:'inline-block',width:'0.2em'}}/>
-            <span style={{position:'relative'}}>yourself
-              <span style={{position:'absolute',right:'-0.35em',top:'0.05em',width:'0.18em',height:'0.18em',borderRadius:'50%',background:'var(--accent)',boxShadow:'0 0 20px var(--accent)'}}/>
-            </span>.
+            <span className="hero-word" style={{display:'inline-block',position:'relative',animationDelay:'240ms'}}>yourself
+              <span style={{position:'absolute',right:'-0.35em',top:'0.05em',width:'0.18em',height:'0.18em',borderRadius:'50%',background:'var(--accent)',boxShadow:'0 0 20px var(--accent)',animation:'heroDotPulse 2.4s ease-in-out 900ms infinite'}}/>
+            </span><span className="hero-word" style={{display:'inline-block',animationDelay:'240ms'}}>.</span>
           </h1>
         </Reveal>
         <Reveal delay={240}>
@@ -362,14 +405,32 @@ function Hero() {
             A new era where money works differently. With blockchain and crypto, opportunities to generate multiple streams of income are no longer the privilege of banks and institutions — they belong to anyone willing to learn.
           </p>
         </Reveal>
+        <Reveal delay={300}>
+          <div style={{marginTop:28,display:'flex',alignItems:'center',gap:14,padding:'10px 16px',border:'1px solid var(--line-strong)',background:'var(--overlay-soft)',backdropFilter:'blur(8px)',flexWrap:'wrap',rowGap:10}}>
+            <div style={{display:'flex',alignItems:'center',gap:8}}>
+              <span style={{fontFamily:'var(--mono)',fontSize:9,letterSpacing:'0.2em',textTransform:'uppercase',color:'var(--ink-60)'}}>Featured on</span>
+              <span style={{fontFamily:'var(--serif)',fontStyle:'italic',fontSize:14,color:'var(--ink)'}}>NST</span>
+            </div>
+            <span style={{width:1,height:18,background:'var(--line)'}}/>
+            <div style={{display:'flex',alignItems:'center',gap:8}}>
+              <span style={{fontFamily:'var(--mono)',fontSize:9,letterSpacing:'0.2em',textTransform:'uppercase',color:'var(--ink-60)'}}>Asia</span>
+              <span style={{fontFamily:'var(--serif)',fontStyle:'italic',fontSize:14,color:'var(--accent)'}}>Legendary Leader</span>
+            </div>
+            <span style={{width:1,height:18,background:'var(--line)'}}/>
+            <div style={{display:'flex',alignItems:'center',gap:6}}>
+              <span style={{fontFamily:'var(--mono)',fontSize:9,letterSpacing:'0.2em',textTransform:'uppercase',color:'var(--ink-60)'}}>Google</span>
+              <span style={{color:'var(--accent)',fontSize:12,letterSpacing:'0.08em'}}>★★★★★</span>
+            </div>
+          </div>
+        </Reveal>
         <Reveal delay={360}>
           <div style={{display:'flex',gap:16,marginTop:44,alignItems:'center',flexWrap:'wrap'}}>
-            <a href="#record" style={{padding:'18px 32px',background:'var(--accent)',color:'var(--bg)',textDecoration:'none',fontFamily:'var(--mono)',fontSize:12,letterSpacing:'0.14em',textTransform:'uppercase',fontWeight:500,boxShadow:'0 20px 60px -20px var(--accent)',transition:'transform .3s,box-shadow .3s',display:'inline-flex',alignItems:'center',gap:10}}
+            <a href="guinness-world-record.html" style={{padding:'18px 32px',background:'var(--accent)',color:'var(--bg)',textDecoration:'none',fontFamily:'var(--mono)',fontSize:12,letterSpacing:'0.14em',textTransform:'uppercase',fontWeight:500,boxShadow:'0 20px 60px -20px var(--accent)',transition:'transform .3s,box-shadow .3s',display:'inline-flex',alignItems:'center',gap:10}}
               onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-2px)';e.currentTarget.style.boxShadow='0 28px 70px -18px var(--accent)';}}
               onMouseLeave={e=>{e.currentTarget.style.transform='';e.currentTarget.style.boxShadow='0 20px 60px -20px var(--accent)';}}>
               Explore the record <span style={{fontFamily:'serif'}}>→</span>
             </a>
-            <a href="#press" style={{padding:'18px 24px',color:'var(--ink)',textDecoration:'none',fontFamily:'var(--mono)',fontSize:12,letterSpacing:'0.14em',textTransform:'uppercase',borderBottom:'1px solid var(--ink-40)'}}>See press coverage</a>
+            <a href="press.html" style={{padding:'18px 24px',color:'var(--ink)',textDecoration:'none',fontFamily:'var(--mono)',fontSize:12,letterSpacing:'0.14em',textTransform:'uppercase',borderBottom:'1px solid var(--ink-40)'}}>See press coverage</a>
           </div>
         </Reveal>
         <Reveal delay={520}>
@@ -388,20 +449,9 @@ function Hero() {
       <div id="hero-right" style={{position:'relative',zIndex:2,aspectRatio:'4/5',maxHeight:'80vh'}}>
         <Reveal delay={200} y={40}>
           <div style={{position:'relative',width:'100%',height:'100%',transform:`perspective(1200px) rotateY(${mx.x*3}deg) rotateX(${-mx.y*3}deg)`,transition:'transform .2s ease-out'}}>
-            <div style={{position:'absolute',inset:-18,border:'1px solid var(--accent)',opacity:0.55,pointerEvents:'none'}}/>
-            <div style={{position:'absolute',inset:-32,borderTop:'1px solid var(--accent)',borderLeft:'1px solid var(--accent)',width:60,height:60,opacity:0.7}}/>
-            <div style={{position:'absolute',right:-32,bottom:-32,borderBottom:'1px solid var(--accent)',borderRight:'1px solid var(--accent)',width:60,height:60,opacity:0.7}}/>
             <div style={{position:'absolute',inset:0,overflow:'hidden',background:'linear-gradient(180deg,transparent 0%,transparent 55%,rgba(10,9,6,0.95) 100%)'}}>
               <SmartImg src="https://www.david-justin.com/wp-content/uploads/2025/10/image-shows-a-man.webp" alt="David Justin" label="DAVID JUSTIN PORTRAIT" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center top',transform:`translate(${mx.x*-14}px,${mx.y*-10}px) scale(1.08)`,transition:'transform .25s ease-out',filter:'contrast(1.05) saturate(0.92) brightness(0.95)'}}/>
               <div style={{position:'absolute',inset:0,background:'radial-gradient(ellipse at center,transparent 40%,rgba(10,9,6,0.75) 100%)',pointerEvents:'none'}}/>
-            </div>
-            <div style={{position:'absolute',left:-40,top:'58%',padding:'14px 18px',background:'rgba(10,9,6,0.92)',backdropFilter:'blur(10px)',border:'1px solid var(--line-strong)',fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.18em',color:'var(--ink-80)',textTransform:'uppercase',boxShadow:'0 30px 60px -20px rgba(0,0,0,0.5)'}}>
-              <div style={{color:'var(--accent)',marginBottom:4}}>● LIVE</div>
-              Kuala Lumpur · 13 Nov 2022
-            </div>
-            <div style={{position:'absolute',right:-24,top:'12%',padding:'18px 22px',background:'rgba(10,9,6,0.92)',backdropFilter:'blur(10px)',border:'1px solid var(--line-strong)',boxShadow:'0 30px 60px -20px rgba(0,0,0,0.5)',maxWidth:180}}>
-              <div style={{fontFamily:'var(--mono)',fontSize:9,letterSpacing:'0.2em',color:'var(--accent)',marginBottom:6}}>SEEN ON</div>
-              <div style={{fontFamily:'var(--serif)',fontSize:18,color:'var(--ink)',fontStyle:'italic',lineHeight:1.1}}>Bitget · Straits Times · 南洋</div>
             </div>
           </div>
         </Reveal>
@@ -417,15 +467,15 @@ function Hero() {
 // ——— TRUSTED STRIP ———
 function TrustedStrip() {
   const logos=window.DJ_DATA.trustedBy;
-  return <section style={{padding:'40px 0',borderTop:'1px solid var(--line)',borderBottom:'1px solid var(--line)',background:'var(--surface-1)'}}>
-    <div style={{padding:'0 40px',marginBottom:24,display:'flex',alignItems:'center',gap:16,justifyContent:'space-between'}}>
+  return <section data-mode="dark" style={{padding:'56px 0 64px',borderTop:'1px solid var(--line)',borderBottom:'1px solid var(--line)',background:'var(--surface-1)'}}>
+    <div style={{maxWidth:1440,margin:'0 auto',padding:'0 40px',marginBottom:32,display:'flex',alignItems:'center',gap:16,justifyContent:'space-between',flexWrap:'wrap'}}>
       <SectionLabel num="01">Trusted by partners across Asia</SectionLabel>
-      <span style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.2em',color:'var(--ink-40)'}}>↓ 8 ORGS</span>
+      <span style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.22em',color:'var(--ink-40)',textTransform:'uppercase'}}>{String(logos.length).padStart(2,'0')} organisations</span>
     </div>
-    <Marquee speed={50}>
+    <Marquee speed={55}>
       {logos.map((l,i)=>(
-        <div key={i} style={{padding:'10px 56px',display:'flex',alignItems:'center',justifyContent:'center',minWidth:220,height:100}}>
-          <SmartImg src={l} alt="partner logo" label="LOGO" style={{maxHeight:56,maxWidth:180,objectFit:'contain',filter:'brightness(0) invert(0.85) saturate(0)',opacity:0.7,transition:'opacity .3s'}}/>
+        <div key={i} style={{padding:'0 64px',display:'flex',alignItems:'center',justifyContent:'center',minWidth:320,height:160,flexShrink:0}} title={l.name}>
+          <img src={l.src} alt={l.name} style={{maxHeight:l.maxH||(l.colored?140:110),maxWidth:280,objectFit:'contain',opacity:l.colored?0.95:0.82,filter:l.colored?'none':'brightness(1.1)',transition:'opacity .3s'}}/>
         </div>
       ))}
     </Marquee>
@@ -453,13 +503,13 @@ function Record() {
                 <div style={{marginTop:8,fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.2em',color:'var(--ink-60)',textTransform:'uppercase'}}>The date it happened</div>
               </div>
               <div style={{flex:1,fontFamily:'var(--sans)',color:'var(--ink-80)',fontSize:15,lineHeight:1.6,maxWidth:380}}>
-                On 13 November 2022, David Justin gathered Kuala Lumpur to set the Guinness World Record for the Largest Cryptocurrency Lesson — a single-day masterclass that repositioned Malaysia as a leader in global blockchain education.
+                On 13 November 2022, David Justin gathered Kuala Lumpur to set the Guinness World Record for the Largest Cryptocurrency Lesson — a three-day masterclass with 1,000+ attendees in one venue that repositioned Malaysia as a leader in global blockchain education.
               </div>
             </div>
           </Reveal>
           <Reveal delay={340}>
             <div style={{marginTop:56,display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:0}}>
-              {[{k:<><Counter to={2841}/>+</>,l:'Attendees in one venue'},{k:<><Counter to={8} suffix="h"/></>,l:'Non-stop masterclass'},{k:<>1<span style={{fontStyle:'italic',fontFamily:'var(--serif)'}}>st</span></>,l:'Record of its kind'}].map((s,i)=>(
+              {[{k:<><Counter to={1000}/>+</>,l:'Attendees in one venue'},{k:<><Counter to={3} suffix="d"/></>,l:'Days of masterclass'},{k:<>1<span style={{fontStyle:'italic',fontFamily:'var(--serif)'}}>st</span></>,l:'Record of its kind'}].map((s,i)=>(
                 <div key={i} style={{padding:'24px 16px',borderLeft:i===0?'1px solid var(--line)':'none',borderRight:'1px solid var(--line)'}}>
                   <div style={{fontFamily:'var(--serif)',fontSize:44,color:'var(--ink)',lineHeight:1,letterSpacing:'-0.02em',fontVariantNumeric:'tabular-nums'}}>{s.k}</div>
                   <div style={{marginTop:10,fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.18em',color:'var(--ink-60)',textTransform:'uppercase'}}>{s.l}</div>
@@ -470,7 +520,7 @@ function Record() {
         </div>
         <Reveal delay={180} y={40}>
           <div style={{position:'relative'}}>
-            <div style={{position:'absolute',top:-30,left:-30,zIndex:3,width:130,height:130,borderRadius:'50%',border:'1px solid var(--accent)',background:'rgba(10,9,6,0.85)',backdropFilter:'blur(10px)',display:'flex',alignItems:'center',justifyContent:'center',animation:'spin-slow 24s linear infinite'}}>
+            <div style={{position:'absolute',top:-30,left:-30,zIndex:3,width:130,height:130,borderRadius:'50%',border:'1px solid var(--accent)',background:'var(--chip-bg)',backdropFilter:'blur(10px)',display:'flex',alignItems:'center',justifyContent:'center',animation:'spin-slow 24s linear infinite'}}>
               <svg viewBox="0 0 140 140" style={{position:'absolute',inset:0,width:'100%',height:'100%'}}>
                 <defs><path id="cpath" d="M 70,70 m -52,0 a 52,52 0 1,1 104,0 a 52,52 0 1,1 -104,0"/></defs>
                 <text fill="var(--accent)" style={{fontFamily:'var(--mono)',fontSize:9,letterSpacing:'0.3em'}}>
@@ -503,15 +553,24 @@ function Awards() {
     <div style={{maxWidth:1440,margin:'0 auto'}}>
       <Reveal><SectionLabel num="03">Recognition</SectionLabel></Reveal>
       <div className="grid-3col" style={{marginTop:40,display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:0,borderTop:'1px solid var(--line)',borderBottom:'1px solid var(--line)'}}>
-        {awards.map((a,i)=>(
-          <Reveal key={i} delay={i*90}>
-            <div style={{padding:'48px 32px',borderLeft:i>0?'1px solid var(--line)':'none',display:'flex',flexDirection:'column',gap:14}}>
+        {awards.map((a,i)=>{
+          const isExternal=a.href && /^https?:/.test(a.href);
+          const Card=(
+            <div style={{padding:'48px 32px',borderLeft:i>0?'1px solid var(--line)':'none',display:'flex',flexDirection:'column',gap:14,transition:'background .2s',height:'100%',boxSizing:'border-box'}}
+              onMouseEnter={e=>a.href&&(e.currentTarget.style.background='rgba(229,180,106,0.04)')}
+              onMouseLeave={e=>a.href&&(e.currentTarget.style.background='')}>
               <div style={{width:48,height:48,border:'1px solid var(--accent)',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',color:'var(--accent)',fontFamily:'var(--serif)',fontSize:20,fontStyle:'italic'}}>{String(i+1).padStart(2,'0')}</div>
               <div style={{fontFamily:'var(--serif)',fontSize:32,color:'var(--ink)',lineHeight:1.05,letterSpacing:'-0.015em'}}>{a.label}</div>
               <div style={{fontFamily:'var(--mono)',fontSize:11,color:'var(--ink-60)',letterSpacing:'0.12em',textTransform:'uppercase'}}>{a.sub}</div>
+              {a.href && <div style={{marginTop:6,fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.18em',textTransform:'uppercase',color:'var(--accent)',display:'inline-flex',alignItems:'center',gap:8}}>{isExternal?'View source':'See coverage'} <span style={{fontFamily:'serif'}}>→</span></div>}
             </div>
-          </Reveal>
-        ))}
+          );
+          return <Reveal key={i} delay={i*90}>
+            {a.href
+              ? <a href={a.href} {...(isExternal?{target:'_blank',rel:'noreferrer'}:{})} style={{textDecoration:'none',color:'inherit',display:'block',height:'100%'}}>{Card}</a>
+              : Card}
+          </Reveal>;
+        })}
       </div>
     </div>
   </section>;
@@ -520,78 +579,125 @@ function Awards() {
 // ——— ON THE FLOOR ———
 function Floor() {
   const photos = [
-    { src:'images/floor/tbm-ae-25.jpg',   cat:'CATEGORY ONE',   title:'Event Photo 01' },
-    { src:'images/floor/tbm-ae-40.jpg',   cat:'CATEGORY ONE',   title:'Event Photo 02' },
-    { src:'images/floor/tbm-aft-28.jpg',  cat:'CATEGORY TWO',   title:'Event Photo 03' },
-    { src:'images/floor/tbm-aft-49.jpg',  cat:'CATEGORY TWO',   title:'Event Photo 04' },
-    { src:'images/floor/tbm-aft-56.jpg',  cat:'CATEGORY TWO',   title:'Event Photo 05' },
-    { src:'images/floor/tbm-aft-58.jpg',  cat:'CATEGORY TWO',   title:'Event Photo 06' },
-    { src:'images/floor/tbm-aft2-240.jpg',cat:'CATEGORY THREE',  title:'Event Photo 07' },
-    { src:'images/floor/tbm-aft3-14.jpg', cat:'CATEGORY THREE',  title:'Event Photo 08' },
-    { src:'images/floor/tbm-aft3-34.jpg', cat:'CATEGORY THREE',  title:'Event Photo 09' },
-    { src:'images/floor/tbm-day3-406.jpg',cat:'CATEGORY FOUR',   title:'Event Photo 10' },
-    { src:'images/floor/tbm-day3-450.jpg',cat:'CATEGORY FOUR',   title:'Event Photo 11' },
-    { src:'images/floor/tbm-eve-71.jpg',  cat:'CATEGORY FIVE',   title:'Event Photo 12' },
-    { src:'images/floor/tbm-eve-74.jpg',  cat:'CATEGORY FIVE',   title:'Event Photo 13' },
+    { src:'images/floor/tbm-aft-28.jpg',  cat:'KEYNOTE',     title:'On stage — bear market strategy' },
+    { src:'images/floor/tbm-aft-49.jpg',  cat:'AFTERNOON',   title:'The 15th cohort, in session' },
+    { src:'images/floor/tbm-aft-56.jpg',  cat:'AFTERNOON',   title:'Day Three · morning rush' },
+    { src:'images/floor/tbm-aft-58.jpg',  cat:'KEYNOTE',     title:'Center stage — live teach' },
+    { src:'images/floor/tbm-aft2-240.jpg',cat:'COMMUNITY',   title:'Meet-and-greet, front of house' },
+    { src:'images/floor/tbm-aft3-14.jpg', cat:'ACADEMY',     title:'Cohort portrait · group 4' },
+    { src:'images/floor/tbm-aft3-34.jpg', cat:'CLOSING',     title:'One class. One record.' },
+    { src:'images/floor/tbm-day3-406.jpg',cat:'DAY THREE',   title:'Main hall fills up' },
+    { src:'images/floor/tbm-day3-450.jpg',cat:'DAY THREE',   title:'Stage in full swing' },
+    { src:'images/floor/tbm-eve-71.jpg',  cat:'EVENING',     title:'Crowd lights — final hour' },
+    { src:'images/floor/tbm-eve-74.jpg',  cat:'EVENING',     title:'Curtain call · 一生一起走' },
   ];
-  const [current, setCurrent] = useState(Math.floor(photos.length / 2));
-  const trackRef = useRef();
+  const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const N = photos.length;
 
+  // Auto-advance left → right every 3.5s
   useEffect(() => {
-    function update() {
-      const track = trackRef.current;
-      if (!track) return;
-      const cw = track.parentElement.offsetWidth;
-      const cardW = 340 + 16;
-      const offset = (cw / 2) - (current * cardW) - 170;
-      track.style.transform = `translateX(${offset}px)`;
-    }
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
-  }, [current]);
+    if (paused) return;
+    const id = setInterval(() => setCurrent(c => (c + 1) % N), 3500);
+    return () => clearInterval(id);
+  }, [paused, N]);
 
-  useEffect(() => {
-    function onKey(e) {
-      if (e.key === 'ArrowRight') setCurrent(c => Math.min(c + 1, photos.length - 1));
-      if (e.key === 'ArrowLeft')  setCurrent(c => Math.max(c - 1, 0));
-    }
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
-  }, []);
+  // Compute layout for each card based on relative position to current
+  const getStyle = (i) => {
+    // signed shortest distance in circular range
+    let d = i - current;
+    if (d > N / 2) d -= N;
+    if (d < -N / 2) d += N;
+    const abs = Math.abs(d);
+    if (abs > 2) return { opacity: 0, transform: 'translate(-50%,-50%) scale(0.6)', pointerEvents: 'none', zIndex: 0, filter: 'blur(8px)' };
+    const isCenter = d === 0;
+    const offsetX = d * (window.innerWidth <= 900 ? 220 : 380);
+    const scale = isCenter ? 1 : (abs === 1 ? 0.78 : 0.58);
+    const rotY = d * -18;
+    const op = isCenter ? 1 : (abs === 1 ? 0.55 : 0.22);
+    const blur = isCenter ? 0 : (abs === 1 ? 2 : 5);
+    return {
+      transform: `translate(calc(-50% + ${offsetX}px),-50%) rotateY(${rotY}deg) scale(${scale})`,
+      opacity: op,
+      zIndex: 10 - abs,
+      filter: `blur(${blur}px) brightness(${isCenter ? 1 : 0.6})`,
+      cursor: isCenter ? 'default' : 'pointer',
+    };
+  };
+
+  const p = photos[current];
 
   return (
-    <section id="floor" style={{padding:'80px 0',background:'var(--bg)',overflow:'hidden'}}>
-      <div style={{maxWidth:1200,margin:'0 auto',padding:'0 40px 40px'}}>
-        <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:48}}>
-          <Reveal>
-            <h2 style={{fontFamily:'var(--serif)',fontSize:'clamp(2.5rem,6vw,5rem)',fontWeight:400,margin:0,lineHeight:1}}>
-              On the <span style={{color:'var(--accent)'}}>floor.</span>
+    <section id="floor" style={{padding:'140px 0 160px',background:'var(--bg)',overflow:'hidden',borderTop:'1px solid var(--line)',position:'relative'}}>
+      <div aria-hidden style={{position:'absolute',inset:0,zIndex:0,overflow:'hidden',pointerEvents:'none'}}>
+        <iframe src="https://www.youtube.com/embed/TWiU8AIAoDE?autoplay=1&mute=1&loop=1&playlist=TWiU8AIAoDE&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1" title="bg" allow="autoplay; encrypted-media" style={{position:'absolute',top:'50%',left:'50%',width:'177.78vh',height:'100vh',minWidth:'100%',minHeight:'56.25vw',transform:'translate(-50%,-50%) scale(1.15)',border:'none',pointerEvents:'none'}}/>
+        <div className="floor-scrim" style={{position:'absolute',inset:0}}/>
+        <div style={{position:'absolute',inset:0,background:'radial-gradient(ellipse 60% 50% at 10% 0%,rgba(229,180,106,0.10),transparent 55%)'}}/>
+      </div>
+      <div style={{position:'relative',zIndex:2}}>
+      <CornerMarks/>
+      <div style={{maxWidth:1440,margin:'0 auto',padding:'0 40px'}}>
+        <Reveal><SectionLabel num="07">On the floor · photo archive</SectionLabel></Reveal>
+
+        <div style={{display:'grid',gridTemplateColumns:'1.3fr 1fr',gap:60,alignItems:'end',marginTop:24,marginBottom:64}} className="grid-2col">
+          <Reveal delay={80}>
+            <h2 style={{fontFamily:'var(--serif)',fontSize:'clamp(3rem,8vw,8rem)',fontWeight:400,margin:0,lineHeight:0.92,letterSpacing:'-0.03em',color:'var(--ink)'}}>
+              On the <span style={{fontStyle:'italic',color:'var(--accent)'}}>floor</span>
+              <span style={{color:'var(--accent)',textShadow:'0 0 20px rgba(229,180,106,0.6)'}}>.</span>
             </h2>
           </Reveal>
-          <Reveal delay={120}>
-            <p style={{maxWidth:360,color:'var(--ink-60)',fontSize:'0.95rem',lineHeight:1.6,margin:0,paddingTop:8}}>
-              Snapshots from the record-breaking lesson, keynote stages, and academy cohorts — where the curriculum meets the community.
+          <Reveal delay={180}>
+            <p style={{color:'var(--ink-80)',fontSize:17,lineHeight:1.6,margin:0,fontFamily:'var(--sans)',maxWidth:520,justifySelf:'end'}}>
+              Inside the arena that broke the record — three days, 1,000+ attendees, one venue. The keynote, the cohort portraits, and the curtain-call crowd that made history.
             </p>
           </Reveal>
         </div>
       </div>
-      <div className="floor-carousel-wrapper">
-        <div className="floor-track" ref={trackRef}>
-          {photos.map((p, i) => (
-            <div
-              key={i}
-              className={`floor-card${i === current ? ' active' : ''}`}
-              onClick={() => setCurrent(i)}
-            >
-              <img src={p.src} alt={p.title} loading="lazy" />
-              <div className="floor-card-label">
-                <span className="floor-cat">{p.cat}</span>
-                <span className="floor-title">{p.title}</span>
+
+      <Reveal delay={220} y={32}>
+        <div
+          className="floor-cf"
+          onMouseEnter={()=>setPaused(true)}
+          onMouseLeave={()=>setPaused(false)}
+        >
+          {photos.map((ph, i) => {
+            const st = getStyle(i);
+            // distance again for center caption gating
+            let d = i - current; if (d > N/2) d -= N; if (d < -N/2) d += N;
+            const isCenter = d === 0;
+            return (
+              <div
+                key={i}
+                className="floor-cf-card"
+                style={st}
+                onClick={() => !isCenter && setCurrent(i)}
+              >
+                <img src={ph.src + '?v=2'} alt={ph.title} loading={Math.abs(d) <= 2 ? 'eager' : 'lazy'}/>
+                {isCenter && (
+                  <div className="floor-cf-caption">
+                    <div className="cat">{ph.cat}</div>
+                    <div className="ttl">{ph.title}</div>
+                  </div>
+                )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
+      </Reveal>
+
+      {/* Counter + progress */}
+      <div style={{maxWidth:1440,margin:'40px auto 0',padding:'0 40px',display:'flex',alignItems:'center',justifyContent:'center',gap:20,flexWrap:'wrap'}}>
+        <span style={{fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.24em',color:'var(--accent)',fontVariantNumeric:'tabular-nums'}}>{String(current+1).padStart(2,'0')}</span>
+        <div style={{flex:'0 1 320px',height:1,background:'var(--line-strong)',position:'relative',overflow:'hidden'}}>
+          <div key={current+'-'+paused} style={{position:'absolute',inset:0,background:'var(--accent)',transformOrigin:'left',transform:'scaleX(0)',animation:paused?'none':'floor-bar 3500ms linear forwards'}}/>
+        </div>
+        <span style={{fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.24em',color:'var(--ink-60)',fontVariantNumeric:'tabular-nums'}}>{String(N).padStart(2,'0')}</span>
+        <span style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.2em',color:'var(--ink-40)',textTransform:'uppercase',marginLeft:12}}>{paused ? '⏸ PAUSED · HOVER OFF TO PLAY' : '▶ AUTO · HOVER TO PAUSE'}</span>
+      </div>
+
+      <style>{`
+        @keyframes floor-bar { from { transform:scaleX(0); } to { transform:scaleX(1); } }
+      `}</style>
       </div>
     </section>
   );
@@ -601,47 +707,135 @@ function Floor() {
 function Press() {
   const {media}=window.DJ_DATA;
   const [active,setActive]=useState(0);
-  return <section id="press" style={{padding:'140px 0',position:'relative'}}>
+  const [paused,setPaused]=useState(false);
+  useEffect(()=>{
+    if(paused) return;
+    const id=setInterval(()=>setActive(a=>(a+1)%media.length), 4500);
+    return ()=>clearInterval(id);
+  },[paused,media.length]);
+  const feature = media[active];
+  return <section id="press" style={{padding:'140px 0 160px',position:'relative',background:'var(--bg)',borderTop:'1px solid var(--line)',borderBottom:'1px solid var(--line)'}}>
+    <CornerMarks/>
+
     <div style={{maxWidth:1440,margin:'0 auto',padding:'0 40px'}}>
-      <div id="press-grid" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:60,alignItems:'end',marginBottom:64}}>
+      <div id="press-grid" style={{display:'grid',gridTemplateColumns:'1.2fr 1fr',gap:60,alignItems:'end',marginBottom:72}}>
         <Reveal>
-          <SectionLabel num="04">Featured in major media</SectionLabel>
-          <h2 style={{fontFamily:'var(--serif)',fontWeight:400,margin:'16px 0 0',fontSize:'clamp(40px,5.5vw,88px)',lineHeight:0.98,letterSpacing:'-0.025em',color:'var(--ink)'}}>The <span style={{fontStyle:'italic',color:'var(--accent)'}}>press</span> room.</h2>
+          <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:16}}>
+            <span style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.24em',color:'var(--accent)',textTransform:'uppercase',fontWeight:600}}>04 · Featured in major media</span>
+            <span style={{flex:'0 0 40px',height:1,background:'var(--line-strong)'}}/>
+          </div>
+          <h2 style={{fontFamily:'var(--serif)',fontWeight:400,margin:0,fontSize:'clamp(52px,7vw,120px)',lineHeight:0.92,letterSpacing:'-0.03em',color:'var(--ink)'}}>
+            The <span style={{fontStyle:'italic',color:'var(--accent)'}}>press</span> room.
+          </h2>
         </Reveal>
         <Reveal delay={120}>
-          <p style={{fontFamily:'var(--sans)',color:'var(--ink-80)',fontSize:15,lineHeight:1.65,maxWidth:480}}>
-            From The Straits Times to 南洋商报 — David Justin's record-breaking cryptocurrency lesson gained nationwide media recognition, highlighting his leadership in blockchain education.
-          </p>
-        </Reveal>
-      </div>
-      <div id="press-layout" style={{display:'grid',gridTemplateColumns:'1.3fr 1fr',gap:32}}>
-        <Reveal y={32}>
-          <div style={{position:'relative',aspectRatio:'4/5',overflow:'hidden',background:'var(--surface-1)',border:'1px solid var(--line)'}}>
-            <SmartImg src={media[active].src} alt={media[active].title} label={media[active].outlet} style={{width:'100%',height:'100%',objectFit:'cover',transition:'opacity .4s'}}/>
-            <div style={{position:'absolute',left:24,top:24,padding:'6px 12px',background:'rgba(10,9,6,0.85)',backdropFilter:'blur(8px)',fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.2em',color:'var(--accent)'}}>NOW VIEWING · {String(active+1).padStart(2,'0')}</div>
-            <div style={{position:'absolute',left:24,bottom:24,right:24,padding:'20px',background:'rgba(10,9,6,0.88)',backdropFilter:'blur(12px)',border:'1px solid var(--line-strong)'}}>
-              <div style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.2em',color:'var(--accent)'}}>{media[active].year} · {media[active].outlet}</div>
-              <div style={{fontFamily:'var(--serif)',fontSize:28,color:'var(--ink)',fontStyle:'italic',marginTop:6,lineHeight:1.1}}>{media[active].title}</div>
+          <div style={{borderLeft:'1px solid var(--line)',paddingLeft:28,maxWidth:520,justifySelf:'end'}}>
+            <p style={{fontFamily:'var(--sans)',color:'var(--ink-80)',fontSize:17,lineHeight:1.6,margin:0}}>
+              From The Straits Times to 南洋商报 — David Justin's record-breaking cryptocurrency lesson gained nationwide media recognition, highlighting his leadership in blockchain education.
+            </p>
+            <div style={{marginTop:24,display:'flex',alignItems:'center',gap:12,fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.22em',color:'var(--ink-60)',textTransform:'uppercase'}}>
+              <span style={{width:24,height:1,background:'var(--accent)'}}/>
+              <span>{String(media.length).padStart(2,'0')} features · 2025</span>
             </div>
           </div>
         </Reveal>
-        <div style={{display:'flex',flexDirection:'column',gap:0,borderTop:'1px solid var(--line)'}}>
-          {media.map((m,i)=>(
-            <button key={i} onClick={()=>setActive(i)} style={{all:'unset',cursor:'pointer',padding:'22px 4px',borderBottom:'1px solid var(--line)',display:'grid',gridTemplateColumns:'48px 80px 1fr auto',gap:18,alignItems:'center',transition:'background .3s,padding .3s',background:active===i?'rgba(229,180,106,0.06)':'transparent',paddingLeft:active===i?20:4}}>
-              <div style={{fontFamily:'var(--mono)',fontSize:11,color:active===i?'var(--accent)':'var(--ink-40)',letterSpacing:'0.1em'}}>{String(i+1).padStart(2,'0')}</div>
-              <div style={{width:80,height:56,overflow:'hidden',background:'var(--surface-2)',border:'1px solid var(--line)'}}>
-                <SmartImg src={m.src} alt="" label="PRESS" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
+      </div>
+
+      {/* Feature + thumbs layout — portrait feature to show full newspaper */}
+      <div id="press-stage" style={{display:'grid',gridTemplateColumns:'minmax(0,520px) 1fr',gap:28,alignItems:'start',height:780}}
+           onMouseEnter={()=>setPaused(true)} onMouseLeave={()=>setPaused(false)}>
+        {/* BIG FEATURE TILE — portrait, fills column height */}
+        <Reveal>
+          <a key={active} href={feature.src} target="_blank" rel="noreferrer" className="press-feature"
+             style={{position:'relative',display:'block',width:'100%',height:780,overflow:'hidden',background:'var(--surface-2)',border:'1px solid var(--line)',textDecoration:'none',animation:'pressFade .7s cubic-bezier(.22,.61,.36,1)'}}>
+            <img src={feature.src} alt={feature.title} style={{width:'100%',height:'100%',objectFit:'contain',objectPosition:'center',display:'block',background:'var(--surface-2)'}}/>
+            {/* Top gradient for outlet chip legibility */}
+            <div style={{position:'absolute',top:0,left:0,right:0,height:140,background:'linear-gradient(180deg,rgba(10,9,6,0.85) 0%,transparent 100%)',pointerEvents:'none'}}/>
+            {/* Bottom gradient for title */}
+            <div style={{position:'absolute',left:0,right:0,bottom:0,height:260,background:'linear-gradient(180deg,transparent 0%,rgba(10,9,6,0.96) 75%)',pointerEvents:'none'}}/>
+            {/* Outlet + index */}
+            <div style={{position:'absolute',top:24,left:24,right:24,display:'flex',alignItems:'center',justifyContent:'space-between',zIndex:3}}>
+              <div style={{padding:'10px 16px',background:'var(--accent)',fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.22em',color:'var(--ink-strong)',textTransform:'uppercase',fontWeight:700}}>{feature.outlet}</div>
+              <div style={{fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.22em',color:'var(--ink)',textTransform:'uppercase',padding:'10px 14px',background:'rgba(10,9,6,0.6)',backdropFilter:'blur(6px)'}}>{String(active+1).padStart(2,'0')} / {String(media.length).padStart(2,'0')} · {feature.year}</div>
+            </div>
+            {/* Title + CTA */}
+            <div style={{position:'absolute',left:32,right:32,bottom:28,zIndex:3}}>
+              <div style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.24em',color:'var(--accent)',textTransform:'uppercase',fontWeight:600,marginBottom:12}}>— Featured story</div>
+              <div style={{fontFamily:'var(--serif)',fontSize:'clamp(24px,2.2vw,34px)',fontStyle:'italic',color:'var(--ink)',lineHeight:1.15,letterSpacing:'-0.01em',maxWidth:'95%',marginBottom:18}}>{feature.title}</div>
+              <div style={{display:'inline-flex',alignItems:'center',gap:12,fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.22em',color:'var(--ink)',textTransform:'uppercase',fontWeight:600}}>
+                <span>Read the feature</span>
+                <span style={{width:32,height:32,borderRadius:'50%',background:'var(--accent)',color:'var(--ink-strong)',display:'inline-flex',alignItems:'center',justifyContent:'center',fontSize:14}}>↗</span>
               </div>
-              <div>
-                <div style={{fontFamily:'var(--serif)',fontSize:18,color:active===i?'var(--ink)':'var(--ink-80)',fontStyle:'italic',lineHeight:1.15}}>{m.title}</div>
-                <div style={{fontFamily:'var(--mono)',fontSize:10,color:'var(--ink-60)',letterSpacing:'0.14em',textTransform:'uppercase',marginTop:4}}>{m.outlet} · {m.year}</div>
-              </div>
-              <div style={{fontFamily:'var(--mono)',fontSize:16,color:active===i?'var(--accent)':'var(--ink-40)',transition:'transform .3s',transform:active===i?'translateX(4px)':'none'}}>→</div>
-            </button>
+            </div>
+            {/* Auto-advance progress bar */}
+            <div style={{position:'absolute',left:0,right:0,bottom:0,height:3,background:'rgba(255,255,255,0.08)',zIndex:4}}>
+              <div key={active+'-bar'} style={{height:'100%',background:'var(--accent)',width:'100%',transformOrigin:'left',animation:paused?'none':'pressBar 4.5s linear'}}/>
+            </div>
+          </a>
+        </Reveal>
+
+        {/* THUMB COLUMN — compact list */}
+        <Reveal delay={120}>
+          <div id="press-thumbs" style={{display:'flex',flexDirection:'column',gap:12}}>
+            {media.map((m,i)=>{
+              const isActive = i===active;
+              return (
+                <button key={i} onClick={()=>setActive(i)}
+                  style={{position:'relative',display:'grid',gridTemplateColumns:'110px 1fr',gap:0,height:110,overflow:'hidden',background:isActive?'var(--surface-1)':'transparent',border:isActive?'1px solid var(--accent)':'1px solid var(--line)',padding:0,cursor:'pointer',textAlign:'left',transition:'border-color .4s, background .4s'}}>
+                  {/* Small cropped thumb on left */}
+                  <div style={{position:'relative',overflow:'hidden',background:'var(--surface-2)'}}>
+                    <img src={m.src} alt={m.title} loading="lazy" style={{width:'100%',height:'100%',objectFit:'cover',display:'block',opacity:isActive?1:0.55,transition:'opacity .5s, transform .7s',transform:isActive?'scale(1.06)':'scale(1)'}}/>
+                    <div style={{position:'absolute',inset:0,background:isActive?'transparent':'var(--bg-tint)',transition:'background .4s'}}/>
+                  </div>
+                  {/* Text side */}
+                  <div style={{padding:'16px 22px',display:'flex',flexDirection:'column',justifyContent:'center',gap:8,minWidth:0}}>
+                    <div style={{display:'flex',alignItems:'center',gap:10}}>
+                      <span style={{fontFamily:'var(--mono)',fontSize:9,letterSpacing:'0.24em',color:isActive?'var(--accent)':'var(--ink-60)',textTransform:'uppercase',fontWeight:700}}>{String(i+1).padStart(2,'0')}</span>
+                      <span style={{width:20,height:1,background:isActive?'var(--accent)':'var(--line-strong)'}}/>
+                      <span style={{fontFamily:'var(--mono)',fontSize:9,letterSpacing:'0.2em',color:'var(--ink-80)',textTransform:'uppercase',fontWeight:600}}>{m.outlet} · {m.year}</span>
+                      {isActive && <span style={{width:6,height:6,borderRadius:'50%',background:'var(--accent)',boxShadow:'0 0 8px var(--accent)',marginLeft:'auto'}}/>}
+                    </div>
+                    <div style={{fontFamily:'var(--serif)',fontSize:16,fontStyle:'italic',color:isActive?'var(--ink)':'var(--ink-80)',lineHeight:1.3,letterSpacing:'-0.005em',transition:'color .4s',display:'-webkit-box',WebkitLineClamp:2,WebkitBoxOrient:'vertical',overflow:'hidden'}}>{m.title}</div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </Reveal>
+      </div>
+
+      {/* Footer stat strip — sits on the brown fade */}
+      <div style={{marginTop:80,padding:'36px 0 0',borderTop:'1px solid var(--line)',display:'flex',alignItems:'center',justifyContent:'space-between',gap:24,flexWrap:'wrap'}}>
+        <div style={{display:'flex',alignItems:'center',gap:40,flexWrap:'wrap'}}>
+          {[
+            {k:'5',l:'Major features'},
+            {k:'3',l:'National outlets'},
+            {k:'2+',l:'Languages covered'},
+          ].map((s,i)=>(
+            <div key={i} style={{display:'flex',alignItems:'baseline',gap:12}}>
+              <span style={{fontFamily:'var(--serif)',fontSize:44,color:'var(--ink)',letterSpacing:'-0.02em',lineHeight:1}}>{s.k}</span>
+              <span style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.2em',color:'var(--ink-60)',textTransform:'uppercase',maxWidth:140}}>{s.l}</span>
+            </div>
           ))}
+        </div>
+        <div style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.22em',color:'var(--ink-60)',textTransform:'uppercase',display:'flex',alignItems:'center',gap:10}}>
+          <span style={{width:6,height:6,borderRadius:'50%',background:'var(--accent)',boxShadow:'0 0 10px var(--accent)'}}/>
+          Tap any clipping to view the feature
         </div>
       </div>
     </div>
+
+    <style>{`
+      .press-feature:hover img { transform:scale(1.08) !important; }
+      @keyframes pressFade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+      @keyframes pressBar { from { transform:scaleX(0); } to { transform:scaleX(1); } }
+      @media (max-width:900px) {
+        #press-stage { grid-template-columns:1fr !important; }
+        #press-stage > * > a.press-feature { aspect-ratio:3/4 !important; max-height:none !important; }
+        #press-thumbs { height:auto !important; grid-template-rows:none !important; grid-template-columns:repeat(5,1fr) !important; }
+        #press-thumbs > button { height:110px !important; }
+      }
+    `}</style>
   </section>;
 }
 
@@ -664,9 +858,9 @@ function Testimonials() {
       <div id="testimonials-grid" style={{marginTop:60,display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:0,borderTop:'1px solid var(--line)',borderLeft:'1px solid var(--line)'}}>
         {testimonials.map((t,i)=>(
           <Reveal key={i} delay={(i%3)*80}>
-            <article style={{padding:'36px 32px',borderRight:'1px solid var(--line)',borderBottom:'1px solid var(--line)',display:'flex',flexDirection:'column',gap:20,height:'100%',position:'relative',transition:'background .4s',minHeight:340,background:'rgba(10,9,6,0.35)',backdropFilter:'blur(6px)'}}
+            <article style={{padding:'36px 32px',borderRight:'1px solid var(--line)',borderBottom:'1px solid var(--line)',display:'flex',flexDirection:'column',gap:20,height:'100%',position:'relative',transition:'background .4s',minHeight:340,background:'var(--bg-tint)',backdropFilter:'blur(6px)'}}
               onMouseEnter={e=>{e.currentTarget.style.background='rgba(229,180,106,0.07)';}}
-              onMouseLeave={e=>{e.currentTarget.style.background='rgba(10,9,6,0.35)';}}>
+              onMouseLeave={e=>{e.currentTarget.style.background='var(--bg-tint)';}}>
               <div style={{fontFamily:'var(--serif)',fontSize:64,fontStyle:'italic',color:'var(--accent)',lineHeight:0.5,height:28}}>"</div>
               <p style={{margin:0,fontFamily:t.lang==='zh'?'var(--serif-cn,var(--sans))':'var(--sans)',fontSize:15,lineHeight:1.65,color:'var(--ink-80)',flex:1}}>{t.quote}</p>
               <div style={{paddingTop:20,borderTop:'1px solid var(--line)',display:'flex',alignItems:'center',gap:14}}>
@@ -690,11 +884,7 @@ function Testimonials() {
 // ——— EXCHANGES ———
 function Exchanges() {
   const {exchanges}=window.DJ_DATA;
-  return <section style={{padding:'120px 0',position:'relative',overflow:'hidden'}}>
-    <div aria-hidden style={{position:'absolute',inset:0,zIndex:0,overflow:'hidden'}}>
-      <iframe src="https://www.youtube.com/embed/TWiU8AIAoDE?autoplay=1&mute=1&loop=1&playlist=TWiU8AIAoDE&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1" title="bg" allow="autoplay; encrypted-media" style={{position:'absolute',top:'50%',left:'50%',width:'177.78vh',height:'100vh',minWidth:'100%',minHeight:'56.25vw',transform:'translate(-50%,-50%) scale(1.15)',border:'none',pointerEvents:'none'}}/>
-      <div style={{position:'absolute',inset:0,background:'rgba(8,7,5,0.82)'}}/>
-    </div>
+  return <section style={{padding:'120px 0',position:'relative',overflow:'hidden',background:'var(--surface-1)'}}>
     <div style={{maxWidth:1440,margin:'0 auto',padding:'0 40px',position:'relative',zIndex:2}}>
       <Reveal>
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:60,alignItems:'end',marginBottom:48}}>
@@ -715,7 +905,7 @@ function Exchanges() {
               onMouseLeave={e2=>{e2.currentTarget.style.background='';}}>
               <div style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.2em',color:'var(--ink-40)'}}>0{i+1}</div>
               <div style={{flex:1,display:'flex',alignItems:'center'}}>
-                <SmartImg src={e.src} alt={e.name} label={e.name} style={{maxHeight:52,maxWidth:'100%',objectFit:'contain',filter:'brightness(0) invert(0.9) saturate(0)'}}/>
+                <SmartImg src={e.src} alt={e.name} label={e.name} className="exchange-logo" style={{maxHeight:52,maxWidth:'100%',objectFit:'contain'}}/>
               </div>
               <div style={{fontFamily:'var(--serif)',fontSize:22,color:'var(--ink)',fontStyle:'italic'}}>{e.name}</div>
             </div>
@@ -773,7 +963,7 @@ function Vlog() {
               style={{width:'100%',height:'100%',border:'none'}}
             />
           </div>
-          <div style={{marginTop:16,padding:'18px 22px',border:'1px solid var(--line-strong)',background:'rgba(10,9,6,0.8)',backdropFilter:'blur(10px)',display:'flex',alignItems:'center',justifyContent:'space-between',gap:16,flexWrap:'wrap'}}>
+          <div style={{marginTop:16,padding:'18px 22px',border:'1px solid var(--line-strong)',background:'var(--chip-bg)',backdropFilter:'blur(10px)',display:'flex',alignItems:'center',justifyContent:'space-between',gap:16,flexWrap:'wrap'}}>
             <div style={{minWidth:0,flex:1}}>
               <div style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.2em',color:'var(--accent)'}}>NOW PLAYING · EP {String(active+1).padStart(2,'0')}</div>
               <div style={{fontFamily:'var(--serif)',fontStyle:'italic',fontSize:22,color:'var(--ink)',marginTop:4,lineHeight:1.25}}>{titles[activeVid.id]||activeVid.t}</div>
@@ -832,9 +1022,9 @@ function LumaEvents() {
             <a href={e.url} target="_blank" rel="noreferrer" style={{textDecoration:'none',color:'inherit',display:'flex',flexDirection:'column',height:'100%',borderRight:'1px solid var(--line)',borderBottom:'1px solid var(--line)',transition:'background .4s'}}
               onMouseEnter={ev=>{ev.currentTarget.style.background='rgba(229,180,106,0.05)';}}
               onMouseLeave={ev=>{ev.currentTarget.style.background='transparent';}}>
-              <div style={{position:'relative',aspectRatio:'4/3',overflow:'hidden',borderBottom:'1px solid var(--line)'}}>
-                <SmartImg src={e.cover} alt={e.title} label={e.title} style={{width:'100%',height:'100%',objectFit:'cover'}}/>
-                <div style={{position:'absolute',top:16,left:16,padding:'10px 14px',background:'rgba(10,9,6,0.85)',backdropFilter:'blur(10px)',border:'1px solid var(--line-strong)',textAlign:'center',minWidth:64}}>
+              <div style={{position:'relative',aspectRatio:'1/1',overflow:'hidden',borderBottom:'1px solid var(--line)',background:'var(--surface-2)',padding:40}}>
+                <SmartImg src={e.cover} alt={e.title} label={e.title} style={{width:'100%',height:'100%',objectFit:'contain'}}/>
+                <div style={{position:'absolute',top:16,left:16,padding:'10px 14px',background:'var(--chip-bg)',backdropFilter:'blur(10px)',border:'1px solid var(--line-strong)',textAlign:'center',minWidth:64}}>
                   <div style={{fontFamily:'var(--mono)',fontSize:9,letterSpacing:'0.2em',color:'var(--accent)',textTransform:'uppercase'}}>{e.date}</div>
                   <div style={{fontFamily:'var(--serif)',fontSize:28,color:'var(--ink)',lineHeight:1}}>{e.day}</div>
                   <div style={{fontFamily:'var(--mono)',fontSize:9,letterSpacing:'0.16em',color:'var(--ink-60)',textTransform:'uppercase',marginTop:2}}>{e.weekday}</div>
@@ -868,16 +1058,25 @@ function LumaEvents() {
 function FAQ() {
   const {faq}=window.DJ_DATA;
   const [open,setOpen]=useState(0);
-  return <section id="faq" style={{padding:'140px 0',borderTop:'1px solid var(--line)'}}>
+  return <section id="faq" style={{padding:'140px 0',background:'var(--bg)',borderTop:'1px solid var(--line)',borderBottom:'1px solid var(--line)'}}>
     <div style={{maxWidth:1200,margin:'0 auto',padding:'0 40px'}}>
       <Reveal>
         <div id="faq-grid" style={{display:'grid',gridTemplateColumns:'1fr 1.4fr',gap:80,alignItems:'start',marginBottom:40}}>
           <div id="faq-sticky" style={{position:'sticky',top:120}}>
-            <SectionLabel num="09">FAQ</SectionLabel>
-            <h2 style={{fontFamily:'var(--serif)',fontWeight:400,margin:'16px 0 0',fontSize:'clamp(40px,5vw,76px)',lineHeight:0.98,letterSpacing:'-0.025em',color:'var(--ink)'}}>Frequently <span style={{fontStyle:'italic',color:'var(--accent)'}}>asked</span>.</h2>
-            <p style={{fontFamily:'var(--sans)',color:'var(--ink-80)',fontSize:14,lineHeight:1.65,marginTop:24,maxWidth:340}}>
+            <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:14}}>
+              <span style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.24em',color:'var(--accent)',textTransform:'uppercase'}}>09 · FAQ</span>
+              <span style={{flex:'0 0 32px',height:1,background:'var(--line-strong)'}}/>
+            </div>
+            <h2 style={{fontFamily:'var(--serif)',fontWeight:400,margin:0,fontSize:'clamp(44px,5.5vw,92px)',lineHeight:0.94,letterSpacing:'-0.03em',color:'var(--ink)'}}>
+              Frequently <span style={{fontStyle:'italic',color:'var(--accent)'}}>asked</span>.
+            </h2>
+            <p style={{fontFamily:'var(--sans)',color:'var(--ink-80)',fontSize:15,lineHeight:1.65,marginTop:28,maxWidth:360}}>
               Common questions about David, his record, and the academy's mission to advance blockchain education.
             </p>
+            <div style={{marginTop:32,paddingTop:24,borderTop:'1px solid var(--line)',display:'flex',alignItems:'center',gap:10,fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.22em',color:'var(--ink-60)',textTransform:'uppercase'}}>
+              <span style={{width:6,height:6,borderRadius:'50%',background:'var(--accent)'}}/>
+              Still curious? <a href="enquiry.html" style={{color:'var(--accent)',textDecoration:'none',borderBottom:'1px solid var(--accent)',marginLeft:4}}>Send a note →</a>
+            </div>
           </div>
           <div style={{borderTop:'1px solid var(--line)'}}>
             {faq.map((item,i)=>(
@@ -887,7 +1086,7 @@ function FAQ() {
                     <span style={{fontFamily:'var(--mono)',fontSize:11,color:'var(--accent)',letterSpacing:'0.14em'}}>{String(i+1).padStart(2,'0')}</span>
                     <span style={{fontFamily:'var(--serif)',fontSize:24,color:'var(--ink)',fontStyle:'italic',lineHeight:1.2}}>{item.q}</span>
                   </span>
-                  <span style={{width:32,height:32,border:'1px solid var(--line-strong)',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',color:'var(--accent)',fontFamily:'var(--mono)',fontSize:14,transition:'transform .4s,background .3s',transform:open===i?'rotate(45deg)':'rotate(0)',background:open===i?'rgba(229,180,106,0.08)':'transparent',flexShrink:0}}>+</span>
+                  <span style={{width:36,height:36,border:'1px solid var(--line-strong)',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',color:'var(--accent)',fontFamily:'var(--mono)',fontSize:16,transition:'transform .4s,background .3s,border-color .3s',transform:open===i?'rotate(45deg)':'rotate(0)',background:open===i?'var(--accent)':'transparent',borderColor:open===i?'var(--accent)':'var(--line-strong)',color:open===i?'var(--ink)':'var(--accent)',flexShrink:0}}>+</span>
                 </button>
                 <div style={{maxHeight:open===i?400:0,overflow:'hidden',transition:'max-height .5s cubic-bezier(.22,.61,.36,1)'}}>
                   <p style={{margin:0,padding:'0 0 28px 48px',maxWidth:620,fontFamily:'var(--sans)',fontSize:15,lineHeight:1.7,color:'var(--ink-80)'}}>{item.a}</p>
@@ -939,25 +1138,33 @@ function Footer() {
     <div style={{maxWidth:1440,margin:'0 auto'}}>
       <div id="footer-grid" style={{display:'grid',gridTemplateColumns:'1.4fr 1fr 1fr 1fr',gap:48,marginBottom:60}}>
         <div>
-          <div style={{display:'flex',alignItems:'baseline',gap:8,marginBottom:20}}>
-            <span style={{fontFamily:'var(--serif)',fontSize:36,fontStyle:'italic',color:'var(--ink)'}}>David</span>
-            <span style={{width:6,height:6,background:'var(--accent)',borderRadius:'50%',transform:'translateY(-4px)'}}/>
-            <span style={{fontFamily:'var(--serif)',fontSize:36,fontStyle:'italic',color:'var(--ink)'}}>Justin</span>
-          </div>
+          <img src="images/dj-logo.png?v=3" alt="David Justin" style={{height:96,width:'auto',display:'block',marginBottom:24}}/>
           <p style={{fontFamily:'var(--sans)',color:'var(--ink-80)',fontSize:14,lineHeight:1.6,maxWidth:360}}>
             Learn, connect, and grow with leaders and investors shaping the future of finance.
           </p>
         </div>
         {[
-          {h:'Company',items:['About Us','Media Inquiries','Contact Us','Join Our Team','Press Release']},
-          {h:'Programs',items:['Programs','Events','Workshops','Seminars','Webinars','Book']},
-          {h:'Legal',items:['Links','Disclaimer','Privacy Policy','Terms & Conditions']},
+          {h:'Explore',items:[
+            {t:'Home',h:'index.html'},
+            {t:'Guinness Record',h:'guinness-world-record.html'},
+            {t:'Press',h:'press.html'},
+            {t:'Blog',h:'blog.html'},
+          ]},
+          {h:'Connect',items:[
+            {t:'Enquiry',h:'enquiry.html'},
+            {t:'Events · luma',h:'https://luma.com/davidjustin'},
+            {t:'YouTube',h:'https://www.youtube.com/@DavidJustinOfficial'},
+          ]},
+          {h:'Contact',items:[
+            {t:'support@david-justin.com',h:'mailto:support@david-justin.com'},
+            {t:'Kuala Lumpur, Malaysia',h:'#'},
+          ]},
         ].map((col,i)=>(
           <div key={i}>
             <div style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.24em',color:'var(--accent)',textTransform:'uppercase',marginBottom:20}}>{col.h}</div>
             <div style={{display:'flex',flexDirection:'column',gap:12}}>
               {col.items.map((x,j)=>(
-                <a key={j} href="#" style={{color:'var(--ink-80)',textDecoration:'none',fontFamily:'var(--sans)',fontSize:14}}>{x}</a>
+                <a key={j} href={x.h} style={{color:'var(--ink-80)',textDecoration:'none',fontFamily:'var(--sans)',fontSize:14}}>{x.t}</a>
               ))}
             </div>
           </div>

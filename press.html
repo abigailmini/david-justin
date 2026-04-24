@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Press · David Justin — Featured in Nanyang, The Straits Times &amp; Brush of Hope</title>
+<meta name="description" content="Press coverage of David Justin — Guinness World Record holder and blockchain educator — across Nanyang Siang Pau, The Straits Times, Brush of Hope, and more.">
+<meta name="keywords" content="David Justin press, Nanyang Siang Pau, The Straits Times, Brush of Hope, blockchain educator media, Malaysia crypto press">
+<link rel="canonical" href="https://david-justin.com/press.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Press · David Justin">
+<meta property="og:description" content="Featured in Nanyang Siang Pau, The Straits Times, Brush of Hope and more — press coverage of David Justin's record-breaking blockchain education work.">
+<meta property="og:image" content="https://david-justin.com/images/dj-logo.png">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"CollectionPage",
+  "name":"David Justin — Press Coverage",
+  "url":"https://david-justin.com/press.html",
+  "about":{ "@type":"Person", "name":"David Justin" }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/shell.css?v=5">
+<script src="assets/theme.js?v=5"></script>
+<style>
+  /* Featured hero card */
+  .featured-grid {
+    display:grid; grid-template-columns:1.3fr 1fr; gap:0;
+    border:1px solid var(--line-strong); background:var(--surface-1);
+    overflow:hidden;
+  }
+  @media (max-width:900px) { .featured-grid { grid-template-columns:1fr; } }
+  .featured-cover {
+    min-height:520px; position:relative;
+    background:var(--surface-2);
+    display:flex; flex-direction:column; justify-content:space-between;
+    padding:48px; overflow:hidden;
+  }
+  [data-mode="dark"] .featured-cover {
+    background:linear-gradient(135deg, #1a1310 0%, #0A0906 60%, #15110c 100%);
+  }
+  [data-mode="light"] .featured-cover {
+    background:linear-gradient(135deg, #EDE6D6 0%, #E2D9C4 60%, #D8CDB5 100%);
+  }
+  .featured-cover::before {
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 80% 20%, rgba(229,180,106,0.15), transparent 40%),
+      repeating-linear-gradient(0deg, transparent 0, transparent 2px, rgba(242,236,224,0.02) 2px, rgba(242,236,224,0.02) 3px);
+  }
+  .featured-cover-inner { position:relative; z-index:2; }
+  .featured-masthead {
+    font-family:var(--serif-cn, "Noto Serif SC"), serif;
+    font-size:64px; line-height:1; color:var(--ink); font-weight:500;
+    letter-spacing:-0.02em; margin-bottom:8px;
+  }
+  .featured-masthead-sub { font-family:var(--mono); font-size:11px; letter-spacing:0.26em; text-transform:uppercase; color:var(--accent); }
+  .featured-pullquote {
+    font-family:var(--serif); font-style:italic; font-size:38px;
+    line-height:1.15; color:var(--ink); letter-spacing:-0.02em;
+    margin:40px 0 0; max-width:90%;
+  }
+  .featured-pullquote::before { content:"\201C"; color:var(--accent); font-size:80px; line-height:0.4; vertical-align:-0.2em; margin-right:4px; }
+  .featured-byline {
+    font-family:var(--mono); font-size:11px; letter-spacing:0.18em; color:var(--ink-60);
+    text-transform:uppercase; padding-top:24px; border-top:1px solid rgba(242,236,224,0.1);
+  }
+  .featured-body {
+    padding:48px; display:flex; flex-direction:column; justify-content:center; gap:24px;
+  }
+  .featured-body .section-label { margin-bottom:8px; }
+  .featured-body h2 {
+    font-family:var(--serif); font-weight:400; font-size:44px; line-height:1.02;
+    letter-spacing:-0.02em; margin:0; color:var(--ink);
+  }
+  .featured-body h2 em { color:var(--accent); font-style:italic; }
+  .featured-body p { font-family:var(--sans); font-size:15px; line-height:1.7; color:var(--ink-80); margin:0; }
+  .featured-meta { display:flex; gap:24px; font-family:var(--mono); font-size:11px; letter-spacing:0.16em; color:var(--ink-60); text-transform:uppercase; padding-top:24px; border-top:1px solid var(--line); }
+  .featured-meta span strong { color:var(--accent); font-weight:400; }
+
+  /* Press card grid */
+  .press-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0; border-top:1px solid var(--line); border-left:1px solid var(--line); }
+  @media (max-width:900px) { .press-grid { grid-template-columns:1fr; } }
+  .press-card {
+    padding:40px; border-right:1px solid var(--line); border-bottom:1px solid var(--line);
+    background:var(--bg); transition:background .3s;
+    display:flex; flex-direction:column; gap:24px; min-height:440px;
+  }
+  .press-card:hover { background:var(--surface-1); }
+  .press-logo {
+    height:56px; display:flex; align-items:center;
+    padding-bottom:24px; border-bottom:1px solid var(--line);
+  }
+  .press-logo-text {
+    font-family:var(--serif); font-size:36px; font-weight:500; line-height:1;
+    color:var(--ink); letter-spacing:-0.02em;
+  }
+  .press-logo-text.cn { font-family:"Noto Serif SC", serif; font-size:40px; }
+  .press-logo-text.brush { font-family:var(--serif); font-style:italic; color:var(--accent); font-size:32px; }
+  .press-kicker { font-family:var(--mono); font-size:10px; letter-spacing:0.22em; color:var(--accent); text-transform:uppercase; }
+  .press-title { font-family:var(--serif); font-size:24px; line-height:1.2; letter-spacing:-0.01em; color:var(--ink); margin:0; }
+  .press-excerpt { font-family:var(--sans); font-size:14px; line-height:1.65; color:var(--ink-80); margin:0; flex-grow:1; }
+  .press-footer { display:flex; justify-content:space-between; align-items:center; padding-top:20px; border-top:1px solid var(--line); font-family:var(--mono); font-size:10px; letter-spacing:0.18em; color:var(--ink-60); text-transform:uppercase; }
+  .press-read { color:var(--accent); }
+
+  /* Logo marquee */
+  .logo-strip { padding:60px 40px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--surface-1); overflow:hidden; }
+  .logo-strip-label { font-family:var(--mono); font-size:10px; letter-spacing:0.24em; color:var(--ink-60); text-transform:uppercase; text-align:center; margin-bottom:32px; }
+  .logo-row { display:flex; align-items:center; justify-content:center; gap:64px; flex-wrap:wrap; opacity:0.7; }
+  .logo-row span { font-family:var(--serif); font-size:22px; color:var(--ink-80); letter-spacing:-0.01em; }
+  .logo-row span.cn { font-family:"Noto Serif SC", serif; font-size:26px; }
+  .logo-row span.italic { font-style:italic; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo"><img src="images/dj-logo-horizontal.png?v=3" alt="David Justin"></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="guinness-world-record.html">Record</a>
+    <a href="press.html" class="active">Press</a>
+    <a href="blog.html">Blog</a>
+    <a href="enquiry.html">Enquiry</a>
+  </div>
+  <a href="enquiry.html" class="nav-cta">Press Enquiry</a>
+</nav>
+
+<!-- HERO -->
+<header class="page-hero">
+  <div class="page-hero-inner">
+    <div class="eyebrow reveal">Press &amp; Media · Selected coverage</div>
+    <h1 class="page-title reveal">As <em>featured</em> in.</h1>
+    <p class="page-lede reveal">
+      Selected press coverage of David Justin's work in blockchain education, public speaking,
+      and the Guinness World Record for the Largest Blockchain Lesson — across regional and international outlets.
+    </p>
+  </div>
+</header>
+
+<!-- LOGO STRIP -->
+<section class="logo-strip">
+  <div class="logo-strip-label">Featured across</div>
+  <div class="logo-row">
+    <span class="cn">南洋商报</span>
+    <span>The Straits Times</span>
+    <span class="italic" style="color:var(--accent);">Brush of Hope</span>
+    <span>Sin Chew Daily</span>
+    <span>Sunway News</span>
+    <span>The Edge Malaysia</span>
+  </div>
+</section>
+
+<!-- FEATURED -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label reveal"><span>01</span> Featured story</div>
+    <h2 class="section-heading reveal" style="margin-bottom:40px;">The <em>headline</em> piece.</h2>
+
+    <article class="featured-grid reveal">
+      <div class="featured-cover">
+        <div class="featured-cover-inner">
+          <div>
+            <div class="featured-masthead">南洋商报</div>
+            <div class="featured-masthead-sub">Nanyang Siang Pau · Chinese Daily</div>
+          </div>
+          <blockquote class="featured-pullquote">
+            He made blockchain feel like mother tongue — then taught it to nearly 900 people at once.
+          </blockquote>
+          <div class="featured-byline">By Nanyang Business Desk · March 2023</div>
+        </div>
+      </div>
+      <div class="featured-body">
+        <div class="section-label"><span>◆</span> Print &amp; Digital Feature</div>
+        <h2>Malaysian educator <em>rewrites</em> the blockchain textbook.</h2>
+        <p>
+          Nanyang Siang Pau profiled David Justin's journey from self-taught crypto enthusiast to
+          Guinness World Record-holding educator — anchored by his Mandarin-language teaching style
+          that has made public-blockchain fundamentals accessible to tens of thousands of learners
+          across Southeast Asia's Chinese-speaking communities.
+        </p>
+        <p>
+          The feature covered the road to 897 participants at Sunway University, the academy's
+          one-million-learner mission, and why David believes the next wave of Web3 adoption will
+          be educated, not speculated.
+        </p>
+        <div class="featured-meta">
+          <span><strong>Outlet</strong> · Nanyang Siang Pau</span>
+          <span><strong>Format</strong> · Print + Digital</span>
+          <span><strong>Reach</strong> · 400k+</span>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- OTHER COVERAGE -->
+<section class="section" style="padding-top:40px;">
+  <div class="section-inner">
+    <div class="section-label reveal"><span>02</span> Selected coverage</div>
+    <h2 class="section-heading reveal" style="margin-bottom:40px;">More <em>features</em>.</h2>
+
+    <div class="press-grid reveal">
+
+      <article class="press-card">
+        <div class="press-logo"><span class="press-logo-text cn">南洋商报</span></div>
+        <div class="press-kicker">Nanyang Siang Pau · Feature</div>
+        <h3 class="press-title">From self-taught to world record: the educator behind Malaysia's blockchain moment.</h3>
+        <p class="press-excerpt">
+          A long-form profile tracing David's arc from retail trader to full-time educator,
+          and the methodology behind a record-breaking single-speaker lesson.
+        </p>
+        <div class="press-footer">
+          <span>March 2023</span>
+          <span class="press-read">Read →</span>
+        </div>
+      </article>
+
+      <article class="press-card">
+        <div class="press-logo"><span class="press-logo-text">The Straits Times</span></div>
+        <div class="press-kicker">The Straits Times · Technology</div>
+        <h3 class="press-title">Singapore &amp; KL cross-border blockchain training takes shape.</h3>
+        <p class="press-excerpt">
+          Regional technology desk on how educators like David Justin are positioning Malaysia
+          and Singapore as complementary hubs for Web3 skills development.
+        </p>
+        <div class="press-footer">
+          <span>Q2 2024</span>
+          <span class="press-read">Read →</span>
+        </div>
+      </article>
+
+      <article class="press-card">
+        <div class="press-logo"><span class="press-logo-text brush">Brush of Hope</span></div>
+        <div class="press-kicker">Brush of Hope · Community</div>
+        <h3 class="press-title">Painting futures: a record-holder on why teaching is the real hustle.</h3>
+        <p class="press-excerpt">
+          A conversational feature from the Brush of Hope community series on the moment
+          David decided to move from trading full-time into educating full-time.
+        </p>
+        <div class="press-footer">
+          <span>August 2024</span>
+          <span class="press-read">Read →</span>
+        </div>
+      </article>
+
+      <article class="press-card">
+        <div class="press-logo"><span class="press-logo-text cn">星洲日报</span></div>
+        <div class="press-kicker">Sin Chew Daily · Business</div>
+        <h3 class="press-title">New generation educators are reshaping how Malaysians learn crypto.</h3>
+        <p class="press-excerpt">
+          Business desk coverage of the shift toward bilingual, practitioner-led financial
+          education — with David's academy as the anchor case study.
+        </p>
+        <div class="press-footer">
+          <span>Late 2023</span>
+          <span class="press-read">Read →</span>
+        </div>
+      </article>
+
+      <article class="press-card">
+        <div class="press-logo"><span class="press-logo-text">Sunway News</span></div>
+        <div class="press-kicker">Sunway News · Campus</div>
+        <h3 class="press-title">897 seats, one lesson: Sunway hosts a world record.</h3>
+        <p class="press-excerpt">
+          The campus newsroom's behind-the-scenes account of the logistics, the adjudicator's
+          visit, and the moment the new Guinness record was announced live.
+        </p>
+        <div class="press-footer">
+          <span>March 2023</span>
+          <span class="press-read">Read →</span>
+        </div>
+      </article>
+
+      <article class="press-card">
+        <div class="press-logo"><span class="press-logo-text">The Edge</span></div>
+        <div class="press-kicker">The Edge Malaysia · Op-Ed</div>
+        <h3 class="press-title">Guest column: why financial literacy must now include the on-chain kind.</h3>
+        <p class="press-excerpt">
+          An invited op-ed arguing that Malaysia's next generation of retail investors need
+          on-chain fluency, not just price charts — with a five-point framework for schools and employers.
+        </p>
+        <div class="press-footer">
+          <span>2024</span>
+          <span class="press-read">Read →</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section" style="background:var(--surface-1);border-top:1px solid var(--line);text-align:center;padding:100px 40px;">
+  <div class="section-inner">
+    <div class="section-label reveal" style="justify-content:center;"><span>◇</span> Press Enquiries</div>
+    <h2 class="section-heading reveal" style="margin:12px 0 24px;">On <em>deadline</em>?</h2>
+    <p class="body-copy reveal" style="max-width:640px;margin:0 auto 32px;">
+      Journalists, producers, and podcast hosts — bios, high-res photos, logos, and quotable
+      stats are available on request. Response within one business day.
+    </p>
+    <div class="reveal" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="enquiry.html" class="btn-primary">Request Press Kit <span aria-hidden="true">→</span></a>
+      <a href="mailto:support@david-justin.com" class="btn-outline">Email directly</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="images/dj-logo.png?v=3" alt="David Justin">
+        <p>Learn, connect, and grow with leaders and investors shaping the future of finance.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="guinness-world-record.html">Guinness Record</a></li>
+          <li><a href="press.html">Press</a></li>
+          <li><a href="blog.html">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="enquiry.html">Enquiry</a></li>
+          <li><a href="https://luma.com/davidjustin" target="_blank" rel="noreferrer">Events · luma</a></li>
+          <li><a href="https://www.youtube.com/@DavidJustinOfficial" target="_blank" rel="noreferrer">YouTube</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:support@david-justin.com">support@david-justin.com</a></li>
+          <li>Kuala Lumpur, Malaysia</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© DAVID-JUSTIN SDN BHD · MMXXV · ALL RIGHTS RESERVED</div>
+      <div>KL ↔ SGP ↔ TYO</div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/shell.js?v=5"></script>
+</body>
+</html>
