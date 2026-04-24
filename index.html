@@ -97,6 +97,19 @@
     #nav-logo { font-size:18px !important; }
     h2 { font-size:clamp(36px,8vw,60px) !important; }
   }
+  /* ——— On the Floor carousel ——— */
+  .floor-carousel-wrapper { overflow:hidden; width:100%; }
+  .floor-track { display:flex; gap:16px; padding:0 calc(50% - 180px); transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); }
+  .floor-card { flex:0 0 340px; height:480px; position:relative; border-radius:4px; overflow:hidden; cursor:pointer; transition:all 0.4s; filter:brightness(0.5); transform:scale(0.92); }
+  .floor-card.active { filter:brightness(1); transform:scale(1); }
+  .floor-card img { width:100%; height:100%; object-fit:cover; display:block; }
+  .floor-card-label { position:absolute; bottom:24px; left:24px; }
+  .floor-cat { display:block; font-size:0.65rem; letter-spacing:0.15em; color:rgba(255,255,255,0.5); margin-bottom:4px; font-family:var(--mono); text-transform:uppercase; }
+  .floor-title { display:block; font-size:1.1rem; color:#fff; font-family:var(--serif); }
+  @media(max-width:768px) {
+    .floor-card { flex:0 0 260px; height:380px; }
+    .floor-track { padding:0 calc(50% - 130px); }
+  }
 </style>
 </head>
 <body>
@@ -504,6 +517,86 @@ function Awards() {
   </section>;
 }
 
+// ——— ON THE FLOOR ———
+function Floor() {
+  const photos = [
+    { src:'images/floor/tbm-ae-25.jpg',   cat:'CATEGORY ONE',   title:'Event Photo 01' },
+    { src:'images/floor/tbm-ae-40.jpg',   cat:'CATEGORY ONE',   title:'Event Photo 02' },
+    { src:'images/floor/tbm-aft-28.jpg',  cat:'CATEGORY TWO',   title:'Event Photo 03' },
+    { src:'images/floor/tbm-aft-49.jpg',  cat:'CATEGORY TWO',   title:'Event Photo 04' },
+    { src:'images/floor/tbm-aft-56.jpg',  cat:'CATEGORY TWO',   title:'Event Photo 05' },
+    { src:'images/floor/tbm-aft-58.jpg',  cat:'CATEGORY TWO',   title:'Event Photo 06' },
+    { src:'images/floor/tbm-aft2-240.jpg',cat:'CATEGORY THREE',  title:'Event Photo 07' },
+    { src:'images/floor/tbm-aft3-14.jpg', cat:'CATEGORY THREE',  title:'Event Photo 08' },
+    { src:'images/floor/tbm-aft3-34.jpg', cat:'CATEGORY THREE',  title:'Event Photo 09' },
+    { src:'images/floor/tbm-day3-406.jpg',cat:'CATEGORY FOUR',   title:'Event Photo 10' },
+    { src:'images/floor/tbm-day3-450.jpg',cat:'CATEGORY FOUR',   title:'Event Photo 11' },
+    { src:'images/floor/tbm-eve-71.jpg',  cat:'CATEGORY FIVE',   title:'Event Photo 12' },
+    { src:'images/floor/tbm-eve-74.jpg',  cat:'CATEGORY FIVE',   title:'Event Photo 13' },
+  ];
+  const [current, setCurrent] = useState(Math.floor(photos.length / 2));
+  const trackRef = useRef();
+
+  useEffect(() => {
+    function update() {
+      const track = trackRef.current;
+      if (!track) return;
+      const cw = track.parentElement.offsetWidth;
+      const cardW = 340 + 16;
+      const offset = (cw / 2) - (current * cardW) - 170;
+      track.style.transform = `translateX(${offset}px)`;
+    }
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, [current]);
+
+  useEffect(() => {
+    function onKey(e) {
+      if (e.key === 'ArrowRight') setCurrent(c => Math.min(c + 1, photos.length - 1));
+      if (e.key === 'ArrowLeft')  setCurrent(c => Math.max(c - 1, 0));
+    }
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, []);
+
+  return (
+    <section id="floor" style={{padding:'80px 0',background:'var(--bg)',overflow:'hidden'}}>
+      <div style={{maxWidth:1200,margin:'0 auto',padding:'0 40px 40px'}}>
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:48}}>
+          <Reveal>
+            <h2 style={{fontFamily:'var(--serif)',fontSize:'clamp(2.5rem,6vw,5rem)',fontWeight:400,margin:0,lineHeight:1}}>
+              On the <span style={{color:'var(--accent)'}}>floor.</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={120}>
+            <p style={{maxWidth:360,color:'var(--ink-60)',fontSize:'0.95rem',lineHeight:1.6,margin:0,paddingTop:8}}>
+              Snapshots from the record-breaking lesson, keynote stages, and academy cohorts — where the curriculum meets the community.
+            </p>
+          </Reveal>
+        </div>
+      </div>
+      <div className="floor-carousel-wrapper">
+        <div className="floor-track" ref={trackRef}>
+          {photos.map((p, i) => (
+            <div
+              key={i}
+              className={`floor-card${i === current ? ' active' : ''}`}
+              onClick={() => setCurrent(i)}
+            >
+              <img src={p.src} alt={p.title} loading="lazy" />
+              <div className="floor-card-label">
+                <span className="floor-cat">{p.cat}</span>
+                <span className="floor-title">{p.title}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ——— PRESS ———
 function Press() {
   const {media}=window.DJ_DATA;
@@ -887,6 +980,7 @@ function App() {
     <TrustedStrip/>
     <Record/>
     <Awards/>
+    <Floor/>
     <Press/>
     <Testimonials/>
     <Exchanges/>
