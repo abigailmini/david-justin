@@ -98,8 +98,25 @@
     #faq-sticky { position:static !important; top:auto !important; }
     /* Testimonials grid */
     #testimonials-grid { grid-template-columns:1fr !important; }
-    /* Exchanges */
-    #exchanges-grid { grid-template-columns:1fr 1fr !important; }
+    /* Exchanges — horizontal scroll on mobile */
+    #exchanges-grid {
+      display:flex !important;
+      flex-direction:row !important;
+      overflow-x:auto !important;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:none;
+      border-left:none !important;
+      padding-bottom:8px;
+      gap:0;
+    }
+    #exchanges-grid::-webkit-scrollbar { display:none; }
+    #exchanges-grid > div {
+      flex:0 0 160px !important;
+      width:160px !important;
+      scroll-snap-align:start;
+      min-height:220px;
+    }
     /* LumaEvents */
     #luma-grid { grid-template-columns:1fr !important; }
     /* Footer */
@@ -107,6 +124,47 @@
     /* Nav hamburger — mobile only shows logo */
     #nav-logo { font-size:18px !important; }
     h2 { font-size:clamp(36px,8vw,60px) !important; }
+    /* Press stage mobile */
+    #press-stage { height:auto !important; display:flex !important; flex-direction:column !important; }
+    #press-stage > * > a.press-feature,
+    #press-stage > div > a.press-feature { height:auto !important; aspect-ratio:3/4 !important; }
+    #press-thumbs { display:flex !important; flex-direction:row !important; overflow-x:auto !important;
+      scrollbar-width:none; gap:8px !important; padding-bottom:4px; }
+    #press-thumbs::-webkit-scrollbar { display:none; }
+    #press-thumbs > button { flex:0 0 200px !important; width:200px; height:130px !important;
+      grid-template-columns:80px 1fr !important; }
+    /* Luma header grid */
+    #luma-header-grid {
+      grid-template-columns:1fr !important;
+      gap:20px !important;
+      margin-bottom:32px !important;
+    }
+    #luma-header-grid p { justify-self:start !important; max-width:100% !important; }
+    /* Luma event cards */
+    #luma-grid > a > div:last-child { padding:20px 20px 24px !important; }
+    #luma-grid > a > div:last-child > div:last-child {
+      grid-template-columns:1fr !important;
+      gap:8px !important;
+    }
+  }
+  /* ——— Hamburger & mobile nav overlay ——— */
+  #nav-hamburger { display:none; }
+  @media (max-width:768px) {
+    #nav-hamburger {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:40px; height:40px;
+      border:1px solid var(--line-strong);
+      border-radius:50%;
+      background:transparent;
+      color:var(--ink);
+      font-size:20px;
+      cursor:pointer;
+      flex-shrink:0;
+      transition:background .2s,border-color .2s;
+    }
+    #nav-hamburger:hover { background:var(--surface-1); border-color:var(--accent); color:var(--accent); }
   }
   /* ——— On the Floor — coverflow ——— */
   .floor-scrim { background:linear-gradient(180deg,rgba(10,9,6,0.92) 0%,rgba(10,9,6,0.88) 45%,rgba(10,9,6,0.94) 100%); }
@@ -336,6 +394,7 @@ function CornerMarks() {
 // ——— NAV ———
 function Nav() {
   const [scrolled,setScrolled]=useState(false);
+  const [mobileOpen,setMobileOpen]=useState(false);
   const [mode,setMode]=useState(()=>{
     try { return localStorage.getItem('dj-theme') || 'dark'; } catch { return 'dark'; }
   });
@@ -349,7 +408,28 @@ function Nav() {
     return ()=>window.removeEventListener('scroll',on);
   },[]);
   const isLight = mode==='light';
-  return <nav style={{position:'fixed',top:0,left:0,right:0,zIndex:50,padding:scrolled?'14px 40px':'28px 40px',transition:'padding .4s,background .4s,border-color .4s',background:scrolled?(isLight?'rgba(246,241,231,0.82)':'rgba(10,9,6,0.78)'):'transparent',backdropFilter:scrolled?'blur(18px) saturate(1.4)':'none',borderBottom:scrolled?'1px solid var(--line)':'1px solid transparent',display:'flex',alignItems:'center',justifyContent:'space-between',fontFamily:'var(--sans)'}}>
+  const navLinks = [
+    {t:'Record',h:'guinness-world-record.html'},
+    {t:'Press',h:'press.html'},
+    {t:'Blog',h:'blog.html'},
+    {t:'Enquiry',h:'enquiry.html'},
+  ];
+  return <>
+  {/* Mobile nav overlay */}
+  {mobileOpen && <div style={{position:'fixed',top:0,left:0,right:0,bottom:0,background:isLight?'rgba(246,241,231,0.97)':'rgba(10,9,6,0.97)',backdropFilter:'blur(24px)',zIndex:48,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'80px 40px 40px',gap:0}}>
+    {navLinks.map((link,i)=>(
+      <a key={i} href={link.h} onClick={()=>setMobileOpen(false)} style={{fontFamily:'var(--serif)',fontSize:'clamp(36px,10vw,56px)',fontStyle:'italic',color:'var(--ink)',textDecoration:'none',padding:'18px 0',borderBottom:'1px solid var(--line)',width:'100%',textAlign:'center',display:'block',transition:'color .3s'}}
+        onMouseEnter={e=>{e.currentTarget.style.color='var(--accent)';}}
+        onMouseLeave={e=>{e.currentTarget.style.color='var(--ink)';}}>{link.t}</a>
+    ))}
+    <a href="enquiry.html" onClick={()=>setMobileOpen(false)} style={{marginTop:36,padding:'18px 52px',border:'1px solid var(--accent)',color:'var(--accent)',textDecoration:'none',fontFamily:'var(--mono)',fontSize:13,letterSpacing:'0.14em',textTransform:'uppercase',display:'inline-block'}}>Enquire →</a>
+    <button onClick={()=>setMode(isLight?'dark':'light')} aria-label="Toggle theme" style={{all:'unset',cursor:'pointer',marginTop:28,width:44,height:44,borderRadius:'50%',border:'1px solid var(--line-strong)',display:'inline-flex',alignItems:'center',justifyContent:'center',color:'var(--ink-80)'}}>
+      {isLight
+        ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>}
+    </button>
+  </div>}
+  <nav style={{position:'fixed',top:0,left:0,right:0,zIndex:50,padding:scrolled?'14px 40px':'28px 40px',transition:'padding .4s,background .4s,border-color .4s',background:scrolled?(isLight?'rgba(246,241,231,0.82)':'rgba(10,9,6,0.78)'):'transparent',backdropFilter:scrolled?'blur(18px) saturate(1.4)':'none',borderBottom:scrolled?'1px solid var(--line)':'1px solid transparent',display:'flex',alignItems:'center',justifyContent:'space-between',fontFamily:'var(--sans)'}}>
     <div id="nav-logo" style={{display:'flex',alignItems:'center',gap:12}}>
       <img src="images/dj-logo-horizontal.png?v=3" alt="David Justin" style={{height:23,width:'auto',display:'block'}}/>
     </div>
@@ -369,7 +449,12 @@ function Nav() {
         onMouseEnter={e=>{e.target.style.background='var(--accent)';e.target.style.color='var(--bg)';}}
         onMouseLeave={e=>{e.target.style.background='rgba(229,180,106,0.06)';e.target.style.color='var(--accent)';}}>Enquire →</a>
     </div>
-  </nav>;
+    {/* Hamburger — mobile only */}
+    <button id="nav-hamburger" onClick={()=>setMobileOpen(o=>!o)} aria-label="Toggle navigation" style={{all:'unset',cursor:'pointer',flexShrink:0}}>
+      {mobileOpen ? '✕' : '☰'}
+    </button>
+  </nav>
+  </>;
 }
 
 // ——— HERO ———
@@ -1006,7 +1091,7 @@ function LumaEvents() {
   return <section id="luma" style={{padding:'140px 0',position:'relative',background:'var(--surface-1)',borderTop:'1px solid var(--line)',borderBottom:'1px solid var(--line)'}}>
     <div style={{maxWidth:1440,margin:'0 auto',padding:'0 40px'}}>
       <Reveal>
-        <div style={{display:'grid',gridTemplateColumns:'1fr 1.3fr',gap:60,alignItems:'end',marginBottom:56}}>
+        <div id="luma-header-grid" style={{display:'grid',gridTemplateColumns:'1fr 1.3fr',gap:60,alignItems:'end',marginBottom:56}}>
           <div>
             <SectionLabel num="08">Upcoming · lu.ma/davidjustin</SectionLabel>
             <h2 style={{fontFamily:'var(--serif)',fontWeight:400,margin:'16px 0 0',fontSize:'clamp(44px,5.5vw,92px)',lineHeight:0.96,letterSpacing:'-0.025em',color:'var(--ink)'}}>Next <span style={{fontStyle:'italic',color:'var(--accent)'}}>gatherings</span>.</h2>
