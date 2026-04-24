@@ -1340,33 +1340,23 @@ function App() {
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script>
 <script>
-/* Fix 1 runtime: nuke any overflow:hidden on press ancestors, force scroll on thumbs */
 (function(){
-  if(window.innerWidth > 768) return;
-  function fixPress() {
-    document.querySelectorAll('#press, #press > *, #press > * > *, #press > * > * > *, #press > * > * > * > *').forEach(function(el){
-      var s = getComputedStyle(el);
-      if(s.overflow === 'hidden' || s.overflowX === 'hidden') {
-        el.style.setProperty('overflow','visible','important');
-        el.style.setProperty('overflow-x','visible','important');
-      }
-    });
+  function fixPressScroll(){
     var thumbs = document.getElementById('press-thumbs');
-    if(thumbs) {
-      thumbs.style.setProperty('overflow-x','scroll','important');
-      thumbs.style.setProperty('overflow-y','visible','important');
-      thumbs.style.setProperty('-webkit-overflow-scrolling','touch','important');
-      thumbs.style.setProperty('width','100%','important');
+    if(!thumbs) return;
+    var el = thumbs;
+    while(el && el !== document.body){
+      el.style.setProperty('overflow-x', el === thumbs ? 'scroll' : 'visible', 'important');
+      el.style.setProperty('overflow-y', 'visible', 'important');
+      el = el.parentElement;
     }
+    thumbs.style.setProperty('-webkit-overflow-scrolling','touch','important');
   }
-  if(document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', fixPress);
-  } else {
-    fixPress();
+  if(window.innerWidth <= 768){
+    fixPressScroll();
+    setTimeout(fixPressScroll, 500);
+    setTimeout(fixPressScroll, 1500);
   }
-  /* Also run after React renders (brief delay) */
-  setTimeout(fixPress, 800);
-  setTimeout(fixPress, 2000);
 })();
 </script>
 </body>
