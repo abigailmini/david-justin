@@ -129,7 +129,8 @@
     #press-stage > * > a.press-feature,
     #press-stage > div > a.press-feature { height:auto !important; aspect-ratio:3/4 !important; }
     #press-thumbs { display:flex !important; flex-direction:row !important; overflow-x:auto !important;
-      scrollbar-width:none; gap:8px !important; padding-bottom:4px; }
+      -webkit-overflow-scrolling:touch; scrollbar-width:none; gap:8px !important; padding-bottom:4px; }
+    #press-stage > div { overflow:hidden; min-width:0; }
     #press-thumbs::-webkit-scrollbar { display:none; }
     #press-thumbs > button { flex:0 0 40vw !important; width:40vw !important; height:130px !important;
       grid-template-columns:72px 1fr !important; }
@@ -139,6 +140,11 @@
     #press-thumbs > button > div:last-child > div:last-child {
       font-size:10px !important; font-style:normal !important;
       -webkit-line-clamp:3 !important; line-height:1.3 !important; letter-spacing:0 !important; }
+    /* Guinness spinning star — scale down on mobile */
+    #guinness-spin { width:72px !important; height:72px !important; top:-16px !important; left:-16px !important; pointer-events:none !important; }
+    #guinness-spin > div { font-size:20px !important; }
+    /* Hero trust bar — force single row on mobile */
+    #hero-trust-bar { flex-wrap:nowrap !important; gap:8px !important; padding:8px 12px !important; justify-content:center !important; }
     /* Luma header grid */
     #luma-header-grid {
       grid-template-columns:1fr !important;
@@ -498,7 +504,7 @@ function Hero() {
           </p>
         </Reveal>
         <Reveal delay={300}>
-          <div style={{marginTop:28,display:'flex',alignItems:'center',gap:14,padding:'10px 16px',border:'1px solid var(--line-strong)',background:'var(--overlay-soft)',backdropFilter:'blur(8px)',flexWrap:'wrap',rowGap:10}}>
+          <div id="hero-trust-bar" style={{marginTop:28,display:'flex',alignItems:'center',gap:14,padding:'10px 16px',border:'1px solid var(--line-strong)',background:'var(--overlay-soft)',backdropFilter:'blur(8px)',flexWrap:'wrap',rowGap:10}}>
             <div style={{display:'flex',alignItems:'center',gap:8}}>
               <span style={{fontFamily:'var(--mono)',fontSize:9,letterSpacing:'0.2em',textTransform:'uppercase',color:'var(--ink-60)'}}>Featured on</span>
               <span style={{fontFamily:'var(--serif)',fontStyle:'italic',fontSize:14,color:'var(--ink)'}}>NST</span>
@@ -612,7 +618,7 @@ function Record() {
         </div>
         <Reveal delay={180} y={40}>
           <div style={{position:'relative'}}>
-            <div style={{position:'absolute',top:-30,left:-30,zIndex:3,width:130,height:130,borderRadius:'50%',border:'1px solid var(--accent)',background:'var(--chip-bg)',backdropFilter:'blur(10px)',display:'flex',alignItems:'center',justifyContent:'center',animation:'spin-slow 24s linear infinite'}}>
+            <div id="guinness-spin" style={{position:'absolute',top:-30,left:-30,zIndex:3,width:130,height:130,borderRadius:'50%',border:'1px solid var(--accent)',background:'var(--chip-bg)',backdropFilter:'blur(10px)',display:'flex',alignItems:'center',justifyContent:'center',animation:'spin-slow 24s linear infinite'}}>
               <svg viewBox="0 0 140 140" style={{position:'absolute',inset:0,width:'100%',height:'100%'}}>
                 <defs><path id="cpath" d="M 70,70 m -52,0 a 52,52 0 1,1 104,0 a 52,52 0 1,1 -104,0"/></defs>
                 <text fill="var(--accent)" style={{fontFamily:'var(--mono)',fontSize:9,letterSpacing:'0.3em'}}>
