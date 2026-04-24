@@ -75,6 +75,8 @@
     #hero-grid { grid-template-columns:1fr !important; }
     #hero-right { display:none !important; }
     #hero-h1 { font-size:clamp(52px,12vw,80px) !important; }
+    /* Fix 3: push hero text below face — section is min-height:100vh so there's room */
+    #hero-grid > div:first-child { padding-top:45vh !important; }
     #hero-stats { grid-template-columns:1fr 1fr 1fr !important; }
     #hero-stats > div > div:first-child { font-size:clamp(20px,6vw,32px) !important; }
     #hero-stats > div { padding:16px 8px 0 0 !important; padding-left:12px !important; }
@@ -125,13 +127,16 @@
     #nav-logo { font-size:18px !important; }
     h2 { font-size:clamp(36px,8vw,60px) !important; }
     /* Press stage mobile */
-    #press-stage { height:auto !important; display:flex !important; flex-direction:column !important; }
+    #press-stage { height:auto !important; display:flex !important; flex-direction:column !important; overflow:visible !important; }
     #press-stage > * > a.press-feature,
     #press-stage > div > a.press-feature { height:auto !important; aspect-ratio:3/4 !important; }
-    #press-thumbs { display:flex !important; flex-direction:row !important; overflow-x:auto !important;
-      -webkit-overflow-scrolling:touch; scrollbar-width:none; gap:8px !important; padding-bottom:4px; }
-    #press-stage > div { min-width:0; }
-    #press-stage > div:last-child { overflow:visible !important; }
+    /* Fix 1: nuclear press-thumbs scroll fix */
+    #press-thumbs { display:flex !important; flex-direction:row !important; overflow-x:scroll !important;
+      overflow-y:visible !important; -webkit-overflow-scrolling:touch !important; scrollbar-width:none;
+      gap:8px !important; padding-bottom:4px; width:100% !important; max-width:100% !important;
+      box-sizing:border-box !important; }
+    #press-stage > div { min-width:0; width:100% !important; }
+    #press-stage > div:last-child { overflow:visible !important; width:100% !important; }
     #press-thumbs::-webkit-scrollbar { display:none; }
     #press-thumbs > button { flex:0 0 40vw !important; width:40vw !important; height:130px !important;
       grid-template-columns:72px 1fr !important; }
@@ -167,14 +172,20 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      background:none;
-      border:none;
       color:var(--ink);
       font-size:22px;
       cursor:pointer;
       flex-shrink:0;
-      padding:6px 8px;
+      padding:6px 10px;
       line-height:1;
+      /* Fix 2: visible bordered button */
+      background:rgba(255,255,255,0.06) !important;
+      border:1.5px solid var(--ink-40, rgba(255,255,255,0.4)) !important;
+      border-radius:8px !important;
+    }
+    [data-mode="light"] #nav-hamburger {
+      background:rgba(0,0,0,0.05) !important;
+      border-color:rgba(0,0,0,0.25) !important;
     }
     #nav-desktop-links { display:none !important; }
   }
@@ -935,11 +946,13 @@ function Press() {
         #press-thumbs > button { height:110px !important; }
       }
       @media (max-width:768px) {
-        /* Fix 1: ensure thumb Reveal wrapper doesn't clip horizontal scroll */
-        #press, #press > *, #press > * > *, #press > * > * > * {
+        /* Fix 1: ensure NO ancestor clips the horizontal scroll container */
+        #press, #press > *, #press > * > *, #press > * > * > *, #press > * > * > * > * {
           overflow-x: visible !important;
         }
-        #press-stage > div:last-child { overflow: visible !important; }
+        /* …except the scroll container itself */
+        #press-thumbs { overflow-x: scroll !important; overflow-y: visible !important; }
+        #press-stage > div:last-child { overflow: visible !important; width:100% !important; }
         /* Fix 2: press stats — all 3 in one row */
         #press-stats {
           flex-wrap: nowrap !important;
@@ -1325,6 +1338,36 @@ function App() {
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+<script>
+/* Fix 1 runtime: nuke any overflow:hidden on press ancestors, force scroll on thumbs */
+(function(){
+  if(window.innerWidth > 768) return;
+  function fixPress() {
+    document.querySelectorAll('#press, #press > *, #press > * > *, #press > * > * > *, #press > * > * > * > *').forEach(function(el){
+      var s = getComputedStyle(el);
+      if(s.overflow === 'hidden' || s.overflowX === 'hidden') {
+        el.style.setProperty('overflow','visible','important');
+        el.style.setProperty('overflow-x','visible','important');
+      }
+    });
+    var thumbs = document.getElementById('press-thumbs');
+    if(thumbs) {
+      thumbs.style.setProperty('overflow-x','scroll','important');
+      thumbs.style.setProperty('overflow-y','visible','important');
+      thumbs.style.setProperty('-webkit-overflow-scrolling','touch','important');
+      thumbs.style.setProperty('width','100%','important');
+    }
+  }
+  if(document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fixPress);
+  } else {
+    fixPress();
+  }
+  /* Also run after React renders (brief delay) */
+  setTimeout(fixPress, 800);
+  setTimeout(fixPress, 2000);
+})();
 </script>
 </body>
 </html>
