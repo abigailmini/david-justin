@@ -119,6 +119,54 @@
   .cert-title { font-family:var(--serif); font-size:40px; color:var(--ink); letter-spacing:-0.02em; line-height:1.05; margin-bottom:20px; }
   .cert-meta { font-family:var(--mono); font-size:11px; letter-spacing:0.14em; color:var(--ink-60); text-transform:uppercase; padding-top:20px; border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; }
 
+  /* Group photo */
+  .group-photo-section {
+    padding:0 0 120px;
+    background:linear-gradient(180deg, transparent, rgba(229,180,106,0.04));
+  }
+  .group-photo-frame {
+    margin-top:40px;
+    background:linear-gradient(180deg, var(--surface-1), var(--surface-2));
+    border:1px solid var(--line-strong);
+    overflow:hidden;
+    box-shadow:0 24px 80px rgba(0,0,0,0.28);
+  }
+  .group-photo-frame img {
+    display:block;
+    width:100%;
+    height:auto;
+  }
+  .group-photo-caption {
+    display:flex;
+    justify-content:space-between;
+    gap:24px;
+    padding:24px 28px;
+    border-top:1px solid var(--line);
+    background:rgba(10,9,6,0.76);
+    flex-wrap:wrap;
+  }
+  .group-photo-caption strong {
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:28px;
+    color:var(--ink);
+    font-weight:400;
+    letter-spacing:-0.02em;
+  }
+  .group-photo-caption span {
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.18em;
+    color:var(--accent);
+    text-transform:uppercase;
+    align-self:center;
+  }
+  @media (max-width:640px) {
+    .group-photo-section { padding-bottom:96px; }
+    .group-photo-caption { padding:18px 20px; }
+    .group-photo-caption strong { font-size:22px; }
+  }
+
   /* CTA strip */
   .cta-strip { padding:100px 40px; background:var(--surface-1); border-top:1px solid var(--line); border-bottom:1px solid var(--line); text-align:center; }
   .cta-strip h3 { font-family:var(--serif); font-size:clamp(32px,4vw,56px); font-weight:400; margin:0 0 24px; letter-spacing:-0.02em; }
@@ -367,6 +415,25 @@
         </li>
       </ol>
     </div>
+  </div>
+</section>
+
+<!-- GROUP PHOTO -->
+<section class="section group-photo-section" id="group-photo">
+  <div class="section-inner">
+    <div class="section-label reveal"><span>04</span> Final frame</div>
+    <h2 class="section-heading reveal">The <em>group photo</em> after history was made.</h2>
+    <p class="body-copy reveal" style="max-width:760px;margin-top:20px;">
+      One last frame from MITEC, taken with the community that helped set the world's largest verified blockchain lesson.
+    </p>
+
+    <figure class="group-photo-frame reveal">
+      <img src="images/gwr-group-photo.jpg" alt="Guinness World Record group photo with David Justin and participants at MITEC Kuala Lumpur">
+      <figcaption class="group-photo-caption">
+        <strong>Guinness World Record · Group Photo</strong>
+        <span>MITEC · Kuala Lumpur · 13–15 Nov 2022</span>
+      </figcaption>
+    </figure>
   </div>
 </section>
 
