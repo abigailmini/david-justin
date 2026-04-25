@@ -1471,8 +1471,7 @@ function fixCircles(){
     }
   }
 }
-new MutationObserver(function(){fixCircles();}).observe(document.body,{childList:true,subtree:true});
-window.addEventListener('load',function(){fixCircles();setTimeout(fixCircles,500);setTimeout(fixCircles,2000);setTimeout(fixCircles,5000);});
+setInterval(fixCircles,500);
 </script>
 </body>
 </html>
