@@ -47,17 +47,18 @@
 <link rel="stylesheet" href="assets/shell.css?v=5">
 <script src="assets/theme.js?v=5"></script>
 <style>
-  /* Record title override */
-  .record-hero { padding:140px 40px 60px; }
+  /* Record section */
   .record-title { font-size:clamp(48px,7vw,120px); }
-
-  /* Stats strip */
-  .stats { display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
-  .stat { padding:40px; border-right:1px solid var(--line); }
-  .stat:last-child { border-right:none; }
-  .stat-num { font-family:var(--serif); font-size:72px; line-height:0.9; color:var(--accent); letter-spacing:-0.03em; }
-  .stat-label { font-family:var(--mono); font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:var(--ink-60); margin-top:12px; }
-  @media (max-width:900px) { .stats { grid-template-columns:1fr 1fr; } .stat:nth-child(2){border-right:none;} .stat-num{font-size:56px;} }
+  #record-grid { grid-template-columns:1.25fr 1fr; }
+  @media (max-width:900px) { #record-grid { grid-template-columns:1fr !important; gap:48px !important; } }
+  @media (max-width:640px) {
+    #record { padding:112px 0 120px !important; }
+    #record-grid { gap:36px !important; }
+    #record-grid > div:first-child > div:nth-of-type(1) { flex-direction:column !important; align-items:flex-start !important; gap:18px !important; }
+    #record-grid > div:first-child > div:nth-of-type(2) { grid-template-columns:1fr !important; }
+    #guinness-spin { width:72px !important; height:72px !important; top:-16px !important; left:-16px !important; pointer-events:none !important; }
+    #guinness-spin > div { font-size:20px !important; }
+  }
 
   /* Slider */
   .slider-wrap { margin:40px 0 0; position:relative; }
@@ -140,28 +141,65 @@
 </nav>
 
 <!-- HERO -->
-<header class="page-hero record-hero">
-  <div class="page-hero-inner">
-    <div class="eyebrow reveal">Officially Verified · 13 November 2022</div>
-    <h1 class="page-title record-title reveal">Largest <em>blockchain</em> lesson.</h1>
-    <p class="page-lede reveal">
-      On 13 November 2022, David Justin stood before <strong style="color:var(--ink);">897 participants</strong> at MITEC Kuala Lumpur
-      to deliver a <strong style="color:var(--ink);">three-day</strong> structured lesson on blockchain technology
-      — officially verified by Guinness World Records as the largest of its kind anywhere on Earth.
-    </p>
-    <div style="margin-top:40px;display:flex;gap:16px;flex-wrap:wrap;" class="reveal">
-      <a href="#story" class="btn-primary">Read the Story <span aria-hidden="true">→</span></a>
-      <a href="#criteria" class="btn-outline">Verification Criteria</a>
+<section id="record" style="position:relative;padding:140px 0 160px;overflow:hidden;background:radial-gradient(ellipse 40% 60% at 85% 30%,rgba(229,180,106,0.12),transparent 60%),var(--bg)">
+  <div style="max-width:1440px;margin:0 auto;padding:0 40px">
+    <div class="section-label reveal"><span>02</span> Making history in blockchain education</div>
+    <div id="record-grid" style="margin-top:40px;display:grid;grid-template-columns:1.25fr 1fr;gap:80px;align-items:start">
+      <div>
+        <h1 class="record-title reveal" style="font-family:var(--serif);font-size:clamp(48px,6.5vw,108px);font-weight:400;line-height:0.95;letter-spacing:-0.025em;margin:0;color:var(--ink)">
+          The <span style="font-style:italic;color:var(--accent)">largest</span><br>cryptocurrency<br>lesson <span style="font-style:italic">ever</span>.
+        </h1>
+        <div class="reveal" style="display:flex;align-items:flex-end;gap:40px;margin-top:56px;padding-top:28px;border-top:1px solid var(--line)">
+          <div>
+            <div style="font-family:var(--serif);font-size:84px;color:var(--accent);line-height:1;letter-spacing:-0.03em">
+              13·11·22
+            </div>
+            <div style="margin-top:8px;font-family:var(--mono);font-size:10px;letter-spacing:0.2em;color:var(--ink-60);text-transform:uppercase">The date it happened</div>
+          </div>
+          <div style="flex:1;font-family:var(--sans);color:var(--ink-80);font-size:15px;line-height:1.6;max-width:380px">
+            On 13 November 2022, David Justin gathered Kuala Lumpur to set the Guinness World Record for the Largest Cryptocurrency Lesson — a three-day masterclass with 1,000+ attendees in one venue that repositioned Malaysia as a leader in global blockchain education.
+          </div>
+        </div>
+        <div class="reveal" style="margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:0">
+          <div style="padding:24px 16px;border-left:1px solid var(--line);border-right:1px solid var(--line)">
+            <div style="font-family:var(--serif);font-size:44px;color:var(--ink);line-height:1;letter-spacing:-0.02em;font-variant-numeric:tabular-nums">1,000+</div>
+            <div style="margin-top:10px;font-family:var(--mono);font-size:10px;letter-spacing:0.18em;color:var(--ink-60);text-transform:uppercase">Attendees in one venue</div>
+          </div>
+          <div style="padding:24px 16px;border-right:1px solid var(--line)">
+            <div style="font-family:var(--serif);font-size:44px;color:var(--ink);line-height:1;letter-spacing:-0.02em;font-variant-numeric:tabular-nums">3d</div>
+            <div style="margin-top:10px;font-family:var(--mono);font-size:10px;letter-spacing:0.18em;color:var(--ink-60);text-transform:uppercase">Days of masterclass</div>
+          </div>
+          <div style="padding:24px 16px;border-right:1px solid var(--line)">
+            <div style="font-family:var(--serif);font-size:44px;color:var(--ink);line-height:1;letter-spacing:-0.02em;font-variant-numeric:tabular-nums">1<span style="font-style:italic;font-family:var(--serif)">st</span></div>
+            <div style="margin-top:10px;font-family:var(--mono);font-size:10px;letter-spacing:0.18em;color:var(--ink-60);text-transform:uppercase">Record of its kind</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div style="position:relative">
+          <div id="guinness-spin" style="position:absolute;top:-30px;left:-30px;z-index:3;width:130px;height:130px;border-radius:50%;border:1px solid var(--accent);background:var(--chip-bg);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;animation:spin-slow 24s linear infinite">
+            <svg viewBox="0 0 140 140" style="position:absolute;inset:0;width:100%;height:100%">
+              <defs><path id="cpath" d="M 70,70 m -52,0 a 52,52 0 1,1 104,0 a 52,52 0 1,1 -104,0"></path></defs>
+              <text fill="var(--accent)" style="font-family:var(--mono);font-size:9px;letter-spacing:0.3em">
+                <textPath href="#cpath">GUINNESS WORLD RECORD · OFFICIAL HOLDER · 2022 · </textPath>
+              </text>
+            </svg>
+            <div style="font-family:var(--serif);font-style:italic;font-size:34px;color:var(--accent);text-shadow:0 0 24px rgba(229,180,106,0.5)">★</div>
+          </div>
+          <div style="border:1px solid var(--line-strong);padding:32px;background:linear-gradient(180deg,var(--surface-1),var(--surface-2));aspect-ratio:4/5;position:relative">
+            <img src="https://www.david-justin.com/wp-content/uploads/2025/10/guiness-record-1.webp" alt="Guinness certificate" style="width:100%;height:100%;object-fit:contain;display:block">
+          </div>
+          <div style="margin-top:20px;padding:20px;border:1px solid var(--line-strong);display:flex;justify-content:space-between;align-items:center;background:var(--surface-1);gap:16px;flex-wrap:wrap">
+            <div>
+              <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.2em;color:var(--ink-40);text-transform:uppercase">Certification</div>
+              <div style="font-family:var(--serif);font-size:20px;color:var(--ink);margin-top:4px;font-style:italic">Officially Amazing™</div>
+            </div>
+            <div style="font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:0.15em">VERIFIED ↗</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</header>
-
-<!-- STATS -->
-<section class="stats reveal">
-  <div class="stat"><div class="stat-num">897</div><div class="stat-label">Participants · One Class</div></div>
-  <div class="stat"><div class="stat-num">3<span style="font-size:32px;">days</span></div><div class="stat-label">Structured Lesson</div></div>
-  <div class="stat"><div class="stat-num">1</div><div class="stat-label">World Record</div></div>
-  <div class="stat"><div class="stat-num">13·11·22</div><div class="stat-label">Record Date</div></div>
 </section>
 
 <!-- SLIDER -->
