@@ -399,7 +399,7 @@ function Marquee({children,reverse=false,speed=60,style={}}) {
 // ——— Smart image ———
 function SmartImg({src,alt,style,className,label}) {
   const [err,setErr]=useState(false);
-  if(err) return <div className={className} style={{...style,display:'flex',alignItems:'center',justifyContent:'center',background:'repeating-linear-gradient(45deg,var(--surface-1),var(--surface-1) 8px,var(--surface-2) 8px,var(--surface-2) 16px)',color:'var(--ink-40)',fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.1em'}}>{label||alt||'IMAGE'}</div>;
+  if(err) return <div className={className} style={{...style,alignItems:'center',justifyContent:'center',background:'repeating-linear-gradient(45deg,var(--surface-1),var(--surface-1) 8px,var(--surface-2) 8px,var(--surface-2) 16px)',color:'var(--ink-40)',fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.1em'}}>{label||alt||'IMAGE'}</div>;
   return <img src={src} alt={alt||''} className={className} style={style} onError={()=>setErr(true)} loading="lazy"/>;
 }
 
@@ -445,7 +445,7 @@ function Nav() {
         onMouseEnter={e=>{e.currentTarget.style.color='var(--accent)';}}
         onMouseLeave={e=>{e.currentTarget.style.color='var(--ink)';}}>{link.t}</a>
     ))}
-    <div style={{padding:'16px 28px 0',display:'flex',alignItems:'center',gap:16}}>
+    <div style={{padding:'16px 28px 0',alignItems:'center',gap:16}}>
       <a href="enquiry.html" onClick={()=>setMobileOpen(false)} style={{padding:'10px 20px',border:'1px solid var(--accent)',color:'var(--accent)',textDecoration:'none',fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.12em',textTransform:'uppercase'}}>Enquire →</a>
       <button onClick={()=>setMode(isLight?'dark':'light')} aria-label="Toggle theme" style={{all:'unset',cursor:'pointer',width:36,height:36,borderRadius:'50%',border:'1px solid var(--line-strong)',display:'inline-flex',alignItems:'center',justifyContent:'center',color:'var(--ink-80)'}}>
         {isLight
@@ -454,7 +454,7 @@ function Nav() {
       </button>
     </div>
   </div>}
-  <nav style={{position:'fixed',top:0,left:0,right:0,zIndex:50,padding:scrolled?'14px 40px':'28px 40px',transition:'padding .4s,background .4s,border-color .4s',background:scrolled?(isLight?'rgba(246,241,231,0.82)':'rgba(10,9,6,0.78)'):'transparent',backdropFilter:scrolled?'blur(18px) saturate(1.4)':'none',borderBottom:scrolled?'1px solid var(--line)':'1px solid transparent',display:'flex',alignItems:'center',justifyContent:'space-between',fontFamily:'var(--sans)'}}>
+  <nav style={{position:'fixed',top:0,left:0,right:0,zIndex:50,padding:scrolled?'14px 40px':'28px 40px',transition:'padding .4s,background .4s,border-color .4s',background:scrolled?(isLight?'rgba(246,241,231,0.82)':'rgba(10,9,6,0.78)'):'transparent',backdropFilter:scrolled?'blur(18px) saturate(1.4)':'none',borderBottom:scrolled?'1px solid var(--line)':'1px solid transparent',alignItems:'center',justifyContent:'space-between',fontFamily:'var(--sans)'}}>
     <div id="nav-logo" style={{display:'flex',alignItems:'center',gap:12}}>
       <img src="images/dj-logo-horizontal.png?v=3" alt="David Justin" style={{height:23,width:'auto',display:'block'}}/>
     </div>
@@ -516,7 +516,7 @@ function Hero() {
           </p>
         </Reveal>
         <Reveal delay={300}>
-          <div id="hero-trust-bar" style={{marginTop:28,display:'flex',alignItems:'center',gap:14,padding:'10px 16px',border:'1px solid var(--line-strong)',background:'var(--overlay-soft)',backdropFilter:'blur(8px)',flexWrap:'wrap',rowGap:10}}>
+          <div id="hero-trust-bar" style={{marginTop:28,alignItems:'center',gap:14,padding:'10px 16px',border:'1px solid var(--line-strong)',background:'var(--overlay-soft)',backdropFilter:'blur(8px)',flexWrap:'wrap',rowGap:10}}>
             <div style={{display:'flex',alignItems:'center',gap:8}}>
               <span style={{fontFamily:'var(--mono)',fontSize:9,letterSpacing:'0.2em',textTransform:'uppercase',color:'var(--ink-60)'}}>Featured on</span>
               <span style={{fontFamily:'var(--serif)',fontStyle:'italic',fontSize:14,color:'var(--ink)'}}>NST</span>
@@ -567,7 +567,7 @@ function Hero() {
         </Reveal>
       </div>
     </div>
-    <div style={{position:'absolute',bottom:32,left:'50%',transform:'translateX(-50%)',fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.3em',color:'var(--ink-40)',display:'flex',alignItems:'center',gap:12}}>
+    <div style={{position:'absolute',bottom:32,left:'50%',transform:'translateX(-50%)',fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.3em',color:'var(--ink-40)',alignItems:'center',gap:12}}>
       <span>SCROLL</span>
       <span style={{width:1,height:48,background:'linear-gradient(180deg,var(--accent),transparent)',animation:'scroll-hint 2.4s ease-in-out infinite'}}/>
     </div>
@@ -578,13 +578,13 @@ function Hero() {
 function TrustedStrip() {
   const logos=window.DJ_DATA.trustedBy;
   return <section data-mode="dark" style={{padding:'56px 0 64px',borderTop:'1px solid var(--line)',borderBottom:'1px solid var(--line)',background:'var(--surface-1)'}}>
-    <div style={{maxWidth:1440,margin:'0 auto',padding:'0 40px',marginBottom:32,display:'flex',alignItems:'center',gap:16,justifyContent:'space-between',flexWrap:'wrap'}}>
+    <div style={{maxWidth:1440,margin:'0 auto',padding:'0 40px',marginBottom:32,alignItems:'center',gap:16,justifyContent:'space-between',flexWrap:'wrap'}}>
       <SectionLabel num="01">Trusted by partners across Asia</SectionLabel>
       <span style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.22em',color:'var(--ink-40)',textTransform:'uppercase'}}>{String(logos.length).padStart(2,'0')} organisations</span>
     </div>
     <Marquee speed={55}>
       {logos.map((l,i)=>(
-        <div key={i} style={{padding:'0 64px',display:'flex',alignItems:'center',justifyContent:'center',minWidth:320,height:160,flexShrink:0}} title={l.name}>
+        <div key={i} style={{padding:'0 64px',alignItems:'center',justifyContent:'center',minWidth:320,height:160,flexShrink:0}} title={l.name}>
           <img src={l.src} alt={l.name} style={{maxHeight:l.maxH||(l.colored?140:110),maxWidth:280,objectFit:'contain',opacity:l.colored?0.95:0.82,filter:l.colored?'none':'brightness(1.1)',transition:'opacity .3s'}}/>
         </div>
       ))}
@@ -630,7 +630,7 @@ function Record() {
         </div>
         <Reveal delay={180} y={40}>
           <div style={{position:'relative'}}>
-            <div id="guinness-spin" style={{position:'absolute',top:-30,left:-30,zIndex:3,width:130,height:130,borderRadius:'50%',border:'1px solid var(--accent)',background:'var(--chip-bg)',backdropFilter:'blur(10px)',display:'flex',alignItems:'center',justifyContent:'center',animation:'spin-slow 24s linear infinite'}}>
+            <div id="guinness-spin" style={{position:'absolute',top:-30,left:-30,zIndex:3,width:130,height:130,borderRadius:'50%',border:'1px solid var(--accent)',background:'var(--chip-bg)',backdropFilter:'blur(10px)',alignItems:'center',justifyContent:'center',animation:'spin-slow 24s linear infinite'}}>
               <svg viewBox="0 0 140 140" style={{position:'absolute',inset:0,width:'100%',height:'100%'}}>
                 <defs><path id="cpath" d="M 70,70 m -52,0 a 52,52 0 1,1 104,0 a 52,52 0 1,1 -104,0"/></defs>
                 <text fill="var(--accent)" style={{fontFamily:'var(--mono)',fontSize:9,letterSpacing:'0.3em'}}>
@@ -642,7 +642,7 @@ function Record() {
             <div style={{border:'1px solid var(--line-strong)',padding:32,background:'linear-gradient(180deg,var(--surface-1),var(--surface-2))',aspectRatio:'4/5',position:'relative'}}>
               <SmartImg src="https://www.david-justin.com/wp-content/uploads/2025/10/guiness-record-1.webp" alt="Guinness certificate" label="GUINNESS CERTIFICATE" style={{width:'100%',height:'100%',objectFit:'contain'}}/>
             </div>
-            <div style={{marginTop:20,padding:20,border:'1px solid var(--line-strong)',display:'flex',justifyContent:'space-between',alignItems:'center',background:'var(--surface-1)'}}>
+            <div style={{marginTop:20,padding:20,border:'1px solid var(--line-strong)',justifyContent:'space-between',alignItems:'center',background:'var(--surface-1)'}}>
               <div>
                 <div style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.2em',color:'var(--ink-40)',textTransform:'uppercase'}}>Certification</div>
                 <div style={{fontFamily:'var(--serif)',fontSize:20,color:'var(--ink)',marginTop:4,fontStyle:'italic'}}>Officially Amazing™</div>
@@ -666,10 +666,10 @@ function Awards() {
         {awards.map((a,i)=>{
           const isExternal=a.href && /^https?:/.test(a.href);
           const Card=(
-            <div style={{padding:'48px 32px',borderLeft:i>0?'1px solid var(--line)':'none',display:'flex',flexDirection:'column',gap:14,transition:'background .2s',height:'100%',boxSizing:'border-box'}}
+            <div style={{padding:'48px 32px',borderLeft:i>0?'1px solid var(--line)':'none',flexDirection:'column',gap:14,transition:'background .2s',height:'100%',boxSizing:'border-box'}}
               onMouseEnter={e=>a.href&&(e.currentTarget.style.background='rgba(229,180,106,0.04)')}
               onMouseLeave={e=>a.href&&(e.currentTarget.style.background='')}>
-              <div style={{width:48,height:48,border:'1px solid var(--accent)',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',color:'var(--accent)',fontFamily:'var(--serif)',fontSize:20,fontStyle:'italic'}}>{String(i+1).padStart(2,'0')}</div>
+              <div style={{width:48,height:48,border:'1px solid var(--accent)',borderRadius:'50%',alignItems:'center',justifyContent:'center',color:'var(--accent)',fontFamily:'var(--serif)',fontSize:20,fontStyle:'italic'}}>{String(i+1).padStart(2,'0')}</div>
               <div style={{fontFamily:'var(--serif)',fontSize:32,color:'var(--ink)',lineHeight:1.05,letterSpacing:'-0.015em'}}>{a.label}</div>
               <div style={{fontFamily:'var(--mono)',fontSize:11,color:'var(--ink-60)',letterSpacing:'0.12em',textTransform:'uppercase'}}>{a.sub}</div>
               {a.href && <div style={{marginTop:6,fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.18em',textTransform:'uppercase',color:'var(--accent)',display:'inline-flex',alignItems:'center',gap:8}}>{isExternal?'View source':'See coverage'} <span style={{fontFamily:'serif'}}>→</span></div>}
@@ -796,7 +796,7 @@ function Floor() {
       </Reveal>
 
       {/* Counter + progress */}
-      <div style={{maxWidth:1440,margin:'40px auto 0',padding:'0 40px',display:'flex',alignItems:'center',justifyContent:'center',gap:20,flexWrap:'wrap'}}>
+      <div style={{maxWidth:1440,margin:'40px auto 0',padding:'0 40px',alignItems:'center',justifyContent:'center',gap:20,flexWrap:'wrap'}}>
         <span style={{fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.24em',color:'var(--accent)',fontVariantNumeric:'tabular-nums'}}>{String(current+1).padStart(2,'0')}</span>
         <div style={{flex:'0 1 320px',height:1,background:'var(--line-strong)',position:'relative',overflow:'hidden'}}>
           <div key={current+'-'+paused} style={{position:'absolute',inset:0,background:'var(--accent)',transformOrigin:'left',transform:'scaleX(0)',animation:paused?'none':'floor-bar 3500ms linear forwards'}}/>
@@ -843,7 +843,7 @@ function Press() {
             <p style={{fontFamily:'var(--sans)',color:'var(--ink-80)',fontSize:17,lineHeight:1.6,margin:0}}>
               From The Straits Times to 南洋商报 — David Justin's record-breaking cryptocurrency lesson gained nationwide media recognition, highlighting his leadership in blockchain education.
             </p>
-            <div style={{marginTop:24,display:'flex',alignItems:'center',gap:12,fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.22em',color:'var(--ink-60)',textTransform:'uppercase'}}>
+            <div style={{marginTop:24,alignItems:'center',gap:12,fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.22em',color:'var(--ink-60)',textTransform:'uppercase'}}>
               <span style={{width:24,height:1,background:'var(--accent)'}}/>
               <span>{String(media.length).padStart(2,'0')} features · 2025</span>
             </div>
@@ -864,7 +864,7 @@ function Press() {
             {/* Bottom gradient for title */}
             <div style={{position:'absolute',left:0,right:0,bottom:0,height:260,background:'linear-gradient(180deg,transparent 0%,rgba(10,9,6,0.96) 75%)',pointerEvents:'none'}}/>
             {/* Outlet + index */}
-            <div style={{position:'absolute',top:24,left:24,right:24,display:'flex',alignItems:'center',justifyContent:'space-between',zIndex:3}}>
+            <div style={{position:'absolute',top:24,left:24,right:24,alignItems:'center',justifyContent:'space-between',zIndex:3}}>
               <div style={{padding:'10px 16px',background:'var(--accent)',fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.22em',color:'var(--ink-strong)',textTransform:'uppercase',fontWeight:700}}>{feature.outlet}</div>
               <div style={{fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.22em',color:'var(--ink)',textTransform:'uppercase',padding:'10px 14px',background:'rgba(10,9,6,0.6)',backdropFilter:'blur(6px)'}}>{String(active+1).padStart(2,'0')} / {String(media.length).padStart(2,'0')} · {feature.year}</div>
             </div>
@@ -898,7 +898,7 @@ function Press() {
                     <div style={{position:'absolute',inset:0,background:isActive?'transparent':'var(--bg-tint)',transition:'background .4s'}}/>
                   </div>
                   {/* Text side */}
-                  <div style={{padding:'16px 22px',display:'flex',flexDirection:'column',justifyContent:'center',gap:8,minWidth:0}}>
+                  <div style={{padding:'16px 22px',flexDirection:'column',justifyContent:'center',gap:8,minWidth:0}}>
                     <div style={{display:'flex',alignItems:'center',gap:10}}>
                       <span style={{fontFamily:'var(--mono)',fontSize:9,letterSpacing:'0.24em',color:isActive?'var(--accent)':'var(--ink-60)',textTransform:'uppercase',fontWeight:700}}>{String(i+1).padStart(2,'0')}</span>
                       <span style={{width:20,height:1,background:isActive?'var(--accent)':'var(--line-strong)'}}/>
@@ -915,7 +915,7 @@ function Press() {
       </div>
 
       {/* Footer stat strip — sits on the brown fade */}
-      <div style={{marginTop:80,padding:'36px 0 0',borderTop:'1px solid var(--line)',display:'flex',alignItems:'center',justifyContent:'space-between',gap:24,flexWrap:'wrap'}}>
+      <div style={{marginTop:80,padding:'36px 0 0',borderTop:'1px solid var(--line)',alignItems:'center',justifyContent:'space-between',gap:24,flexWrap:'wrap'}}>
         <div id="press-stats" style={{display:'flex',alignItems:'center',gap:40,flexWrap:'wrap'}}>
           {[
             {k:'5',l:'Major features'},
@@ -928,7 +928,7 @@ function Press() {
             </div>
           ))}
         </div>
-        <div style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.22em',color:'var(--ink-60)',textTransform:'uppercase',display:'flex',alignItems:'center',gap:10}}>
+        <div style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.22em',color:'var(--ink-60)',textTransform:'uppercase',alignItems:'center',gap:10}}>
           <span style={{width:6,height:6,borderRadius:'50%',background:'var(--accent)',boxShadow:'0 0 10px var(--accent)'}}/>
           Tap any clipping to view the feature
         </div>
@@ -996,13 +996,13 @@ function Testimonials() {
       <div id="testimonials-grid" style={{marginTop:60,display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:0,borderTop:'1px solid var(--line)',borderLeft:'1px solid var(--line)'}}>
         {testimonials.map((t,i)=>(
           <Reveal key={i} delay={(i%3)*80}>
-            <article style={{padding:'36px 32px',borderRight:'1px solid var(--line)',borderBottom:'1px solid var(--line)',display:'flex',flexDirection:'column',gap:20,height:'100%',position:'relative',transition:'background .4s',minHeight:340,background:'var(--bg-tint)',backdropFilter:'blur(6px)'}}
+            <article style={{padding:'36px 32px',borderRight:'1px solid var(--line)',borderBottom:'1px solid var(--line)',flexDirection:'column',gap:20,height:'100%',position:'relative',transition:'background .4s',minHeight:340,background:'var(--bg-tint)',backdropFilter:'blur(6px)'}}
               onMouseEnter={e=>{e.currentTarget.style.background='rgba(229,180,106,0.07)';}}
               onMouseLeave={e=>{e.currentTarget.style.background='var(--bg-tint)';}}>
               <div style={{fontFamily:'var(--serif)',fontSize:64,fontStyle:'italic',color:'var(--accent)',lineHeight:0.5,height:28}}>"</div>
               <p style={{margin:0,fontFamily:t.lang==='zh'?'var(--serif-cn,var(--sans))':'var(--sans)',fontSize:15,lineHeight:1.65,color:'var(--ink-80)',flex:1}}>{t.quote}</p>
-              <div style={{paddingTop:20,borderTop:'1px solid var(--line)',display:'flex',alignItems:'center',gap:14}}>
-                <div style={{width:44,height:44,borderRadius:'50%',background:'linear-gradient(135deg,rgba(229,180,106,0.22),var(--surface-2))',border:'1px solid var(--accent)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'var(--serif)',fontSize:17,fontStyle:'italic',color:'var(--accent)',flexShrink:0}}>
+              <div style={{paddingTop:20,borderTop:'1px solid var(--line)',alignItems:'center',gap:14}}>
+                <div style={{width:44,height:44,borderRadius:'50%',background:'linear-gradient(135deg,rgba(229,180,106,0.22),var(--surface-2))',border:'1px solid var(--accent)',alignItems:'center',justifyContent:'center',fontFamily:'var(--serif)',fontSize:17,fontStyle:'italic',color:'var(--accent)',flexShrink:0}}>
                   {t.name.split(' ').map(w=>w[0]).slice(0,2).join('')}
                 </div>
                 <div>
@@ -1038,11 +1038,11 @@ function Exchanges() {
       <div id="exchanges-grid" style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:0,borderTop:'1px solid var(--line)',borderLeft:'1px solid var(--line)'}}>
         {exchanges.map((e,i)=>(
           <Reveal key={i} delay={i*80}>
-            <div style={{padding:'64px 32px',borderRight:'1px solid var(--line)',borderBottom:'1px solid var(--line)',display:'flex',flexDirection:'column',gap:24,transition:'background .4s',minHeight:220}}
+            <div style={{padding:'64px 32px',borderRight:'1px solid var(--line)',borderBottom:'1px solid var(--line)',flexDirection:'column',gap:24,transition:'background .4s',minHeight:220}}
               onMouseEnter={e2=>{e2.currentTarget.style.background='var(--surface-1)';}}
               onMouseLeave={e2=>{e2.currentTarget.style.background='';}}>
               <div style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.2em',color:'var(--ink-40)'}}>0{i+1}</div>
-              <div style={{flex:1,display:'flex',alignItems:'center'}}>
+              <div style={{flex:1,alignItems:'center'}}>
                 <SmartImg src={e.src} alt={e.name} label={e.name} className="exchange-logo" style={{maxHeight:52,maxWidth:'100%',objectFit:'contain'}}/>
               </div>
               <div style={{fontFamily:'var(--serif)',fontSize:22,color:'var(--ink)',fontStyle:'italic'}}>{e.name}</div>
@@ -1116,7 +1116,7 @@ function Vlog() {
               style={{width:'100%',height:'100%',border:'none'}}
             />
           </div>
-          <div style={{marginTop:16,padding:'18px 22px',border:'1px solid var(--line-strong)',background:'var(--chip-bg)',backdropFilter:'blur(10px)',display:'flex',alignItems:'center',justifyContent:'space-between',gap:16,flexWrap:'wrap'}}>
+          <div style={{marginTop:16,padding:'18px 22px',border:'1px solid var(--line-strong)',background:'var(--chip-bg)',backdropFilter:'blur(10px)',alignItems:'center',justifyContent:'space-between',gap:16,flexWrap:'wrap'}}>
             <div style={{minWidth:0,flex:1}}>
               <div style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.2em',color:'var(--accent)'}}>NOW PLAYING · EP {String(active+1).padStart(2,'0')}</div>
               <div style={{fontFamily:'var(--serif)',fontStyle:'italic',fontSize:22,color:'var(--ink)',marginTop:4,lineHeight:1.25}}>{titles[activeVid.id]||activeVid.t}</div>
@@ -1131,7 +1131,7 @@ function Vlog() {
               <button onClick={()=>setActive(i)} style={{all:'unset',cursor:'pointer',width:'100%',display:'grid',gridTemplateColumns:'140px 1fr',gap:16,padding:10,border:'1px solid var(--line-strong)',background:active===i?'rgba(229,180,106,0.1)':'rgba(10,9,6,0.7)',backdropFilter:'blur(10px)',transition:'all .3s'}}>
                 <div style={{position:'relative',aspectRatio:'16/9',overflow:'hidden',background:'var(--surface-2)'}}>
                   <SmartImg src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt={titles[v.id]||v.t} label="VIDEO" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
-                  {active===i && <div style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center',background:'rgba(229,180,106,0.4)',color:'var(--bg)',fontSize:22}}>▶</div>}
+                  {active===i && <div style={{position:'absolute',inset:0,alignItems:'center',justifyContent:'center',background:'rgba(229,180,106,0.4)',color:'var(--bg)',fontSize:22}}>▶</div>}
                 </div>
                 <div style={{display:'flex',flexDirection:'column',justifyContent:'center',gap:4,textAlign:'left',minWidth:0}}>
                   <div style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.18em',color:active===i?'var(--accent)':'var(--ink-60)',textTransform:'uppercase'}}>EP {String(i+1).padStart(2,'0')}</div>
@@ -1172,7 +1172,7 @@ function LumaEvents() {
       <div id="luma-grid" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:0,borderTop:'1px solid var(--line)',borderLeft:'1px solid var(--line)'}}>
         {lumaEvents.map((e,i)=>(
           <Reveal key={i} delay={i*90}>
-            <a href={e.url} target="_blank" rel="noreferrer" style={{textDecoration:'none',color:'inherit',display:'flex',flexDirection:'column',height:'100%',borderRight:'1px solid var(--line)',borderBottom:'1px solid var(--line)',transition:'background .4s'}}
+            <a href={e.url} target="_blank" rel="noreferrer" style={{textDecoration:'none',color:'inherit',flexDirection:'column',height:'100%',borderRight:'1px solid var(--line)',borderBottom:'1px solid var(--line)',transition:'background .4s'}}
               onMouseEnter={ev=>{ev.currentTarget.style.background='rgba(229,180,106,0.05)';}}
               onMouseLeave={ev=>{ev.currentTarget.style.background='transparent';}}>
               <div style={{position:'relative',aspectRatio:'1/1',overflow:'hidden',borderBottom:'1px solid var(--line)',background:'var(--surface-2)',padding:40}}>
@@ -1184,7 +1184,7 @@ function LumaEvents() {
                 </div>
                 <div style={{position:'absolute',top:16,right:16,padding:'6px 10px',background:'rgba(229,180,106,0.88)',color:'var(--bg)',fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.12em',textTransform:'uppercase'}}>{e.price}</div>
               </div>
-              <div style={{padding:'28px 28px 32px',display:'flex',flexDirection:'column',gap:16,flex:1}}>
+              <div style={{padding:'28px 28px 32px',flexDirection:'column',gap:16,flex:1}}>
                 <div style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.2em',color:'var(--accent)',textTransform:'uppercase'}}>{e.tag}</div>
                 <div style={{fontFamily:'var(--serif)',fontSize:26,color:'var(--ink)',fontStyle:'italic',lineHeight:1.15}}>{e.title}</div>
                 <p style={{fontFamily:'var(--sans)',fontSize:14,color:'var(--ink-80)',lineHeight:1.6,margin:0,flex:1}}>{e.blurb}</p>
@@ -1192,7 +1192,7 @@ function LumaEvents() {
                   <div><div style={{color:'var(--ink-40)',fontSize:9,marginBottom:4}}>WHEN</div>{e.time}</div>
                   <div><div style={{color:'var(--ink-40)',fontSize:9,marginBottom:4}}>WHERE</div>{e.location}</div>
                 </div>
-                <div style={{marginTop:6,fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.14em',color:'var(--accent)',textTransform:'uppercase',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+                <div style={{marginTop:6,fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.14em',color:'var(--accent)',textTransform:'uppercase',alignItems:'center',justifyContent:'space-between'}}>
                   <span>RSVP on Luma</span><span>↗</span>
                 </div>
               </div>
@@ -1226,7 +1226,7 @@ function FAQ() {
             <p style={{fontFamily:'var(--sans)',color:'var(--ink-80)',fontSize:15,lineHeight:1.65,marginTop:28,maxWidth:360}}>
               Common questions about David, his record, and the academy's mission to advance blockchain education.
             </p>
-            <div style={{marginTop:32,paddingTop:24,borderTop:'1px solid var(--line)',display:'flex',alignItems:'center',gap:10,fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.22em',color:'var(--ink-60)',textTransform:'uppercase'}}>
+            <div style={{marginTop:32,paddingTop:24,borderTop:'1px solid var(--line)',alignItems:'center',gap:10,fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.22em',color:'var(--ink-60)',textTransform:'uppercase'}}>
               <span style={{width:6,height:6,borderRadius:'50%',background:'var(--accent)'}}/>
               Still curious? <a href="enquiry.html" style={{color:'var(--accent)',textDecoration:'none',borderBottom:'1px solid var(--accent)',marginLeft:4}}>Send a note →</a>
             </div>
@@ -1234,12 +1234,12 @@ function FAQ() {
           <div style={{borderTop:'1px solid var(--line)'}}>
             {faq.map((item,i)=>(
               <div key={i} style={{borderBottom:'1px solid var(--line)'}}>
-                <button onClick={()=>setOpen(open===i?-1:i)} style={{all:'unset',cursor:'pointer',width:'100%',padding:'28px 0',display:'flex',alignItems:'center',justifyContent:'space-between',gap:20}}>
+                <button onClick={()=>setOpen(open===i?-1:i)} style={{all:'unset',cursor:'pointer',width:'100%',padding:'28px 0',alignItems:'center',justifyContent:'space-between',gap:20}}>
                   <span style={{display:'flex',alignItems:'baseline',gap:20}}>
                     <span style={{fontFamily:'var(--mono)',fontSize:11,color:'var(--accent)',letterSpacing:'0.14em'}}>{String(i+1).padStart(2,'0')}</span>
                     <span style={{fontFamily:'var(--serif)',fontSize:24,color:'var(--ink)',fontStyle:'italic',lineHeight:1.2}}>{item.q}</span>
                   </span>
-                  <span style={{width:36,height:36,border:'1px solid var(--line-strong)',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',color:'var(--accent)',fontFamily:'var(--mono)',fontSize:16,transition:'transform .4s,background .3s,border-color .3s',transform:open===i?'rotate(45deg)':'rotate(0)',background:open===i?'var(--accent)':'transparent',borderColor:open===i?'var(--accent)':'var(--line-strong)',color:open===i?'var(--ink)':'var(--accent)',flexShrink:0}}>+</span>
+                  <span style={{width:36,height:36,border:'1px solid var(--line-strong)',borderRadius:'50%',alignItems:'center',justifyContent:'center',color:'var(--accent)',fontFamily:'var(--mono)',fontSize:16,transition:'transform .4s,background .3s,border-color .3s',transform:open===i?'rotate(45deg)':'rotate(0)',background:open===i?'var(--accent)':'transparent',borderColor:open===i?'var(--accent)':'var(--line-strong)',color:open===i?'var(--ink)':'var(--accent)',flexShrink:0}}>+</span>
                 </button>
                 <div style={{maxHeight:open===i?400:0,overflow:'hidden',transition:'max-height .5s cubic-bezier(.22,.61,.36,1)'}}>
                   <p style={{margin:0,padding:'0 0 28px 48px',maxWidth:620,fontFamily:'var(--sans)',fontSize:15,lineHeight:1.7,color:'var(--ink-80)'}}>{item.a}</p>
@@ -1271,7 +1271,7 @@ function Newsletter() {
         </p>
       </Reveal>
       <Reveal delay={340}>
-        <form onSubmit={e=>{e.preventDefault();if(email)setSent(true);}} style={{marginTop:48,display:'flex',gap:0,maxWidth:560,marginLeft:'auto',marginRight:'auto',border:'1px solid var(--line-strong)',background:'rgba(10,9,6,0.75)',backdropFilter:'blur(14px)'}}>
+        <form onSubmit={e=>{e.preventDefault();if(email)setSent(true);}} style={{marginTop:48,gap:0,maxWidth:560,marginLeft:'auto',marginRight:'auto',border:'1px solid var(--line-strong)',background:'rgba(10,9,6,0.75)',backdropFilter:'blur(14px)'}}>
           <input type="email" required value={email} onChange={e=>setEmail(e.target.value)} placeholder="your@email.com" style={{all:'unset',flex:1,padding:'20px 24px',fontFamily:'var(--sans)',fontSize:15,color:'var(--ink)'}}/>
           <button type="submit" style={{all:'unset',cursor:'pointer',padding:'20px 32px',background:'var(--accent)',color:'var(--bg)',fontFamily:'var(--mono)',fontSize:12,letterSpacing:'0.14em',textTransform:'uppercase',fontWeight:500,transition:'background .3s'}}>{sent?'✓ Subscribed':'Subscribe ↗'}</button>
         </form>
@@ -1323,7 +1323,7 @@ function Footer() {
           </div>
         ))}
       </div>
-      <div style={{paddingTop:32,borderTop:'1px solid var(--line)',display:'flex',justifyContent:'space-between',alignItems:'center',fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.14em',color:'var(--ink-40)',textTransform:'uppercase',flexWrap:'wrap',gap:16}}>
+      <div style={{paddingTop:32,borderTop:'1px solid var(--line)',justifyContent:'space-between',alignItems:'center',fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.14em',color:'var(--ink-40)',textTransform:'uppercase',flexWrap:'wrap',gap:16}}>
         <div>© DAVID-JUSTIN SDN BHD · MMXXV · ALL RIGHTS RESERVED</div>
         <div>KL ↔ SGP ↔ TYO</div>
       </div>
