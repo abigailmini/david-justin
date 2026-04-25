@@ -1461,28 +1461,19 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 })();
 </script>
 <script>
-function fixCircles(){
-  var els = document.querySelectorAll('div');
-  for(var i=0;i<els.length;i++){
-    var el=els[i];
-    var w=el.offsetWidth;
-    if(w>=44 && w<=48 && el.style.borderRadius==='50%'){
-      el.style.setProperty('position','relative','important');
-      el.style.setProperty('overflow','hidden','important');
-      // Wrap text in a centered span if not already wrapped
-      if(!el.querySelector('.circle-fix')){
-        var txt=el.textContent;
-        el.textContent='';
-        var span=document.createElement('span');
-        span.className='circle-fix';
-        span.textContent=txt;
-        span.style.cssText='position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);line-height:1;font-style:italic;';
-        el.appendChild(span);
-      }
+function fixAll(){
+  document.querySelectorAll('div,article').forEach(function(el){
+    var s=el.style;
+    if((s.alignItems||s.justifyContent||s.flexDirection||s.gap||s.flexWrap||s.flexShrink) && !s.display){
+      el.style.setProperty('display','flex','important');
     }
-  }
+    if(el.style.borderRadius==='50%' && el.offsetWidth>=40 && el.offsetWidth<=50){
+      el.style.setProperty('display','grid','important');
+      el.style.setProperty('place-items','center','important');
+    }
+  });
 }
-setInterval(fixCircles,500);
+setInterval(fixAll,400);
 </script>
 </body>
 </html>
