@@ -241,8 +241,16 @@
     }
     #nav-desktop-links { display:none !important; }
   }
-  /* ——— Circle fix — force flex centering ——— */
+  /* ——— Circle fix — force ALL circles to center content ——— */
   .circle-center { display:flex !important; align-items:center !important; justify-content:center !important; }
+  /* Awards: number circles (01, 02, 03) */
+  .grid-3col article > a > div > div:first-child,
+  .grid-3col article > div > div:first-child,
+  .grid-3col > div > a > div > div:first-child,
+  .grid-3col > div > div > div:first-child { display:flex !important; align-items:center !important; justify-content:center !important; }
+  /* Testimonials: avatar circles + footer row */
+  #testimonials-grid article > div:last-child { display:flex !important; align-items:center !important; }
+  #testimonials-grid article > div:last-child > div:first-child { display:flex !important; align-items:center !important; justify-content:center !important; }
 
   /* ——— On the Floor — coverflow ——— */
   .floor-scrim { background:linear-gradient(180deg,rgba(10,9,6,0.92) 0%,rgba(10,9,6,0.88) 45%,rgba(10,9,6,0.94) 100%); }
