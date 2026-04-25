@@ -1465,12 +1465,11 @@ function fixCircles(){
     var el=els[i];
     var w=el.offsetWidth;
     if(w>=44 && w<=48 && el.style.borderRadius==='50%'){
-      el.style.setProperty('display','flex','important');
-      el.style.setProperty('align-items','center','important');
-      el.style.setProperty('justify-content','center','important');
+      el.style.setProperty('display','grid','important');
+      el.style.setProperty('place-items','center','important');
       el.style.setProperty('line-height','1','important');
-      el.style.setProperty('text-align','center','important');
       el.style.setProperty('padding','0','important');
+      el.style.setProperty('font-style','normal','important');
     }
   }
 }
