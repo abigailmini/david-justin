@@ -475,7 +475,7 @@ function Nav() {
         onMouseLeave={e=>{e.target.style.background='rgba(229,180,106,0.06)';e.target.style.color='var(--accent)';}}>Enquire →</a>
     </div>
     {/* Hamburger — mobile only */}
-    <button id="nav-hamburger" onClick={()=>setMobileOpen(o=>!o)} aria-label="Toggle navigation" style={{all:'unset',cursor:'pointer',flexShrink:0,border:'1px solid var(--accent)',borderRadius:0,padding:'8px 12px',background:'rgba(229,180,106,0.06)',alignItems:'center',justifyContent:'center',fontSize:20,color:'var(--accent)',lineHeight:1,boxSizing:'border-box',alignSelf:'center'}}>
+    <button id="nav-hamburger" onClick={()=>setMobileOpen(o=>!o)} aria-label="Toggle navigation" style={{cursor:'pointer',flexShrink:0,border:'1px solid var(--accent)',borderRadius:0,padding:'8px 12px',background:'rgba(229,180,106,0.06)',alignItems:'center',justifyContent:'center',fontSize:20,color:'var(--accent)',lineHeight:1,boxSizing:'border-box',alignSelf:'center'}}>
       {mobileOpen ? '✕' : '☰'}
     </button>
   </nav>
