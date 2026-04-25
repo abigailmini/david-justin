@@ -1465,11 +1465,18 @@ function fixCircles(){
     var el=els[i];
     var w=el.offsetWidth;
     if(w>=44 && w<=48 && el.style.borderRadius==='50%'){
-      el.style.setProperty('display','grid','important');
-      el.style.setProperty('place-items','center','important');
-      el.style.setProperty('line-height','1','important');
-      el.style.setProperty('padding','0','important');
-      el.style.setProperty('font-style','normal','important');
+      el.style.setProperty('position','relative','important');
+      el.style.setProperty('overflow','hidden','important');
+      // Wrap text in a centered span if not already wrapped
+      if(!el.querySelector('.circle-fix')){
+        var txt=el.textContent;
+        el.textContent='';
+        var span=document.createElement('span');
+        span.className='circle-fix';
+        span.textContent=txt;
+        span.style.cssText='position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);line-height:1;font-style:italic;';
+        el.appendChild(span);
+      }
     }
   }
 }
