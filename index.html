@@ -712,11 +712,11 @@ function Awards() {
         {awards.map((a,i)=>{
           const isExternal=a.href && /^https?:/.test(a.href);
           const Card=(
-            <div style={{padding:'48px 32px',borderLeft:i>0?'1px solid var(--line)':'none',flexDirection:'column',gap:14,transition:'background .2s',height:'100%',boxSizing:'border-box'}}
+            <div style={{padding:'48px 32px',borderLeft:i>0?'1px solid var(--line)':'none',display:'flex',flexDirection:'column',gap:14,transition:'background .2s',height:'100%',boxSizing:'border-box'}}
               onMouseEnter={e=>a.href&&(e.currentTarget.style.background='rgba(229,180,106,0.04)')}
               onMouseLeave={e=>a.href&&(e.currentTarget.style.background='')}>
-              <div style={{width:48,height:48,border:'1px solid var(--accent)',borderRadius:'50%',alignItems:'center',justifyContent:'center',color:'var(--accent)',fontFamily:'var(--serif)',fontSize:20,fontStyle:'italic'}}>{String(i+1).padStart(2,'0')}</div>
-              <div style={{fontFamily:'var(--serif)',fontSize:32,color:'var(--ink)',lineHeight:1.05,letterSpacing:'-0.015em'}}>{a.label}</div>
+              <div style={{width:48,height:48,border:'1px solid var(--accent)',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',color:'var(--accent)',fontFamily:'var(--serif)',fontSize:20,fontStyle:'italic'}}>{String(i+1).padStart(2,'0')}</div>
+              <div style={{fontFamily:'var(--serif)',fontSize:32,color:'var(--ink)',lineHeight:1.05,letterSpacing:'-0.015em',marginTop:14}}>{a.label}</div>
               <div style={{fontFamily:'var(--mono)',fontSize:11,color:'var(--ink-60)',letterSpacing:'0.12em',textTransform:'uppercase'}}>{a.sub}</div>
               {a.href && <div style={{marginTop:6,fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.18em',textTransform:'uppercase',color:'var(--accent)',display:'inline-flex',alignItems:'center',gap:8}}>{isExternal?'View source':'See coverage'} <span style={{fontFamily:'serif'}}>→</span></div>}
             </div>
