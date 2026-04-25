@@ -1,0 +1,4 @@
+[style*="align-items"] { display: flex !important; }
+[style*="flex-direction"] { display: flex !important; }
+[style*="flex-wrap"] { display: flex !important; }
+[style*="border-radius: 50%"][style*="justify-content"] { display: grid !important; place-items: center !important; }
