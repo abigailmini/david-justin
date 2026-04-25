@@ -1060,7 +1060,13 @@ function Vlog() {
   const [active,setActive]=useState(0);
   const [titles,setTitles]=useState({});
   const activeVid=youtubeVideos[active];
-  const isMobile = window.innerWidth <= 768;
+  const [isMobile,setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(()=>{
+    const onResize = ()=> setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', onResize);
+    return ()=> window.removeEventListener('resize', onResize);
+  },[]);
 
   useEffect(()=>{
     youtubeVideos.forEach(v=>{
