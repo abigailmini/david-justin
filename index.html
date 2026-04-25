@@ -1459,19 +1459,20 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 })();
 </script>
 <script>
-// Fix circles after React renders
 function fixCircles(){
-  document.querySelectorAll('*').forEach(function(el){
-    var s = getComputedStyle(el);
-    if(s.borderRadius==='50%' && el.offsetWidth>30 && el.offsetWidth<60){
+  var els = document.querySelectorAll('div');
+  for(var i=0;i<els.length;i++){
+    var el=els[i];
+    var w=el.offsetWidth;
+    if(w>=44 && w<=48 && el.style.borderRadius==='50%'){
       el.style.setProperty('display','flex','important');
       el.style.setProperty('align-items','center','important');
       el.style.setProperty('justify-content','center','important');
     }
-  });
+  }
 }
-setTimeout(fixCircles,1500);
-setTimeout(fixCircles,3000);
+new MutationObserver(function(){fixCircles();}).observe(document.body,{childList:true,subtree:true});
+window.addEventListener('load',function(){fixCircles();setTimeout(fixCircles,500);setTimeout(fixCircles,2000);setTimeout(fixCircles,5000);});
 </script>
 </body>
 </html>
