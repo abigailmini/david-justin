@@ -29,468 +29,360 @@
 <link rel="stylesheet" href="assets/shell.css?v=5">
 <script src="assets/theme.js?v=5"></script>
 <style>
-  .press-shell {
-    padding: 0 40px;
+  /* Featured hero card */
+  .featured-grid {
+    display:grid; grid-template-columns:1.3fr 1fr; gap:0;
+    border:1px solid var(--line-strong); background:var(--surface-1);
+    overflow:hidden;
   }
-  .press-intro {
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 0 0 72px;
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 60px;
-    align-items: end;
+  @media (max-width:900px) { .featured-grid { grid-template-columns:1fr; } }
+  .featured-cover {
+    min-height:520px; position:relative;
+    background:var(--surface-2);
+    display:flex; flex-direction:column; justify-content:space-between;
+    padding:48px; overflow:hidden;
   }
-  .press-intro-head {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.24em;
-    color: var(--accent);
-    text-transform: uppercase;
-    font-weight: 600;
+  [data-mode="dark"] .featured-cover {
+    background:linear-gradient(135deg, #1a1310 0%, #0A0906 60%, #15110c 100%);
   }
-  .press-intro-head span:last-child {
-    flex: 0 0 40px;
-    height: 1px;
-    background: var(--line-strong);
+  [data-mode="light"] .featured-cover {
+    background:linear-gradient(135deg, #EDE6D6 0%, #E2D9C4 60%, #D8CDB5 100%);
   }
-  .press-intro-title {
-    font-family: var(--serif);
-    font-weight: 400;
-    margin: 0;
-    font-size: clamp(52px, 7vw, 120px);
-    line-height: 0.92;
-    letter-spacing: -0.03em;
-    color: var(--ink);
+  .featured-cover::before {
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 80% 20%, rgba(229,180,106,0.15), transparent 40%),
+      repeating-linear-gradient(0deg, transparent 0, transparent 2px, rgba(242,236,224,0.02) 2px, rgba(242,236,224,0.02) 3px);
   }
-  .press-intro-title em {
-    font-style: italic;
-    color: var(--accent);
+  .featured-cover-inner { position:relative; z-index:2; }
+  .featured-masthead {
+    font-family:var(--serif-cn, "Noto Serif SC"), serif;
+    font-size:64px; line-height:1; color:var(--ink); font-weight:500;
+    letter-spacing:-0.02em; margin-bottom:8px;
   }
-  .press-intro-copy {
-    border-left: 1px solid var(--line);
-    padding-left: 28px;
-    max-width: 520px;
-    justify-self: end;
+  .featured-masthead-sub { font-family:var(--mono); font-size:11px; letter-spacing:0.26em; text-transform:uppercase; color:var(--accent); }
+  .featured-pullquote {
+    font-family:var(--serif); font-style:italic; font-size:38px;
+    line-height:1.15; color:var(--ink); letter-spacing:-0.02em;
+    margin:40px 0 0; max-width:90%;
   }
-  .press-intro-copy p {
-    font-family: var(--sans);
-    color: var(--ink-80);
-    font-size: 17px;
-    line-height: 1.6;
-    margin: 0;
+  .featured-pullquote::before { content:"\201C"; color:var(--accent); font-size:80px; line-height:0.4; vertical-align:-0.2em; margin-right:4px; }
+  .featured-byline {
+    font-family:var(--mono); font-size:11px; letter-spacing:0.18em; color:var(--ink-60);
+    text-transform:uppercase; padding-top:24px; border-top:1px solid rgba(242,236,224,0.1);
   }
-  .press-intro-meta {
-    margin-top: 24px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.22em;
-    color: var(--ink-60);
-    text-transform: uppercase;
+  .featured-body {
+    padding:48px; display:flex; flex-direction:column; justify-content:center; gap:24px;
   }
-  .press-intro-meta span:first-child {
-    width: 24px;
-    height: 1px;
-    background: var(--accent);
+  .featured-body .section-label { margin-bottom:8px; }
+  .featured-body h2 {
+    font-family:var(--serif); font-weight:400; font-size:44px; line-height:1.02;
+    letter-spacing:-0.02em; margin:0; color:var(--ink);
   }
-  .press-stage {
-    max-width: 1440px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: minmax(0, 520px) 1fr;
-    gap: 28px;
-    align-items: start;
+  .featured-body h2 em { color:var(--accent); font-style:italic; }
+  .featured-body p { font-family:var(--sans); font-size:15px; line-height:1.7; color:var(--ink-80); margin:0; }
+  .featured-meta { display:flex; gap:24px; font-family:var(--mono); font-size:11px; letter-spacing:0.16em; color:var(--ink-60); text-transform:uppercase; padding-top:24px; border-top:1px solid var(--line); }
+  .featured-meta span strong { color:var(--accent); font-weight:400; }
+
+  /* Press card grid */
+  .press-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0; border-top:1px solid var(--line); border-left:1px solid var(--line); }
+  @media (max-width:900px) { .press-grid { grid-template-columns:1fr; } }
+  .press-card {
+    padding:40px; border-right:1px solid var(--line); border-bottom:1px solid var(--line);
+    background:var(--bg); transition:background .3s;
+    display:flex; flex-direction:column; gap:24px; min-height:440px;
   }
-  .press-feature {
-    position: relative;
-    display: block;
-    width: 100%;
-    height: 780px;
-    overflow: hidden;
-    background: var(--surface-2);
-    border: 1px solid var(--line);
-    text-decoration: none;
+  .press-card:hover { background:var(--surface-1); }
+  .press-logo {
+    height:56px; display:flex; align-items:center;
+    padding-bottom:24px; border-bottom:1px solid var(--line);
   }
-  .press-feature img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-    display: block;
-    background: var(--surface-2);
-    transition: transform .7s cubic-bezier(.22,.61,.36,1);
+  .press-logo-text {
+    font-family:var(--serif); font-size:36px; font-weight:500; line-height:1;
+    color:var(--ink); letter-spacing:-0.02em;
   }
-  .press-feature:hover img {
-    transform: scale(1.08);
+  .press-logo-text.cn { font-family:"Noto Serif SC", serif; font-size:40px; }
+  .press-logo-text.brush { font-family:var(--serif); font-style:italic; color:var(--accent); font-size:32px; }
+  .press-kicker { font-family:var(--mono); font-size:10px; letter-spacing:0.22em; color:var(--accent); text-transform:uppercase; }
+  .press-title { font-family:var(--serif); font-size:24px; line-height:1.2; letter-spacing:-0.01em; color:var(--ink); margin:0; }
+  .press-excerpt { font-family:var(--sans); font-size:14px; line-height:1.65; color:var(--ink-80); margin:0; flex-grow:1; }
+  .press-footer { display:flex; justify-content:space-between; align-items:center; padding-top:20px; border-top:1px solid var(--line); font-family:var(--mono); font-size:10px; letter-spacing:0.18em; color:var(--ink-60); text-transform:uppercase; }
+  .press-read { color:var(--accent); }
+
+  /* Logo marquee */
+  .logo-strip { padding:60px 40px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--surface-1); overflow:hidden; }
+  .logo-strip-label { font-family:var(--mono); font-size:10px; letter-spacing:0.24em; color:var(--ink-60); text-transform:uppercase; text-align:center; margin-bottom:32px; }
+  .logo-row { display:flex; align-items:center; justify-content:center; gap:64px; flex-wrap:wrap; opacity:0.7; }
+  .logo-row span { font-family:var(--serif); font-size:22px; color:var(--ink-80); letter-spacing:-0.01em; }
+  .logo-row span.cn { font-family:"Noto Serif SC", serif; font-size:26px; }
+  .logo-row span.italic { font-style:italic; }
+
+  /* Homepage press section add-on */
+  .hp-press-addition {
+    padding:140px 0 160px; position:relative; background:var(--bg);
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
   }
-  .press-feature-top,
-  .press-feature-bottom,
-  .press-feature-ui {
-    position: absolute;
-    left: 0;
-    right: 0;
-    pointer-events: none;
+  .hp-press-shell { max-width:1440px; margin:0 auto; padding:0 40px; }
+  .hp-press-grid {
+    display:grid; grid-template-columns:1.2fr 1fr; gap:60px; align-items:end; margin-bottom:72px;
   }
-  .press-feature-top {
-    top: 0;
-    height: 140px;
-    background: linear-gradient(180deg, rgba(10,9,6,0.85) 0%, transparent 100%);
+  .hp-press-headline {
+    font-family:var(--serif); font-weight:400; margin:0; font-size:clamp(52px,7vw,120px);
+    line-height:0.92; letter-spacing:-0.03em; color:var(--ink);
   }
-  .press-feature-bottom {
-    bottom: 0;
-    height: 260px;
-    background: linear-gradient(180deg, transparent 0%, rgba(10,9,6,0.96) 75%);
+  .hp-press-headline em { font-style:italic; color:var(--accent); }
+  .hp-press-copy { border-left:1px solid var(--line); padding-left:28px; max-width:520px; justify-self:end; }
+  .hp-press-copy p { font-family:var(--sans); color:var(--ink-80); font-size:17px; line-height:1.6; margin:0; }
+  .hp-press-copy-meta, .hp-press-mobile-tip {
+    margin-top:24px; display:flex; align-items:center; gap:12px; font-family:var(--mono);
+    font-size:10px; letter-spacing:0.22em; color:var(--ink-60); text-transform:uppercase;
   }
-  .press-feature-ui {
-    inset: 0;
-    z-index: 3;
+  .hp-press-copy-meta span:first-child, .hp-press-mobile-tip span:first-child { width:24px; height:1px; background:var(--accent); }
+  .hp-press-stage {
+    display:grid; grid-template-columns:minmax(0,520px) 1fr; gap:28px; align-items:start; height:780px;
   }
-  .press-feature-badges {
-    position: absolute;
-    top: 24px;
-    left: 24px;
-    right: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
+  .hp-press-feature {
+    position:relative; display:block; width:100%; height:780px; overflow:hidden; background:var(--surface-2);
+    border:1px solid var(--line); text-decoration:none;
   }
-  .press-feature-outlet,
-  .press-feature-count,
-  .press-feature-cta,
-  .press-thumb-meta,
-  .press-stats-note,
-  .press-thumb-index,
-  .press-thumb-title,
-  .press-thumb-dot {
-    pointer-events: none;
+  .hp-press-feature img { width:100%; height:100%; object-fit:contain; object-position:center; display:block; background:var(--surface-2); transition:transform .7s; }
+  .hp-press-feature:hover img { transform:scale(1.08); }
+  .hp-press-overlay-top {
+    position:absolute; top:0; left:0; right:0; height:140px;
+    background:linear-gradient(180deg,rgba(10,9,6,0.85) 0%,transparent 100%); pointer-events:none;
   }
-  .press-feature-outlet {
-    padding: 10px 16px;
-    background: var(--accent);
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.22em;
-    color: var(--ink-strong);
-    text-transform: uppercase;
-    font-weight: 700;
+  .hp-press-overlay-bottom {
+    position:absolute; left:0; right:0; bottom:0; height:260px;
+    background:linear-gradient(180deg,transparent 0%,rgba(10,9,6,0.96) 75%); pointer-events:none;
   }
-  .press-feature-count {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.22em;
-    color: var(--ink);
-    text-transform: uppercase;
-    padding: 10px 14px;
-    background: rgba(10,9,6,0.6);
-    backdrop-filter: blur(6px);
+  .hp-press-feature-top {
+    position:absolute; top:24px; left:24px; right:24px; display:flex; align-items:center; justify-content:space-between; z-index:3;
   }
-  .press-feature-copy {
-    position: absolute;
-    left: 32px;
-    right: 32px;
-    bottom: 28px;
+  .hp-press-chip {
+    padding:10px 16px; background:var(--accent); font-family:var(--mono); font-size:11px;
+    letter-spacing:0.22em; color:#1A140A; text-transform:uppercase; font-weight:700;
   }
-  .press-feature-kicker {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.24em;
-    color: var(--accent);
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: 12px;
+  .hp-press-counter {
+    font-family:var(--mono); font-size:11px; letter-spacing:0.22em; color:var(--ink); text-transform:uppercase;
+    padding:10px 14px; background:rgba(10,9,6,0.6); backdrop-filter:blur(6px);
   }
-  .press-feature-title {
-    font-family: var(--serif);
-    font-size: clamp(24px, 2.2vw, 34px);
-    font-style: italic;
-    color: var(--ink);
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-    max-width: 95%;
-    margin-bottom: 18px;
+  .hp-press-feature-bottom { position:absolute; left:32px; right:32px; bottom:28px; z-index:3; }
+  .hp-press-feature-label {
+    font-family:var(--mono); font-size:10px; letter-spacing:0.24em; color:var(--accent);
+    text-transform:uppercase; font-weight:600; margin-bottom:12px;
   }
-  .press-feature-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.22em;
-    color: var(--ink);
-    text-transform: uppercase;
-    font-weight: 600;
+  .hp-press-feature-title {
+    font-family:var(--serif); font-size:clamp(24px,2.2vw,34px); font-style:italic; color:var(--ink);
+    line-height:1.15; letter-spacing:-0.01em; max-width:95%; margin-bottom:18px;
   }
-  .press-feature-cta-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: var(--ink-strong);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
+  .hp-press-feature-cta {
+    display:inline-flex; align-items:center; gap:12px; font-family:var(--mono); font-size:11px;
+    letter-spacing:0.22em; color:var(--ink); text-transform:uppercase; font-weight:600;
   }
-  .press-feature-progress {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 3px;
-    background: rgba(255,255,255,0.08);
-    z-index: 4;
+  .hp-press-feature-cta-badge {
+    width:32px; height:32px; border-radius:50%; background:var(--accent); color:#1A140A;
+    display:inline-flex; align-items:center; justify-content:center; font-size:14px;
   }
-  .press-feature-progress::after {
-    content: "";
-    display: block;
-    height: 100%;
-    width: 100%;
-    background: var(--accent);
-    transform-origin: left;
-    animation: pressBar 4.5s linear infinite;
+  .hp-press-progress { position:absolute; left:0; right:0; bottom:0; height:3px; background:rgba(255,255,255,0.08); z-index:4; }
+  .hp-press-progress-bar { height:100%; width:100%; background:var(--accent); transform-origin:left; animation:hpPressBar 4.5s linear infinite; }
+  .hp-press-thumbs { display:flex; flex-direction:column; gap:12px; }
+  .hp-press-thumb {
+    position:relative; display:grid; grid-template-columns:110px 1fr; gap:0; height:110px; overflow:hidden;
+    background:transparent; border:1px solid var(--line); padding:0; text-align:left; transition:border-color .4s, background .4s; cursor:pointer;
   }
-  .press-thumbs {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  .hp-press-thumb.is-active { background:var(--surface-1); border-color:var(--accent); }
+  .hp-press-thumb-image-wrap { position:relative; overflow:hidden; background:var(--surface-2); }
+  .hp-press-thumb-image-wrap img {
+    width:100%; height:100%; object-fit:cover; display:block; opacity:0.55; transition:opacity .5s, transform .7s;
   }
-  .press-thumb {
-    position: relative;
-    display: grid;
-    grid-template-columns: 110px 1fr;
-    gap: 0;
-    height: 110px;
-    overflow: hidden;
-    background: transparent;
-    border: 1px solid var(--line);
-    padding: 0;
-    text-align: left;
-    text-decoration: none;
-    color: inherit;
-    transition: border-color .4s, background .4s;
+  .hp-press-thumb.is-active .hp-press-thumb-image-wrap img { opacity:1; transform:scale(1.06); }
+  .hp-press-thumb-tint { position:absolute; inset:0; background:var(--bg-tint); transition:background .4s; }
+  .hp-press-thumb.is-active .hp-press-thumb-tint { background:transparent; }
+  .hp-press-thumb-copy { padding:16px 22px; display:flex; flex-direction:column; justify-content:center; gap:8px; min-width:0; }
+  .hp-press-thumb-meta { display:flex; align-items:center; gap:10px; }
+  .hp-press-thumb-num {
+    font-family:var(--mono); font-size:9px; letter-spacing:0.24em; color:var(--ink-60); text-transform:uppercase; font-weight:700;
   }
-  .press-thumb.active {
-    background: var(--surface-1);
-    border-color: var(--accent);
+  .hp-press-thumb.is-active .hp-press-thumb-num { color:var(--accent); }
+  .hp-press-thumb-line { width:20px; height:1px; background:var(--line-strong); }
+  .hp-press-thumb.is-active .hp-press-thumb-line { background:var(--accent); }
+  .hp-press-thumb-outlet {
+    font-family:var(--mono); font-size:9px; letter-spacing:0.2em; color:var(--ink-80); text-transform:uppercase; font-weight:600;
   }
-  .press-thumb-image {
-    position: relative;
-    overflow: hidden;
-    background: var(--surface-2);
+  .hp-press-thumb-dot {
+    width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 8px var(--accent); margin-left:auto;
   }
-  .press-thumb-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    opacity: 0.55;
-    transition: opacity .5s, transform .7s;
+  .hp-press-thumb-title {
+    font-family:var(--serif); font-size:16px; font-style:italic; color:var(--ink-80); line-height:1.3;
+    letter-spacing:-0.005em; transition:color .4s; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
   }
-  .press-thumb.active .press-thumb-image img {
-    opacity: 1;
-    transform: scale(1.06);
+  .hp-press-thumb.is-active .hp-press-thumb-title { color:var(--ink); }
+  .hp-press-stats {
+    margin-top:80px; padding:36px 0 0; border-top:1px solid var(--line); display:flex; align-items:center;
+    justify-content:space-between; gap:24px; flex-wrap:wrap;
   }
-  .press-thumb-overlay {
-    position: absolute;
-    inset: 0;
-    background: var(--bg-tint);
-    transition: background .4s;
+  .hp-press-stats-list { display:flex; align-items:center; gap:40px; flex-wrap:wrap; }
+  .hp-press-stat { display:flex; align-items:baseline; gap:12px; }
+  .hp-press-stat strong {
+    font-family:var(--serif); font-size:44px; color:var(--ink); letter-spacing:-0.02em; line-height:1; font-weight:400;
   }
-  .press-thumb.active .press-thumb-overlay {
-    background: transparent;
+  .hp-press-stat span {
+    font-family:var(--mono); font-size:10px; letter-spacing:0.2em; color:var(--ink-60); text-transform:uppercase; max-width:140px;
   }
-  .press-thumb-body {
-    padding: 16px 22px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 8px;
-    min-width: 0;
+  @keyframes hpPressBar { from { transform:scaleX(0); } to { transform:scaleX(1); } }
+  @media (max-width:900px) {
+    .hp-press-grid, .hp-press-stage { grid-template-columns:1fr; }
+    .hp-press-copy { justify-self:start; max-width:none; }
+    .hp-press-feature { aspect-ratio:3/4; height:auto; }
   }
-  .press-thumb-meta {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .press-thumb-index {
-    font-family: var(--mono);
-    font-size: 9px;
-    letter-spacing: 0.24em;
-    color: var(--ink-60);
-    text-transform: uppercase;
-    font-weight: 700;
-  }
-  .press-thumb.active .press-thumb-index {
-    color: var(--accent);
-  }
-  .press-thumb-line {
-    width: 20px;
-    height: 1px;
-    background: var(--line-strong);
-  }
-  .press-thumb.active .press-thumb-line {
-    background: var(--accent);
-  }
-  .press-thumb-outlet {
-    font-family: var(--mono);
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    color: var(--ink-80);
-    text-transform: uppercase;
-    font-weight: 600;
-  }
-  .press-thumb-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 8px var(--accent);
-    margin-left: auto;
-    opacity: 0;
-  }
-  .press-thumb.active .press-thumb-dot {
-    opacity: 1;
-  }
-  .press-thumb-title {
-    font-family: var(--serif);
-    font-size: 16px;
-    font-style: italic;
-    color: var(--ink-80);
-    line-height: 1.3;
-    letter-spacing: -0.005em;
-    transition: color .4s;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .press-thumb.active .press-thumb-title {
-    color: var(--ink);
-  }
-  .press-stats {
-    max-width: 1440px;
-    margin: 80px auto 0;
-    padding: 36px 0 0;
-    border-top: 1px solid var(--line);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    flex-wrap: wrap;
-  }
-  .press-stats-list {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-    flex-wrap: wrap;
-  }
-  .press-stat {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-  }
-  .press-stat strong {
-    font-family: var(--serif);
-    font-size: 44px;
-    color: var(--ink);
-    letter-spacing: -0.02em;
-    line-height: 1;
-    font-weight: 400;
-  }
-  .press-stat span {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    color: var(--ink-60);
-    text-transform: uppercase;
-    max-width: 140px;
-  }
-  .press-stats-note {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.22em;
-    color: var(--ink-60);
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .press-stats-note span {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 10px var(--accent);
-  }
-  @keyframes pressBar {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
-  }
-  @media (max-width: 900px) {
-    .press-intro,
-    .press-stage {
-      grid-template-columns: 1fr;
+  @media (max-width:768px) {
+    .hp-press-shell { padding:0 20px; }
+    .hp-press-stage { height:auto; }
+    .hp-press-thumbs {
+      flex-direction:row; overflow-x:auto; overflow-y:visible; -webkit-overflow-scrolling:touch; scrollbar-width:none; gap:8px; padding-bottom:4px;
     }
-    .press-intro-copy {
-      justify-self: start;
-      max-width: none;
-    }
-    .press-feature {
-      height: auto;
-      aspect-ratio: 3 / 4;
-    }
+    .hp-press-thumbs::-webkit-scrollbar { display:none; }
+    .hp-press-thumb { flex:0 0 40vw; width:40vw; height:130px; grid-template-columns:72px 1fr; }
+    .hp-press-thumb-copy { padding:8px 10px; gap:3px; }
+    .hp-press-thumb-meta { display:none; }
+    .hp-press-thumb-title { -webkit-line-clamp:3; font-size:10px; font-style:normal; line-height:1.3; letter-spacing:0; }
+    .hp-press-stats-list { flex-wrap:nowrap; gap:12px; width:100%; }
+    .hp-press-stat { flex:1; min-width:0; gap:6px; }
+    .hp-press-stat strong { font-size:28px; }
+    .hp-press-stat span { font-size:8px; max-width:80px; line-height:1.3; }
   }
-  @media (max-width: 768px) {
-    .press-shell {
-      padding: 0 20px;
-    }
-    .press-intro {
-      gap: 32px;
-      padding-bottom: 48px;
-    }
-    .press-intro-copy {
-      border-left: 0;
-      padding-left: 0;
-    }
-    .press-thumbs {
-      overflow-x: auto;
-    }
-    .press-thumb {
-      min-width: 320px;
-    }
-    .press-stats {
-      gap: 16px;
-    }
-    .press-stats-list {
-      flex-wrap: nowrap;
-      gap: 12px;
-      width: 100%;
-    }
-    .press-stat {
-      flex: 1;
-      min-width: 0;
-      gap: 6px;
-    }
-    .press-stat strong {
-      font-size: 28px;
-    }
-    .press-stat span {
-      font-size: 8px;
-      max-width: 80px;
-      line-height: 1.3;
-    }
-  }
+
 </style>
 </head>
 <body>
+
+<section class="hp-press-addition">
+  <div class="hp-press-shell">
+    <div class="hp-press-grid">
+      <div>
+        <div class="section-label reveal"><span>04</span> Featured in major media</div>
+        <h2 class="hp-press-headline reveal">The <em>press</em> room.</h2>
+      </div>
+      <div class="hp-press-copy reveal">
+        <p>
+          From The Straits Times to 南洋商报, David Justin's record-breaking cryptocurrency lesson gained nationwide media recognition, highlighting his leadership in blockchain education.
+        </p>
+        <div class="hp-press-copy-meta">
+          <span></span>
+          <span>05 features · 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hp-press-stage reveal">
+      <a href="https://www.david-justin.com/wp-content/uploads/2025/12/NFT-News-Straits-Times-2.jpg" target="_blank" rel="noreferrer" class="hp-press-feature" id="hp-press-feature-link">
+        <img src="https://www.david-justin.com/wp-content/uploads/2025/12/NFT-News-Straits-Times-2.jpg" alt="NFT News Feature" id="hp-press-feature-image">
+        <div class="hp-press-overlay-top"></div>
+        <div class="hp-press-overlay-bottom"></div>
+        <div class="hp-press-feature-top">
+          <div class="hp-press-chip" id="hp-press-feature-outlet">The Straits Times</div>
+          <div class="hp-press-counter" id="hp-press-feature-counter">01 / 05 · 2025</div>
+        </div>
+        <div class="hp-press-feature-bottom">
+          <div class="hp-press-feature-label">Featured story</div>
+          <div class="hp-press-feature-title" id="hp-press-feature-title">NFT News Feature</div>
+          <div class="hp-press-feature-cta">
+            <span>Read the feature</span>
+            <span class="hp-press-feature-cta-badge">↗</span>
+          </div>
+        </div>
+        <div class="hp-press-progress"><div class="hp-press-progress-bar"></div></div>
+      </a>
+
+      <div class="hp-press-thumbs" id="hp-press-thumbs">
+        <button type="button" class="hp-press-thumb is-active" data-src="https://www.david-justin.com/wp-content/uploads/2025/12/NFT-News-Straits-Times-2.jpg" data-outlet="The Straits Times" data-title="NFT News Feature" data-year="2025" data-index="1">
+          <div class="hp-press-thumb-image-wrap">
+            <img src="https://www.david-justin.com/wp-content/uploads/2025/12/NFT-News-Straits-Times-2.jpg" alt="NFT News Feature" loading="lazy">
+            <div class="hp-press-thumb-tint"></div>
+          </div>
+          <div class="hp-press-thumb-copy">
+            <div class="hp-press-thumb-meta">
+              <span class="hp-press-thumb-num">01</span>
+              <span class="hp-press-thumb-line"></span>
+              <span class="hp-press-thumb-outlet">The Straits Times · 2025</span>
+              <span class="hp-press-thumb-dot"></span>
+            </div>
+            <div class="hp-press-thumb-title">NFT News Feature</div>
+          </div>
+        </button>
+        <button type="button" class="hp-press-thumb" data-src="https://www.david-justin.com/wp-content/uploads/2025/12/NFT-News-Straits-Times-1.jpg" data-outlet="The Straits Times" data-title="Crypto Education Leadership" data-year="2025" data-index="2">
+          <div class="hp-press-thumb-image-wrap">
+            <img src="https://www.david-justin.com/wp-content/uploads/2025/12/NFT-News-Straits-Times-1.jpg" alt="Crypto Education Leadership" loading="lazy">
+            <div class="hp-press-thumb-tint"></div>
+          </div>
+          <div class="hp-press-thumb-copy">
+            <div class="hp-press-thumb-meta">
+              <span class="hp-press-thumb-num">02</span>
+              <span class="hp-press-thumb-line"></span>
+              <span class="hp-press-thumb-outlet">The Straits Times · 2025</span>
+            </div>
+            <div class="hp-press-thumb-title">Crypto Education Leadership</div>
+          </div>
+        </button>
+        <button type="button" class="hp-press-thumb" data-src="https://www.david-justin.com/wp-content/uploads/2025/12/%E5%8D%97%E6%B4%8B-%E6%95%B0%E5%AD%97%E5%AF%86%E7%A0%81.jpg" data-outlet="南洋商报" data-title="数字密码 · Digital Code" data-year="2025" data-index="3">
+          <div class="hp-press-thumb-image-wrap">
+            <img src="https://www.david-justin.com/wp-content/uploads/2025/12/%E5%8D%97%E6%B4%8B-%E6%95%B0%E5%AD%97%E5%AF%86%E7%A0%81.jpg" alt="数字密码 · Digital Code" loading="lazy">
+            <div class="hp-press-thumb-tint"></div>
+          </div>
+          <div class="hp-press-thumb-copy">
+            <div class="hp-press-thumb-meta">
+              <span class="hp-press-thumb-num">03</span>
+              <span class="hp-press-thumb-line"></span>
+              <span class="hp-press-thumb-outlet">南洋商报 · 2025</span>
+            </div>
+            <div class="hp-press-thumb-title">数字密码 · Digital Code</div>
+          </div>
+        </button>
+        <button type="button" class="hp-press-thumb" data-src="https://www.david-justin.com/wp-content/uploads/2025/12/%E5%8D%97%E6%B4%8B-kol-%E6%8E%A8%E5%B9%BF.jpg" data-outlet="南洋商报" data-title="KOL Feature" data-year="2025" data-index="4">
+          <div class="hp-press-thumb-image-wrap">
+            <img src="https://www.david-justin.com/wp-content/uploads/2025/12/%E5%8D%97%E6%B4%8B-kol-%E6%8E%A8%E5%B9%BF.jpg" alt="KOL Feature" loading="lazy">
+            <div class="hp-press-thumb-tint"></div>
+          </div>
+          <div class="hp-press-thumb-copy">
+            <div class="hp-press-thumb-meta">
+              <span class="hp-press-thumb-num">04</span>
+              <span class="hp-press-thumb-line"></span>
+              <span class="hp-press-thumb-outlet">南洋商报 · 2025</span>
+            </div>
+            <div class="hp-press-thumb-title">KOL Feature</div>
+          </div>
+        </button>
+        <button type="button" class="hp-press-thumb" data-src="https://www.david-justin.com/wp-content/uploads/2025/12/David-Justin-%E5%8D%97%E6%B4%8B%E5%85%A8%E7%89%88%E6%96%87%E5%AE%A3.jpg" data-outlet="南洋商报" data-title="Full-Page Feature" data-year="2025" data-index="5">
+          <div class="hp-press-thumb-image-wrap">
+            <img src="https://www.david-justin.com/wp-content/uploads/2025/12/David-Justin-%E5%8D%97%E6%B4%8B%E5%85%A8%E7%89%88%E6%96%87%E5%AE%A3.jpg" alt="Full-Page Feature" loading="lazy">
+            <div class="hp-press-thumb-tint"></div>
+          </div>
+          <div class="hp-press-thumb-copy">
+            <div class="hp-press-thumb-meta">
+              <span class="hp-press-thumb-num">05</span>
+              <span class="hp-press-thumb-line"></span>
+              <span class="hp-press-thumb-outlet">南洋商报 · 2025</span>
+            </div>
+            <div class="hp-press-thumb-title">Full-Page Feature</div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <div class="hp-press-stats reveal">
+      <div class="hp-press-stats-list">
+        <div class="hp-press-stat"><strong>5</strong><span>Major features</span></div>
+        <div class="hp-press-stat"><strong>3</strong><span>National outlets</span></div>
+        <div class="hp-press-stat"><strong>2+</strong><span>Languages covered</span></div>
+      </div>
+      <div class="hp-press-mobile-tip">
+        <span></span>
+        <span>Tap any clipping to view the feature</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <!-- NAV -->
 <nav class="nav">
@@ -517,135 +409,154 @@
   </div>
 </header>
 
-<section class="section" style="padding-top:40px;padding-bottom:100px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg);">
-  <div class="press-shell">
-    <div class="press-intro">
-      <div class="reveal">
-        <div class="press-intro-head">
-          <span>04 · Featured in major media</span>
-          <span></span>
+<!-- LOGO STRIP -->
+<section class="logo-strip">
+  <div class="logo-strip-label">Featured across</div>
+  <div class="logo-row">
+    <span class="cn">南洋商报</span>
+    <span>The Straits Times</span>
+    <span class="italic" style="color:var(--accent);">Brush of Hope</span>
+    <span>Sin Chew Daily</span>
+    <span>Sunway News</span>
+    <span>The Edge Malaysia</span>
+  </div>
+</section>
+
+<!-- FEATURED -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label reveal"><span>01</span> Featured story</div>
+    <h2 class="section-heading reveal" style="margin-bottom:40px;">The <em>headline</em> piece.</h2>
+
+    <article class="featured-grid reveal">
+      <div class="featured-cover">
+        <div class="featured-cover-inner">
+          <div>
+            <div class="featured-masthead">南洋商报</div>
+            <div class="featured-masthead-sub">Nanyang Siang Pau · Chinese Daily</div>
+          </div>
+          <blockquote class="featured-pullquote">
+            He made blockchain feel like mother tongue — then taught it to nearly 900 people at once.
+          </blockquote>
+          <div class="featured-byline">By Nanyang Business Desk · March 2023</div>
         </div>
-        <h2 class="press-intro-title">The <em>press</em> room.</h2>
       </div>
-      <div class="press-intro-copy reveal">
+      <div class="featured-body">
+        <div class="section-label"><span>◆</span> Print &amp; Digital Feature</div>
+        <h2>Malaysian educator <em>rewrites</em> the blockchain textbook.</h2>
         <p>
-          From The Straits Times to 南洋商报 — David Justin's record-breaking cryptocurrency lesson gained nationwide media recognition, highlighting his leadership in blockchain education.
+          Nanyang Siang Pau profiled David Justin's journey from self-taught crypto enthusiast to
+          Guinness World Record-holding educator — anchored by his Mandarin-language teaching style
+          that has made public-blockchain fundamentals accessible to tens of thousands of learners
+          across Southeast Asia's Chinese-speaking communities.
         </p>
-        <div class="press-intro-meta">
-          <span></span>
-          <span>05 features · 2025</span>
+        <p>
+          The feature covered the road to 897 participants at Sunway University, the academy's
+          one-million-learner mission, and why David believes the next wave of Web3 adoption will
+          be educated, not speculated.
+        </p>
+        <div class="featured-meta">
+          <span><strong>Outlet</strong> · Nanyang Siang Pau</span>
+          <span><strong>Format</strong> · Print + Digital</span>
+          <span><strong>Reach</strong> · 400k+</span>
         </div>
       </div>
-    </div>
+    </article>
+  </div>
+</section>
 
-    <div class="press-stage">
-      <a href="https://www.david-justin.com/wp-content/uploads/2025/12/NFT-News-Straits-Times-2.jpg" target="_blank" rel="noreferrer" class="press-feature reveal">
-        <img src="https://www.david-justin.com/wp-content/uploads/2025/12/NFT-News-Straits-Times-2.jpg" alt="NFT News Feature">
-        <div class="press-feature-top"></div>
-        <div class="press-feature-bottom"></div>
-        <div class="press-feature-ui">
-          <div class="press-feature-badges">
-            <div class="press-feature-outlet">The Straits Times</div>
-            <div class="press-feature-count">01 / 05 · 2025</div>
-          </div>
-          <div class="press-feature-copy">
-            <div class="press-feature-kicker">— Featured story</div>
-            <div class="press-feature-title">NFT News Feature</div>
-            <div class="press-feature-cta">
-              <span>Read the feature</span>
-              <span class="press-feature-cta-icon">↗</span>
-            </div>
-          </div>
+<!-- OTHER COVERAGE -->
+<section class="section" style="padding-top:40px;">
+  <div class="section-inner">
+    <div class="section-label reveal"><span>02</span> Selected coverage</div>
+    <h2 class="section-heading reveal" style="margin-bottom:40px;">More <em>features</em>.</h2>
+
+    <div class="press-grid reveal">
+
+      <article class="press-card">
+        <div class="press-logo"><span class="press-logo-text cn">南洋商报</span></div>
+        <div class="press-kicker">Nanyang Siang Pau · Feature</div>
+        <h3 class="press-title">From self-taught to world record: the educator behind Malaysia's blockchain moment.</h3>
+        <p class="press-excerpt">
+          A long-form profile tracing David's arc from retail trader to full-time educator,
+          and the methodology behind a record-breaking single-speaker lesson.
+        </p>
+        <div class="press-footer">
+          <span>March 2023</span>
+          <span class="press-read">Read →</span>
         </div>
-        <div class="press-feature-progress"></div>
-      </a>
+      </article>
 
-      <div class="press-thumbs reveal">
-        <a href="https://www.david-justin.com/wp-content/uploads/2025/12/NFT-News-Straits-Times-2.jpg" target="_blank" rel="noreferrer" class="press-thumb active">
-          <div class="press-thumb-image">
-            <img src="https://www.david-justin.com/wp-content/uploads/2025/12/NFT-News-Straits-Times-2.jpg" alt="NFT News Feature">
-            <div class="press-thumb-overlay"></div>
-          </div>
-          <div class="press-thumb-body">
-            <div class="press-thumb-meta">
-              <span class="press-thumb-index">01</span>
-              <span class="press-thumb-line"></span>
-              <span class="press-thumb-outlet">The Straits Times · 2025</span>
-              <span class="press-thumb-dot"></span>
-            </div>
-            <div class="press-thumb-title">NFT News Feature</div>
-          </div>
-        </a>
+      <article class="press-card">
+        <div class="press-logo"><span class="press-logo-text">The Straits Times</span></div>
+        <div class="press-kicker">The Straits Times · Technology</div>
+        <h3 class="press-title">Singapore &amp; KL cross-border blockchain training takes shape.</h3>
+        <p class="press-excerpt">
+          Regional technology desk on how educators like David Justin are positioning Malaysia
+          and Singapore as complementary hubs for Web3 skills development.
+        </p>
+        <div class="press-footer">
+          <span>Q2 2024</span>
+          <span class="press-read">Read →</span>
+        </div>
+      </article>
 
-        <a href="https://www.david-justin.com/wp-content/uploads/2025/12/NFT-News-Straits-Times-1.jpg" target="_blank" rel="noreferrer" class="press-thumb">
-          <div class="press-thumb-image">
-            <img src="https://www.david-justin.com/wp-content/uploads/2025/12/NFT-News-Straits-Times-1.jpg" alt="Crypto Education Leadership">
-            <div class="press-thumb-overlay"></div>
-          </div>
-          <div class="press-thumb-body">
-            <div class="press-thumb-meta">
-              <span class="press-thumb-index">02</span>
-              <span class="press-thumb-line"></span>
-              <span class="press-thumb-outlet">The Straits Times · 2025</span>
-            </div>
-            <div class="press-thumb-title">Crypto Education Leadership</div>
-          </div>
-        </a>
+      <article class="press-card">
+        <div class="press-logo"><span class="press-logo-text brush">Brush of Hope</span></div>
+        <div class="press-kicker">Brush of Hope · Community</div>
+        <h3 class="press-title">Painting futures: a record-holder on why teaching is the real hustle.</h3>
+        <p class="press-excerpt">
+          A conversational feature from the Brush of Hope community series on the moment
+          David decided to move from trading full-time into educating full-time.
+        </p>
+        <div class="press-footer">
+          <span>August 2024</span>
+          <span class="press-read">Read →</span>
+        </div>
+      </article>
 
-        <a href="https://www.david-justin.com/wp-content/uploads/2025/12/%E5%8D%97%E6%B4%8B-%E6%95%B0%E5%AD%97%E5%AF%86%E7%A0%81.jpg" target="_blank" rel="noreferrer" class="press-thumb">
-          <div class="press-thumb-image">
-            <img src="https://www.david-justin.com/wp-content/uploads/2025/12/%E5%8D%97%E6%B4%8B-%E6%95%B0%E5%AD%97%E5%AF%86%E7%A0%81.jpg" alt="数字密码 · Digital Code">
-            <div class="press-thumb-overlay"></div>
-          </div>
-          <div class="press-thumb-body">
-            <div class="press-thumb-meta">
-              <span class="press-thumb-index">03</span>
-              <span class="press-thumb-line"></span>
-              <span class="press-thumb-outlet">南洋商报 · 2025</span>
-            </div>
-            <div class="press-thumb-title">数字密码 · Digital Code</div>
-          </div>
-        </a>
+      <article class="press-card">
+        <div class="press-logo"><span class="press-logo-text cn">星洲日报</span></div>
+        <div class="press-kicker">Sin Chew Daily · Business</div>
+        <h3 class="press-title">New generation educators are reshaping how Malaysians learn crypto.</h3>
+        <p class="press-excerpt">
+          Business desk coverage of the shift toward bilingual, practitioner-led financial
+          education — with David's academy as the anchor case study.
+        </p>
+        <div class="press-footer">
+          <span>Late 2023</span>
+          <span class="press-read">Read →</span>
+        </div>
+      </article>
 
-        <a href="https://www.david-justin.com/wp-content/uploads/2025/12/%E5%8D%97%E6%B4%8B-kol-%E6%8E%A8%E5%B9%BF.jpg" target="_blank" rel="noreferrer" class="press-thumb">
-          <div class="press-thumb-image">
-            <img src="https://www.david-justin.com/wp-content/uploads/2025/12/%E5%8D%97%E6%B4%8B-kol-%E6%8E%A8%E5%B9%BF.jpg" alt="KOL Feature">
-            <div class="press-thumb-overlay"></div>
-          </div>
-          <div class="press-thumb-body">
-            <div class="press-thumb-meta">
-              <span class="press-thumb-index">04</span>
-              <span class="press-thumb-line"></span>
-              <span class="press-thumb-outlet">南洋商报 · 2025</span>
-            </div>
-            <div class="press-thumb-title">KOL Feature</div>
-          </div>
-        </a>
+      <article class="press-card">
+        <div class="press-logo"><span class="press-logo-text">Sunway News</span></div>
+        <div class="press-kicker">Sunway News · Campus</div>
+        <h3 class="press-title">897 seats, one lesson: Sunway hosts a world record.</h3>
+        <p class="press-excerpt">
+          The campus newsroom's behind-the-scenes account of the logistics, the adjudicator's
+          visit, and the moment the new Guinness record was announced live.
+        </p>
+        <div class="press-footer">
+          <span>March 2023</span>
+          <span class="press-read">Read →</span>
+        </div>
+      </article>
 
-        <a href="https://www.david-justin.com/wp-content/uploads/2025/12/David-Justin-%E5%8D%97%E6%B4%8B%E5%85%A8%E7%89%88%E6%96%87%E5%AE%A3.jpg" target="_blank" rel="noreferrer" class="press-thumb">
-          <div class="press-thumb-image">
-            <img src="https://www.david-justin.com/wp-content/uploads/2025/12/David-Justin-%E5%8D%97%E6%B4%8B%E5%85%A8%E7%89%88%E6%96%87%E5%AE%A3.jpg" alt="Full-Page Feature">
-            <div class="press-thumb-overlay"></div>
-          </div>
-          <div class="press-thumb-body">
-            <div class="press-thumb-meta">
-              <span class="press-thumb-index">05</span>
-              <span class="press-thumb-line"></span>
-              <span class="press-thumb-outlet">南洋商报 · 2025</span>
-            </div>
-            <div class="press-thumb-title">Full-Page Feature</div>
-          </div>
-        </a>
-      </div>
-    </div>
+      <article class="press-card">
+        <div class="press-logo"><span class="press-logo-text">The Edge</span></div>
+        <div class="press-kicker">The Edge Malaysia · Op-Ed</div>
+        <h3 class="press-title">Guest column: why financial literacy must now include the on-chain kind.</h3>
+        <p class="press-excerpt">
+          An invited op-ed arguing that Malaysia's next generation of retail investors need
+          on-chain fluency, not just price charts — with a five-point framework for schools and employers.
+        </p>
+        <div class="press-footer">
+          <span>2024</span>
+          <span class="press-read">Read →</span>
+        </div>
+      </article>
 
-    <div class="press-stats reveal">
-      <div class="press-stats-list">
-        <div class="press-stat"><strong>5</strong><span>Major features</span></div>
-        <div class="press-stat"><strong>3</strong><span>National outlets</span></div>
-        <div class="press-stat"><strong>2+</strong><span>Languages covered</span></div>
-      </div>
-      <div class="press-stats-note"><span></span>Tap any clipping to view the feature</div>
     </div>
   </div>
 </section>
@@ -707,5 +618,65 @@
 </footer>
 
 <script src="assets/shell.js?v=5"></script>
+
+<script>
+  (function () {
+    const thumbs = Array.from(document.querySelectorAll('.hp-press-thumb'));
+    if (!thumbs.length) return;
+
+    const featureLink = document.getElementById('hp-press-feature-link');
+    const featureImage = document.getElementById('hp-press-feature-image');
+    const featureOutlet = document.getElementById('hp-press-feature-outlet');
+    const featureCounter = document.getElementById('hp-press-feature-counter');
+    const featureTitle = document.getElementById('hp-press-feature-title');
+    const progressBar = document.querySelector('.hp-press-progress-bar');
+    let active = 0;
+    let timer = null;
+
+    function resetBar() {
+      progressBar.style.animation = 'none';
+      void progressBar.offsetWidth;
+      progressBar.style.animation = 'hpPressBar 4.5s linear infinite';
+    }
+
+    function activate(index) {
+      active = index;
+      thumbs.forEach((thumb, i) => thumb.classList.toggle('is-active', i === index));
+      const thumb = thumbs[index];
+      const src = thumb.dataset.src;
+      const outlet = thumb.dataset.outlet;
+      const title = thumb.dataset.title;
+      const year = thumb.dataset.year;
+      const count = String(index + 1).padStart(2, '0');
+      const total = String(thumbs.length).padStart(2, '0');
+
+      featureLink.href = src;
+      featureImage.src = src;
+      featureImage.alt = title;
+      featureOutlet.textContent = outlet;
+      featureCounter.textContent = count + ' / ' + total + ' · ' + year;
+      featureTitle.textContent = title;
+      resetBar();
+    }
+
+    function restart() {
+      clearInterval(timer);
+      timer = setInterval(function () {
+        activate((active + 1) % thumbs.length);
+      }, 4500);
+    }
+
+    thumbs.forEach((thumb, index) => {
+      thumb.addEventListener('click', function () {
+        activate(index);
+        restart();
+      });
+    });
+
+    activate(0);
+    restart();
+  })();
+</script>
+
 </body>
 </html>
