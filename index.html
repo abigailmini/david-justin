@@ -1459,17 +1459,19 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 })();
 </script>
 <script>
-// Fix circles after React renders — force display:flex on all round elements
-setTimeout(function(){
+// Fix circles after React renders
+function fixCircles(){
   document.querySelectorAll('*').forEach(function(el){
     var s = getComputedStyle(el);
     if(s.borderRadius==='50%' && el.offsetWidth>30 && el.offsetWidth<60){
-      el.style.display='flex';
-      el.style.alignItems='center';
-      el.style.justifyContent='center';
+      el.style.setProperty('display','flex','important');
+      el.style.setProperty('align-items','center','important');
+      el.style.setProperty('justify-content','center','important');
     }
   });
-},2000);
+}
+setTimeout(fixCircles,1500);
+setTimeout(fixCircles,3000);
 </script>
 </body>
 </html>
