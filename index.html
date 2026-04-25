@@ -1043,13 +1043,13 @@ function Testimonials() {
       <div id="testimonials-grid" style={{marginTop:60,display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:0,borderTop:'1px solid var(--line)',borderLeft:'1px solid var(--line)'}}>
         {testimonials.map((t,i)=>(
           <Reveal key={i} delay={(i%3)*80}>
-            <article style={{padding:'36px 32px',borderRight:'1px solid var(--line)',borderBottom:'1px solid var(--line)',flexDirection:'column',gap:20,height:'100%',position:'relative',transition:'background .4s',minHeight:340,background:'var(--bg-tint)',backdropFilter:'blur(6px)'}}
+            <article style={{padding:'36px 32px',display:'flex',borderRight:'1px solid var(--line)',borderBottom:'1px solid var(--line)',flexDirection:'column',gap:20,height:'100%',position:'relative',transition:'background .4s',minHeight:340,background:'var(--bg-tint)',backdropFilter:'blur(6px)'}}
               onMouseEnter={e=>{e.currentTarget.style.background='rgba(229,180,106,0.07)';}}
               onMouseLeave={e=>{e.currentTarget.style.background='var(--bg-tint)';}}>
               <div style={{fontFamily:'var(--serif)',fontSize:64,fontStyle:'italic',color:'var(--accent)',lineHeight:0.5,height:28}}>"</div>
               <p style={{margin:0,fontFamily:t.lang==='zh'?'var(--serif-cn,var(--sans))':'var(--sans)',fontSize:15,lineHeight:1.65,color:'var(--ink-80)',flex:1}}>{t.quote}</p>
-              <div style={{paddingTop:20,borderTop:'1px solid var(--line)',alignItems:'center',gap:14}}>
-                <div style={{width:44,height:44,borderRadius:'50%',background:'linear-gradient(135deg,rgba(229,180,106,0.22),var(--surface-2))',border:'1px solid var(--accent)',alignItems:'center',justifyContent:'center',fontFamily:'var(--serif)',fontSize:17,fontStyle:'italic',color:'var(--accent)',flexShrink:0}}>
+              <div style={{paddingTop:20,borderTop:'1px solid var(--line)',display:'flex',alignItems:'center',gap:14}}>
+                <div style={{width:44,height:44,borderRadius:'50%',display:'flex',background:'linear-gradient(135deg,rgba(229,180,106,0.22),var(--surface-2))',border:'1px solid var(--accent)',alignItems:'center',justifyContent:'center',fontFamily:'var(--serif)',fontSize:17,fontStyle:'italic',color:'var(--accent)',flexShrink:0}}>
                   {t.name.split(' ').map(w=>w[0]).slice(0,2).join('')}
                 </div>
                 <div>
