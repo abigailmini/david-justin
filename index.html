@@ -241,6 +241,9 @@
     }
     #nav-desktop-links { display:none !important; }
   }
+  /* ——— Circle fix — force flex centering ——— */
+  .circle-center { display:flex !important; align-items:center !important; justify-content:center !important; }
+
   /* ——— On the Floor — coverflow ——— */
   .floor-scrim { background:linear-gradient(180deg,rgba(10,9,6,0.92) 0%,rgba(10,9,6,0.88) 45%,rgba(10,9,6,0.94) 100%); }
   [data-mode="light"] .floor-scrim { background:linear-gradient(180deg,rgba(246,241,231,0.96) 0%,rgba(246,241,231,0.94) 45%,rgba(246,241,231,0.97) 100%); }
@@ -721,7 +724,7 @@ function Awards() {
             <div style={{padding:'48px 32px',borderLeft:i>0?'1px solid var(--line)':'none',display:'flex',flexDirection:'column',gap:14,transition:'background .2s',height:'100%',boxSizing:'border-box'}}
               onMouseEnter={e=>a.href&&(e.currentTarget.style.background='rgba(229,180,106,0.04)')}
               onMouseLeave={e=>a.href&&(e.currentTarget.style.background='')}>
-              <div style={{width:48,height:48,border:'1px solid var(--accent)',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',color:'var(--accent)',fontFamily:'var(--serif)',fontSize:20,fontStyle:'italic'}}>{String(i+1).padStart(2,'0')}</div>
+              <div className="circle-center" style={{width:48,height:48,border:'1px solid var(--accent)',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',color:'var(--accent)',fontFamily:'var(--serif)',fontSize:20,fontStyle:'italic'}}>{String(i+1).padStart(2,'0')}</div>
               <div style={{fontFamily:'var(--serif)',fontSize:32,color:'var(--ink)',lineHeight:1.05,letterSpacing:'-0.015em',marginTop:14}}>{a.label}</div>
               <div style={{fontFamily:'var(--mono)',fontSize:11,color:'var(--ink-60)',letterSpacing:'0.12em',textTransform:'uppercase'}}>{a.sub}</div>
               {a.href && <div style={{marginTop:6,fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.18em',textTransform:'uppercase',color:'var(--accent)',display:'inline-flex',alignItems:'center',gap:8}}>{isExternal?'View source':'See coverage'} <span style={{fontFamily:'serif'}}>→</span></div>}
@@ -1075,7 +1078,7 @@ function Testimonials() {
               <div style={{fontFamily:'var(--serif)',fontSize:64,fontStyle:'italic',color:'var(--accent)',lineHeight:0.5,height:28}}>"</div>
               <p style={{margin:0,fontFamily:t.lang==='zh'?'var(--serif-cn,var(--sans))':'var(--sans)',fontSize:15,lineHeight:1.65,color:'var(--ink-80)',flex:1}}>{t.quote}</p>
               <div style={{paddingTop:20,borderTop:'1px solid var(--line)',display:'flex',alignItems:'center',gap:14}}>
-                <div style={{width:44,height:44,borderRadius:'50%',display:'flex',background:'linear-gradient(135deg,rgba(229,180,106,0.22),var(--surface-2))',border:'1px solid var(--accent)',alignItems:'center',justifyContent:'center',fontFamily:'var(--serif)',fontSize:17,fontStyle:'italic',color:'var(--accent)',flexShrink:0}}>
+                <div className="circle-center" style={{width:44,height:44,borderRadius:'50%',display:'flex',background:'linear-gradient(135deg,rgba(229,180,106,0.22),var(--surface-2))',border:'1px solid var(--accent)',alignItems:'center',justifyContent:'center',fontFamily:'var(--serif)',fontSize:17,fontStyle:'italic',color:'var(--accent)',flexShrink:0}}>
                   {t.name.split(' ').map(w=>w[0]).slice(0,2).join('')}
                 </div>
                 <div>
