@@ -1458,5 +1458,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
   }
 })();
 </script>
+<style>
+/* LAST-RESORT circle centering — loaded after React renders */
+[style*="border-radius: 50%"] { display:flex !important; align-items:center !important; justify-content:center !important; }
+</style>
 </body>
 </html>
