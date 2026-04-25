@@ -241,16 +241,15 @@
     }
     #nav-desktop-links { display:none !important; }
   }
-  /* ——— Circle fix — force ALL circles to center content ——— */
-  .circle-center { display:flex !important; align-items:center !important; justify-content:center !important; }
-  /* Awards: number circles (01, 02, 03) */
-  .grid-3col article > a > div > div:first-child,
-  .grid-3col article > div > div:first-child,
-  .grid-3col > div > a > div > div:first-child,
-  .grid-3col > div > div > div:first-child { display:flex !important; align-items:center !important; justify-content:center !important; }
-  /* Testimonials: avatar circles + footer row */
-  #testimonials-grid article > div:last-child { display:flex !important; align-items:center !important; }
-  #testimonials-grid article > div:last-child > div:first-child { display:flex !important; align-items:center !important; justify-content:center !important; }
+  /* ——— GLOBAL FIX: React drops display:flex from inline styles ——— */
+  /* Force display:flex on any element that has flex CSS properties in inline style */
+  [style*="align-items"] { display:flex !important; }
+  [style*="flex-direction"] { display:flex !important; }
+  [style*="flex-wrap"] { display:flex !important; }
+  [style*="flex-shrink"] { display:flex !important; }
+  /* Circles: force grid centering */
+  [style*="border-radius: 50%"][style*="width: 44px"],
+  [style*="border-radius: 50%"][style*="width: 48px"] { display:grid !important; place-items:center !important; }
 
   /* ——— On the Floor — coverflow ——— */
   .floor-scrim { background:linear-gradient(180deg,rgba(10,9,6,0.92) 0%,rgba(10,9,6,0.88) 45%,rgba(10,9,6,0.94) 100%); }
