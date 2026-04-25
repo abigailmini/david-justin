@@ -241,6 +241,12 @@
     }
     #nav-desktop-links { display:none !important; }
   }
+  /* ——— React 18 display fix — React omits display from rendered styles ——— */
+  [style*="align-items"] { display: flex !important; }
+  [style*="flex-direction"] { display: flex !important; }
+  [style*="flex-wrap"] { display: flex !important; }
+  [style*="border-radius: 50%"][style*="justify-content"] { display: grid !important; place-items: center !important; }
+
   /* ——— On the Floor — coverflow ——— */
   .floor-scrim { background:linear-gradient(180deg,rgba(10,9,6,0.92) 0%,rgba(10,9,6,0.88) 45%,rgba(10,9,6,0.94) 100%); }
   [data-mode="light"] .floor-scrim { background:linear-gradient(180deg,rgba(246,241,231,0.96) 0%,rgba(246,241,231,0.94) 45%,rgba(246,241,231,0.97) 100%); }
