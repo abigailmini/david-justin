@@ -241,16 +241,6 @@
     }
     #nav-desktop-links { display:none !important; }
   }
-  /* ——— GLOBAL FIX: React drops display:flex from inline styles ——— */
-  /* Force display:flex on any element that has flex CSS properties in inline style */
-  [style*="align-items"] { display:flex !important; }
-  [style*="flex-direction"] { display:flex !important; }
-  [style*="flex-wrap"] { display:flex !important; }
-  [style*="flex-shrink"] { display:flex !important; }
-  /* Circles: force grid centering */
-  [style*="border-radius: 50%"][style*="width: 44px"],
-  [style*="border-radius: 50%"][style*="width: 48px"] { display:grid !important; place-items:center !important; }
-
   /* ——— On the Floor — coverflow ——— */
   .floor-scrim { background:linear-gradient(180deg,rgba(10,9,6,0.92) 0%,rgba(10,9,6,0.88) 45%,rgba(10,9,6,0.94) 100%); }
   [data-mode="light"] .floor-scrim { background:linear-gradient(180deg,rgba(246,241,231,0.96) 0%,rgba(246,241,231,0.94) 45%,rgba(246,241,231,0.97) 100%); }
@@ -400,7 +390,7 @@ function AmberCursor() {
 }
 
 // ——— Scroll reveal ———
-function Reveal({children,delay=0,y=24,as='div',display,...rest}) {
+function Reveal({children,delay=0,y=24,as='div',display,style,className='',...rest}) {
   const ref=useRef();
   const [v,setV]=useState(false);
   useEffect(()=>{
@@ -410,10 +400,12 @@ function Reveal({children,delay=0,y=24,as='div',display,...rest}) {
     return ()=>io.disconnect();
   },[]);
   const Tag=as;
-  const baseStyle = rest.style||{};
-  return <Tag ref={ref} {...rest} style={{
+  const baseStyle = style||{};
+  const resolvedDisplay = display ?? baseStyle.display;
+  const hasDisplay = resolvedDisplay != null && resolvedDisplay !== '';
+  return <Tag ref={ref} className={className} {...rest} style={{
     ...baseStyle,
-    display: display || baseStyle.display || undefined,
+    ...(hasDisplay ? {display:resolvedDisplay} : {}),
     opacity:v?1:0,
     transform:v?'translateY(0)':`translateY(${y}px)`,
     transition:`opacity 900ms cubic-bezier(.22,.61,.36,1) ${delay}ms,transform 900ms cubic-bezier(.22,.61,.36,1) ${delay}ms`,
@@ -1438,41 +1430,6 @@ function App() {
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
-</script>
-<script>
-(function(){
-  function fixPressScroll(){
-    var thumbs = document.getElementById('press-thumbs');
-    if(!thumbs) return;
-    var el = thumbs;
-    while(el && el !== document.body){
-      el.style.setProperty('overflow-x', el === thumbs ? 'scroll' : 'visible', 'important');
-      el.style.setProperty('overflow-y', 'visible', 'important');
-      el = el.parentElement;
-    }
-    thumbs.style.setProperty('-webkit-overflow-scrolling','touch','important');
-  }
-  if(window.innerWidth <= 768){
-    fixPressScroll();
-    setTimeout(fixPressScroll, 500);
-    setTimeout(fixPressScroll, 1500);
-  }
-})();
-</script>
-<script>
-function fixAll(){
-  document.querySelectorAll('div,article').forEach(function(el){
-    var s=el.style;
-    if((s.alignItems||s.justifyContent||s.flexDirection||s.gap||s.flexWrap||s.flexShrink) && !s.display){
-      el.style.setProperty('display','flex','important');
-    }
-    if(el.style.borderRadius==='50%' && el.offsetWidth>=40 && el.offsetWidth<=50){
-      el.style.setProperty('display','grid','important');
-      el.style.setProperty('place-items','center','important');
-    }
-  });
-}
-setInterval(fixAll,400);
 </script>
 </body>
 </html>
