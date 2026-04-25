@@ -494,7 +494,7 @@ function Nav() {
         onMouseEnter={e=>{e.currentTarget.style.color='var(--accent)';}}
         onMouseLeave={e=>{e.currentTarget.style.color='var(--ink)';}}>{link.t}</a>
     ))}
-    <div style={{padding:'16px 28px 0',alignItems:'center',gap:16}}>
+    <div style={{padding:'16px 28px 0',display:'flex',alignItems:'center',gap:16}}>
       <a href="enquiry.html" onClick={()=>setMobileOpen(false)} style={{padding:'10px 20px',border:'1px solid var(--accent)',color:'var(--accent)',textDecoration:'none',fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.12em',textTransform:'uppercase'}}>Enquire →</a>
       <button onClick={()=>setMode(isLight?'dark':'light')} aria-label="Toggle theme" style={{all:'unset',cursor:'pointer',width:36,height:36,borderRadius:'50%',border:'1px solid var(--line-strong)',display:'inline-flex',alignItems:'center',justifyContent:'center',color:'var(--ink-80)'}}>
         {isLight
@@ -524,7 +524,7 @@ function Nav() {
         onMouseLeave={e=>{e.target.style.background='rgba(229,180,106,0.06)';e.target.style.color='var(--accent)';}}>Enquire →</a>
     </div>
     {/* Hamburger — mobile only */}
-    <button id="nav-hamburger" onClick={()=>setMobileOpen(o=>!o)} aria-label="Toggle navigation" style={{cursor:'pointer',flexShrink:0,border:'1px solid var(--accent)',borderRadius:0,padding:'8px 12px',background:'rgba(229,180,106,0.06)',alignItems:'center',justifyContent:'center',fontSize:20,color:'var(--accent)',lineHeight:1,boxSizing:'border-box',alignSelf:'center'}}>
+    <button id="nav-hamburger" onClick={()=>setMobileOpen(o=>!o)} aria-label="Toggle navigation" style={{cursor:'pointer',display:'flex',flexShrink:0,border:'1px solid var(--accent)',borderRadius:0,padding:'8px 12px',background:'rgba(229,180,106,0.06)',alignItems:'center',justifyContent:'center',fontSize:20,color:'var(--accent)',lineHeight:1,boxSizing:'border-box',alignSelf:'center'}}>
       {mobileOpen ? '✕' : '☰'}
     </button>
   </nav>
@@ -565,7 +565,7 @@ function Hero() {
           </p>
         </Reveal>
         <Reveal delay={300}>
-          <div id="hero-trust-bar" style={{marginTop:28,alignItems:'center',gap:14,padding:'10px 16px',border:'1px solid var(--line-strong)',background:'var(--overlay-soft)',backdropFilter:'blur(8px)',flexWrap:'wrap',rowGap:10}}>
+          <div id="hero-trust-bar" style={{marginTop:28,display:'flex',alignItems:'center',gap:14,padding:'10px 16px',border:'1px solid var(--line-strong)',background:'var(--overlay-soft)',backdropFilter:'blur(8px)',flexWrap:'wrap',rowGap:10}}>
             <div style={{display:'flex',alignItems:'center',gap:8}}>
               <span style={{fontFamily:'var(--mono)',fontSize:9,letterSpacing:'0.2em',textTransform:'uppercase',color:'var(--ink-60)'}}>Featured on</span>
               <span style={{fontFamily:'var(--serif)',fontStyle:'italic',fontSize:14,color:'var(--ink)'}}>NST</span>
@@ -616,7 +616,7 @@ function Hero() {
         </Reveal>
       </div>
     </div>
-    <div style={{position:'absolute',bottom:32,left:'50%',transform:'translateX(-50%)',fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.3em',color:'var(--ink-40)',alignItems:'center',gap:12}}>
+    <div style={{position:'absolute',bottom:32,left:'50%',transform:'translateX(-50%)',display:'flex',fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.3em',color:'var(--ink-40)',alignItems:'center',gap:12}}>
       <span>SCROLL</span>
       <span style={{width:1,height:48,background:'linear-gradient(180deg,var(--accent),transparent)',animation:'scroll-hint 2.4s ease-in-out infinite'}}/>
     </div>
@@ -627,13 +627,13 @@ function Hero() {
 function TrustedStrip() {
   const logos=window.DJ_DATA.trustedBy;
   return <section data-mode="dark" style={{padding:'56px 0 64px',borderTop:'1px solid var(--line)',borderBottom:'1px solid var(--line)',background:'var(--surface-1)'}}>
-    <div style={{maxWidth:1440,margin:'0 auto',padding:'0 40px',marginBottom:32,alignItems:'center',gap:16,justifyContent:'space-between',flexWrap:'wrap'}}>
+    <div style={{maxWidth:1440,margin:'0 auto',padding:'0 40px',marginBottom:32,display:'flex',alignItems:'center',gap:16,justifyContent:'space-between',flexWrap:'wrap'}}>
       <SectionLabel num="01">Trusted by partners across Asia</SectionLabel>
       <span style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.22em',color:'var(--ink-40)',textTransform:'uppercase'}}>{String(logos.length).padStart(2,'0')} organisations</span>
     </div>
     <Marquee speed={55}>
       {logos.map((l,i)=>(
-        <div key={i} style={{padding:'0 64px',alignItems:'center',justifyContent:'center',minWidth:320,height:160,flexShrink:0}} title={l.name}>
+        <div key={i} style={{padding:'0 64px',display:'flex',alignItems:'center',justifyContent:'center',minWidth:320,height:160,flexShrink:0}} title={l.name}>
           <img src={l.src} alt={l.name} style={{maxHeight:l.maxH||(l.colored?140:110),maxWidth:280,objectFit:'contain',opacity:l.colored?0.95:0.82,filter:l.colored?'none':'brightness(1.1)',transition:'opacity .3s'}}/>
         </div>
       ))}
@@ -679,7 +679,7 @@ function Record() {
         </div>
         <Reveal delay={180} y={40}>
           <div style={{position:'relative'}}>
-            <div id="guinness-spin" style={{position:'absolute',top:-30,left:-30,zIndex:3,width:130,height:130,borderRadius:'50%',border:'1px solid var(--accent)',background:'var(--chip-bg)',backdropFilter:'blur(10px)',alignItems:'center',justifyContent:'center',animation:'spin-slow 24s linear infinite'}}>
+            <div id="guinness-spin" style={{position:'absolute',top:-30,left:-30,zIndex:3,width:130,height:130,borderRadius:'50%',border:'1px solid var(--accent)',background:'var(--chip-bg)',backdropFilter:'blur(10px)',display:'flex',alignItems:'center',justifyContent:'center',animation:'spin-slow 24s linear infinite'}}>
               <svg viewBox="0 0 140 140" style={{position:'absolute',inset:0,width:'100%',height:'100%'}}>
                 <defs><path id="cpath" d="M 70,70 m -52,0 a 52,52 0 1,1 104,0 a 52,52 0 1,1 -104,0"/></defs>
                 <text fill="var(--accent)" style={{fontFamily:'var(--mono)',fontSize:9,letterSpacing:'0.3em'}}>
@@ -691,7 +691,7 @@ function Record() {
             <div style={{border:'1px solid var(--line-strong)',padding:32,background:'linear-gradient(180deg,var(--surface-1),var(--surface-2))',aspectRatio:'4/5',position:'relative'}}>
               <SmartImg src="https://www.david-justin.com/wp-content/uploads/2025/10/guiness-record-1.webp" alt="Guinness certificate" label="GUINNESS CERTIFICATE" style={{width:'100%',height:'100%',objectFit:'contain'}}/>
             </div>
-            <div style={{marginTop:20,padding:20,border:'1px solid var(--line-strong)',justifyContent:'space-between',alignItems:'center',background:'var(--surface-1)'}}>
+            <div style={{marginTop:20,padding:20,border:'1px solid var(--line-strong)',display:'flex',justifyContent:'space-between',alignItems:'center',background:'var(--surface-1)'}}>
               <div>
                 <div style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.2em',color:'var(--ink-40)',textTransform:'uppercase'}}>Certification</div>
                 <div style={{fontFamily:'var(--serif)',fontSize:20,color:'var(--ink)',marginTop:4,fontStyle:'italic'}}>Officially Amazing™</div>
@@ -845,7 +845,7 @@ function Floor() {
       </Reveal>
 
       {/* Counter + progress */}
-      <div style={{maxWidth:1440,margin:'40px auto 0',padding:'0 40px',alignItems:'center',justifyContent:'center',gap:20,flexWrap:'wrap'}}>
+      <div style={{maxWidth:1440,margin:'40px auto 0',padding:'0 40px',display:'flex',alignItems:'center',justifyContent:'center',gap:20,flexWrap:'wrap'}}>
         <span style={{fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.24em',color:'var(--accent)',fontVariantNumeric:'tabular-nums'}}>{String(current+1).padStart(2,'0')}</span>
         <div style={{flex:'0 1 320px',height:1,background:'var(--line-strong)',position:'relative',overflow:'hidden'}}>
           <div key={current+'-'+paused} style={{position:'absolute',inset:0,background:'var(--accent)',transformOrigin:'left',transform:'scaleX(0)',animation:paused?'none':'floor-bar 3500ms linear forwards'}}/>
@@ -892,7 +892,7 @@ function Press() {
             <p style={{fontFamily:'var(--sans)',color:'var(--ink-80)',fontSize:17,lineHeight:1.6,margin:0}}>
               From The Straits Times to 南洋商报 — David Justin's record-breaking cryptocurrency lesson gained nationwide media recognition, highlighting his leadership in blockchain education.
             </p>
-            <div style={{marginTop:24,alignItems:'center',gap:12,fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.22em',color:'var(--ink-60)',textTransform:'uppercase'}}>
+            <div style={{marginTop:24,display:'flex',alignItems:'center',gap:12,fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.22em',color:'var(--ink-60)',textTransform:'uppercase'}}>
               <span style={{width:24,height:1,background:'var(--accent)'}}/>
               <span>{String(media.length).padStart(2,'0')} features · 2025</span>
             </div>
@@ -913,7 +913,7 @@ function Press() {
             {/* Bottom gradient for title */}
             <div style={{position:'absolute',left:0,right:0,bottom:0,height:260,background:'linear-gradient(180deg,transparent 0%,rgba(10,9,6,0.96) 75%)',pointerEvents:'none'}}/>
             {/* Outlet + index */}
-            <div style={{position:'absolute',top:24,left:24,right:24,alignItems:'center',justifyContent:'space-between',zIndex:3}}>
+            <div style={{position:'absolute',top:24,left:24,right:24,display:'flex',alignItems:'center',justifyContent:'space-between',zIndex:3}}>
               <div style={{padding:'10px 16px',background:'var(--accent)',fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.22em',color:'var(--ink-strong)',textTransform:'uppercase',fontWeight:700}}>{feature.outlet}</div>
               <div style={{fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.22em',color:'var(--ink)',textTransform:'uppercase',padding:'10px 14px',background:'rgba(10,9,6,0.6)',backdropFilter:'blur(6px)'}}>{String(active+1).padStart(2,'0')} / {String(media.length).padStart(2,'0')} · {feature.year}</div>
             </div>
@@ -947,7 +947,7 @@ function Press() {
                     <div style={{position:'absolute',inset:0,background:isActive?'transparent':'var(--bg-tint)',transition:'background .4s'}}/>
                   </div>
                   {/* Text side */}
-                  <div style={{padding:'16px 22px',flexDirection:'column',justifyContent:'center',gap:8,minWidth:0}}>
+                  <div style={{padding:'16px 22px',display:'flex',flexDirection:'column',justifyContent:'center',gap:8,minWidth:0}}>
                     <div style={{display:'flex',alignItems:'center',gap:10}}>
                       <span style={{fontFamily:'var(--mono)',fontSize:9,letterSpacing:'0.24em',color:isActive?'var(--accent)':'var(--ink-60)',textTransform:'uppercase',fontWeight:700}}>{String(i+1).padStart(2,'0')}</span>
                       <span style={{width:20,height:1,background:isActive?'var(--accent)':'var(--line-strong)'}}/>
@@ -964,7 +964,7 @@ function Press() {
       </div>
 
       {/* Footer stat strip — sits on the brown fade */}
-      <div style={{marginTop:80,padding:'36px 0 0',borderTop:'1px solid var(--line)',alignItems:'center',justifyContent:'space-between',gap:24,flexWrap:'wrap'}}>
+      <div style={{marginTop:80,padding:'36px 0 0',borderTop:'1px solid var(--line)',display:'flex',alignItems:'center',justifyContent:'space-between',gap:24,flexWrap:'wrap'}}>
         <div id="press-stats" style={{display:'flex',alignItems:'center',gap:40,flexWrap:'wrap'}}>
           {[
             {k:'5',l:'Major features'},
@@ -977,7 +977,7 @@ function Press() {
             </div>
           ))}
         </div>
-        <div style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.22em',color:'var(--ink-60)',textTransform:'uppercase',alignItems:'center',gap:10}}>
+        <div style={{display:'flex',fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.22em',color:'var(--ink-60)',textTransform:'uppercase',alignItems:'center',gap:10}}>
           <span style={{width:6,height:6,borderRadius:'50%',background:'var(--accent)',boxShadow:'0 0 10px var(--accent)'}}/>
           Tap any clipping to view the feature
         </div>
@@ -1000,8 +1000,29 @@ function Press() {
           overflow-x: visible !important;
         }
         /* …except the scroll container itself */
-        #press-thumbs { overflow-x: scroll !important; overflow-y: visible !important; }
+        #press-thumbs {
+          overflow-x: scroll !important;
+          overflow-y: visible !important;
+          display: grid !important;
+          grid-template-columns: repeat(5, minmax(220px, 1fr)) !important;
+          gap: 10px !important;
+          width: 100% !important;
+          padding-bottom: 4px !important;
+        }
+        #press-stage {
+          height: auto !important;
+          gap: 20px !important;
+        }
+        #press-stage > div,
+        #press-stage > div > a.press-feature {
+          height: auto !important;
+          max-height: none !important;
+        }
         #press-stage > div:last-child { overflow: visible !important; width:100% !important; }
+        #press-thumbs > button {
+          min-width: 220px !important;
+          height: 96px !important;
+        }
         /* Fix 2: press stats — all 3 in one row */
         #press-stats {
           flex-wrap: nowrap !important;
@@ -1091,7 +1112,7 @@ function Exchanges() {
               onMouseEnter={e2=>{e2.currentTarget.style.background='var(--surface-1)';}}
               onMouseLeave={e2=>{e2.currentTarget.style.background='';}}>
               <div style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.2em',color:'var(--ink-40)'}}>0{i+1}</div>
-              <div style={{flex:1,alignItems:'center'}}>
+              <div style={{display:'flex',flex:1,alignItems:'center'}}>
                 <SmartImg src={e.src} alt={e.name} label={e.name} className="exchange-logo" style={{maxHeight:52,maxWidth:'100%',objectFit:'contain'}}/>
               </div>
               <div style={{fontFamily:'var(--serif)',fontSize:22,color:'var(--ink)',fontStyle:'italic'}}>{e.name}</div>
@@ -1165,7 +1186,7 @@ function Vlog() {
               style={{width:'100%',height:'100%',border:'none'}}
             />
           </div>
-          <div style={{marginTop:16,padding:'18px 22px',border:'1px solid var(--line-strong)',background:'var(--chip-bg)',backdropFilter:'blur(10px)',alignItems:'center',justifyContent:'space-between',gap:16,flexWrap:'wrap'}}>
+          <div style={{marginTop:16,padding:'18px 22px',border:'1px solid var(--line-strong)',background:'var(--chip-bg)',backdropFilter:'blur(10px)',display:'flex',alignItems:'center',justifyContent:'space-between',gap:16,flexWrap:'wrap'}}>
             <div style={{minWidth:0,flex:1}}>
               <div style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.2em',color:'var(--accent)'}}>NOW PLAYING · EP {String(active+1).padStart(2,'0')}</div>
               <div style={{fontFamily:'var(--serif)',fontStyle:'italic',fontSize:22,color:'var(--ink)',marginTop:4,lineHeight:1.25}}>{titles[activeVid.id]||activeVid.t}</div>
@@ -1180,7 +1201,7 @@ function Vlog() {
               <button onClick={()=>setActive(i)} style={{all:'unset',cursor:'pointer',width:'100%',display:'grid',gridTemplateColumns:'140px 1fr',gap:16,padding:10,border:'1px solid var(--line-strong)',background:active===i?'rgba(229,180,106,0.1)':'rgba(10,9,6,0.7)',backdropFilter:'blur(10px)',transition:'all .3s'}}>
                 <div style={{position:'relative',aspectRatio:'16/9',overflow:'hidden',background:'var(--surface-2)'}}>
                   <SmartImg src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt={titles[v.id]||v.t} label="VIDEO" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
-                  {active===i && <div style={{position:'absolute',inset:0,alignItems:'center',justifyContent:'center',background:'rgba(229,180,106,0.4)',color:'var(--bg)',fontSize:22}}>▶</div>}
+                  {active===i && <div style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center',background:'rgba(229,180,106,0.4)',color:'var(--bg)',fontSize:22}}>▶</div>}
                 </div>
                 <div style={{display:'flex',flexDirection:'column',justifyContent:'center',gap:4,textAlign:'left',minWidth:0}}>
                   <div style={{fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.18em',color:active===i?'var(--accent)':'var(--ink-60)',textTransform:'uppercase'}}>EP {String(i+1).padStart(2,'0')}</div>
@@ -1241,7 +1262,7 @@ function LumaEvents() {
                   <div><div style={{color:'var(--ink-40)',fontSize:9,marginBottom:4}}>WHEN</div>{e.time}</div>
                   <div><div style={{color:'var(--ink-40)',fontSize:9,marginBottom:4}}>WHERE</div>{e.location}</div>
                 </div>
-                <div style={{marginTop:6,fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.14em',color:'var(--accent)',textTransform:'uppercase',alignItems:'center',justifyContent:'space-between'}}>
+                <div style={{marginTop:6,display:'flex',fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.14em',color:'var(--accent)',textTransform:'uppercase',alignItems:'center',justifyContent:'space-between'}}>
                   <span>RSVP on Luma</span><span>↗</span>
                 </div>
               </div>
@@ -1275,7 +1296,7 @@ function FAQ() {
             <p style={{fontFamily:'var(--sans)',color:'var(--ink-80)',fontSize:15,lineHeight:1.65,marginTop:28,maxWidth:360}}>
               Common questions about David, his record, and the academy's mission to advance blockchain education.
             </p>
-            <div style={{marginTop:32,paddingTop:24,borderTop:'1px solid var(--line)',alignItems:'center',gap:10,fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.22em',color:'var(--ink-60)',textTransform:'uppercase'}}>
+            <div style={{marginTop:32,paddingTop:24,borderTop:'1px solid var(--line)',display:'flex',alignItems:'center',gap:10,fontFamily:'var(--mono)',fontSize:10,letterSpacing:'0.22em',color:'var(--ink-60)',textTransform:'uppercase'}}>
               <span style={{width:6,height:6,borderRadius:'50%',background:'var(--accent)'}}/>
               Still curious? <a href="enquiry.html" style={{color:'var(--accent)',textDecoration:'none',borderBottom:'1px solid var(--accent)',marginLeft:4}}>Send a note →</a>
             </div>
@@ -1283,12 +1304,12 @@ function FAQ() {
           <div style={{borderTop:'1px solid var(--line)'}}>
             {faq.map((item,i)=>(
               <div key={i} style={{borderBottom:'1px solid var(--line)'}}>
-                <button onClick={()=>setOpen(open===i?-1:i)} style={{all:'unset',cursor:'pointer',width:'100%',padding:'28px 0',alignItems:'center',justifyContent:'space-between',gap:20}}>
+                <button onClick={()=>setOpen(open===i?-1:i)} style={{all:'unset',cursor:'pointer',width:'100%',padding:'28px 0',display:'flex',alignItems:'center',justifyContent:'space-between',gap:20}}>
                   <span style={{display:'flex',alignItems:'baseline',gap:20}}>
                     <span style={{fontFamily:'var(--mono)',fontSize:11,color:'var(--accent)',letterSpacing:'0.14em'}}>{String(i+1).padStart(2,'0')}</span>
                     <span style={{fontFamily:'var(--serif)',fontSize:24,color:'var(--ink)',fontStyle:'italic',lineHeight:1.2}}>{item.q}</span>
                   </span>
-                  <span style={{width:36,height:36,border:'1px solid var(--line-strong)',borderRadius:'50%',alignItems:'center',justifyContent:'center',color:'var(--accent)',fontFamily:'var(--mono)',fontSize:16,transition:'transform .4s,background .3s,border-color .3s',transform:open===i?'rotate(45deg)':'rotate(0)',background:open===i?'var(--accent)':'transparent',borderColor:open===i?'var(--accent)':'var(--line-strong)',color:open===i?'var(--ink)':'var(--accent)',flexShrink:0}}>+</span>
+                  <span style={{width:36,height:36,border:'1px solid var(--line-strong)',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',color:'var(--accent)',fontFamily:'var(--mono)',fontSize:16,transition:'transform .4s,background .3s,border-color .3s',transform:open===i?'rotate(45deg)':'rotate(0)',background:open===i?'var(--accent)':'transparent',borderColor:open===i?'var(--accent)':'var(--line-strong)',color:open===i?'var(--ink)':'var(--accent)',flexShrink:0}}>+</span>
                 </button>
                 <div style={{maxHeight:open===i?400:0,overflow:'hidden',transition:'max-height .5s cubic-bezier(.22,.61,.36,1)'}}>
                   <p style={{margin:0,padding:'0 0 28px 48px',maxWidth:620,fontFamily:'var(--sans)',fontSize:15,lineHeight:1.7,color:'var(--ink-80)'}}>{item.a}</p>
@@ -1372,7 +1393,7 @@ function Footer() {
           </div>
         ))}
       </div>
-      <div style={{paddingTop:32,borderTop:'1px solid var(--line)',justifyContent:'space-between',alignItems:'center',fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.14em',color:'var(--ink-40)',textTransform:'uppercase',flexWrap:'wrap',gap:16}}>
+      <div style={{paddingTop:32,borderTop:'1px solid var(--line)',display:'flex',justifyContent:'space-between',alignItems:'center',fontFamily:'var(--mono)',fontSize:11,letterSpacing:'0.14em',color:'var(--ink-40)',textTransform:'uppercase',flexWrap:'wrap',gap:16}}>
         <div>© DAVID-JUSTIN SDN BHD · MMXXV · ALL RIGHTS RESERVED</div>
         <div>KL ↔ SGP ↔ TYO</div>
       </div>
